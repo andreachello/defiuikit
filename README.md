@@ -15,6 +15,8 @@
 
 - [Quick start](#quick-start)
 - [Swap](#swap)
+- [Liquidity Pool](#liquidity-pool) - Coming Soon
+- [Bridge](#bridge) - Coming Soon
 
 ## Quick Start
 
