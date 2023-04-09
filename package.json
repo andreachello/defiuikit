@@ -1,0 +1,62 @@
+{
+  "name": "defi-ui-kit",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "version": "0.0.1",
+  "description": "A React component library to streamline DeFi platform building",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-lib": "rollup -c",
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
+  "keywords": [
+    "defi"
+  ],
+  "author": "Andrea Chello",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-react": "^7.18.6",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^8.3.3",
+    "@types/node": "18.11.3",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "autoprefixer": "^10.4.12",
+    "babel-loader": "^8.3.0",
+    "postcss": "^8.4.18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^3.20.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tailwindcss": "^3.2.4",
+    "tsup": "^6.7.0",
+    "typescript": "4.9.4"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.28.0",
+    "@wagmi/core": "^0.10.2",
+    "classnames": "^2.3.2",
+    "ethers": "^5.7.2",
+    "react-icons": "^4.8.0",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.2",
+    "wagmi": "^0.12.2"
+  }
+}
