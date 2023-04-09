@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://getbootstrap.com/">
+  <a href="">
     <img src="https://defi-reserach.s3.eu-west-2.amazonaws.com/defi-ui-kit-logo.png" alt="defi-ui-kit logo" />
   </a>
 </p>
@@ -90,16 +90,16 @@ Integrated swap components
 <img src="https://defi-reserach.s3.eu-west-2.amazonaws.com/swap-showcase.png" />
 
 ```jsx
- <Swap 
-    apiType='1inch'
-    tokenA={baseCurrencies[0]}
-    tokenB={baseCurrencies[1]}
-    tokenList={baseCurrencies}
-    primaryTokens={baseCurrencies}
-    />
+import { Swap } from "defi-ui-kit"
+
+const SwapExample = () => {
+  return (
+    <Swap />
+  )
+}
 ```
 
-Props:
+Optional Parameters:
 
 ```
 tokenA?: TokenMetadataResponse,
@@ -110,3 +110,24 @@ primaryTokens?: TokenMetadataResponse[],
 switchIcon?: "none" | React.ReactNode, 
 variant?: "bidirectional" | "unidirectional"
 ```
+
+### Swap Component Usage
+
+- Token A and Token B: Default tokens 
+- Primary Tokens: Common token bases for swaps
+- Token List: List of tokens we want to swap 
+
+<img src="https://defi-reserach.s3.eu-west-2.amazonaws.com/swap-usage.png"/>
+
+### Swap API Types
+
+The swap component has already been integrated with several types of APIs to choose from:
+
+- 0x 
+- 1Inch
+- UniswapV2
+- PancakeswapV2
+
+<p align="center">
+<img src="https://defi-reserach.s3.eu-west-2.amazonaws.com/Swap-api-types.png"/>
+</p>
