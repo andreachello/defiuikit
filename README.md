@@ -140,7 +140,7 @@ The swap component has already been integrated with several types of APIs to cho
 | -- | -- | -- | -- |
 | 0x | ✅ | ✅ | ✅ |
 | 1Inch | ✅ | ❌ | ✅ |
-| UniswapV2 | ❌ | ❌ | ❌ |
+| UniswapV2 | ❌ | ✅ | ❌ |
 | PancakeswapV2 | ❌ | ❌ | ❌ |
 
 ### Calculations
