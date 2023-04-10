@@ -133,3 +133,22 @@ The swap component has already been integrated with several types of APIs to cho
 <p align="center">
 <img src="https://defi-reserach.s3.eu-west-2.amazonaws.com/Swap-api-types.png"/>
 </p>
+
+- Support/Implementation of features 
+
+| API Type | Gas Estimation | Price Impact | Source |
+| -- | -- | -- | -- |
+| 0x | ✅ | ✅ | ✅ |
+| 1Inch | ✅ | ❌ | ✅ |
+| UniswapV2 | ❌ | ❌ | ❌ |
+| PancakeswapV2 | ❌ | ❌ | ❌ |
+
+### Calculations
+
+#### Price Impact
+
+$$\frac{\Delta_x}{x + \Delta_x} \times 100$$
+
+where, 
+
+$x$ is the reserve of Token A

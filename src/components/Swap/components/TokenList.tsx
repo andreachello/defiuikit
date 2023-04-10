@@ -6,7 +6,6 @@ import { baseCurrencies } from '../data/tokens';
 import React from 'react';
 
 interface ITokenListProps {
-
     onSelect: (token: TokenMetadataResponse) => void,
     network: number | undefined,
     tokenList?: TokenMetadataResponse[] |undefined,

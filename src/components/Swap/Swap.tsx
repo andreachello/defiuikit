@@ -14,7 +14,7 @@ import SwapButton from './components/SwapButton';
 
 import SwitchButton from './components/SwitchButton';
 import ChainDropdown from './components/ChainDropdown';
-import { getAmountOut, swapTokens } from './utils/ethereumFunctions';
+import { getAmountOut, getReserves, swapTokens } from './utils/ethereumFunctions';
 import { BASE_PATH_0X, BASE_PATH_1INCH, NATIVE_TOKEN_ADDRESS, BASE_PATH_PORTALS } from './data/constants';
 import cx from "classnames"
 import { useDeFiUIKitContext } from './context/DeFiUIKitContext';
@@ -74,6 +74,9 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
     const [isLoading, setIsLoading] = useState(false);
     const [hasBalance, setHasBalance] = useState<boolean>()
     const [sources, setSources] = useState<Source[]>([])
+    const [priceImpact, setPriceImpact] = useState("")
+    const [reserves, setReserves] = useState<string[]>([])
+
     const [txDetails, setTxDetails] = useState({
         to: "",
         data: "",
@@ -186,6 +189,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 
                 setError(null)
                 setSources([])
+
+                setPriceImpact(swapPrice.estimatedPriceImpact)
     
                 swapPrice.sources.map((source: Source) => {
                     
@@ -222,12 +227,23 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
             }
         } else if (apiType === "uniswapv2" || apiType === "pancakeswap") {
 
+            const signer = await fetchSigner()
+
               // TODO FIX FOR BSC
-            getAmountOut(tokenFrom, tokenTo, amountFrom, apiType)
+            getAmountOut(tokenFrom, tokenTo, amountFrom, apiType, signer)
                 .then((amount) => setAmountTo(Number(amount)))
                 .catch((error) => setError(error))
+            
+                getReserves(tokenFrom, tokenTo, account.address, signer, apiType)
+                .then((data) => {
+                    setReserves([data[0], data[1]])
+                    // price_impact = delta_x / (x + delta_x)
+                    setPriceImpact((amountFrom / (Number(data[0]) + amountFrom) * 100).toFixed(4));
+                })
+                .catch(err => console.log(err))
         }
     }
+
 
     const getTokenTicker = (token: TokenMetadataResponse) => {
         let tokenTicker;
@@ -529,7 +545,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
         <TokenSelection onTokenSelect={onSelectFrom} onAmountSelect={onAmountSelect} getPrice={getPrice} amountFrom={amountFrom} token={tokenFrom} tokenBalance={tokenFromBalance} tokenList={tokenList} primaryTokens={primaryTokens} tokenPrice={tokenFromPrice} apiType={apiType} chain={chain}/>
         <TokenSelection onTokenSelect={onSelectTo} amountTo={amountTo} getPrice={getPrice} token={tokenTo} disabled={true} tokenBalance={tokenToBalance} tokenList={tokenList} primaryTokens={primaryTokens} tokenPrice={tokenToPrice} apiType={apiType} chain={chain}/>
         <SwapError error={error}/>
-        <ExtraInfo gas={gas} sources={sources} />
+        <ExtraInfo gas={gas} sources={sources} priceImpact={priceImpact}/>
         <SwapButton 
                 canSwap={canSwap} 
                 swapFunction={trySwap} 

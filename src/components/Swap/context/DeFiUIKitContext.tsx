@@ -30,6 +30,6 @@ export const DeFiUIKitProvider = ({ children, config }: { children: ReactNode, c
 
 export const useDeFiUIKitContext = () => {
   const context = useContext(DeFiUIKitContext)
-  if (context === undefined) throw new Error("useDeFiUIKitContext must be within an EthereumProvider")
+  if (context === undefined) throw new Error("useDeFiUIKitContext must be within a DeFiUIKitProvider")
   return context
 }

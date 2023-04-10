@@ -94,21 +94,16 @@ export async function getAmountOut(
     address1: TokenMetadataResponse,
     address2: TokenMetadataResponse,
     amountIn: number,
-    apiType: string
+    apiType: string,
+    signer: ethers.Signer
   ) {
     try {
-      
-      const signer = await getSigner() as ethers.Signer
-      
+
       const router = getRouter(apiType, signer)
       
       const [addressFrom, addressTo] = formatNativeAddress(address1.address, address2.address, apiType)
       const formattedAmount = formatTokenAmount(address1, amountIn)
       
-      console.log("Formatted Amount", formattedAmount);
-      console.log("Address From", address1.address);
-      console.log("Address To", addressTo);
-
       const valuesOut = await router.getAmountsOut(
         ethers.BigNumber.from(formattedAmount),
         [addressFrom, addressTo]
@@ -126,17 +121,21 @@ export async function getAmountOut(
 // Reserves
 // -------------------------------------------------------------------
 
+// TODO: Get reserves and calc price impact
+// TODO: Get reserves and show them
+
   export async function fetchReserves(address1: TokenMetadataResponse, address2: TokenMetadataResponse, pair: any) {
     try {
       const reservesRaw = await pair.getReserves();
+      
       let results = [
-        Number(ethers.utils.formatEther(reservesRaw[0])),
-        Number(ethers.utils.formatEther(reservesRaw[1])),
+        (await pair.token0()) === address1.address ? reservesRaw[0] : reservesRaw[1],
+        (await pair.token1()) === address2.address ? reservesRaw[1] : reservesRaw[0],
       ];
-  
+
       return [
-        (await pair.token0()) === address1 ? results[0] : results[1],
-        (await pair.token1()) === address2 ? results[1] : results[0],
+        Number(ethers.utils.formatUnits(results[0], address1.decimals)),
+        Number(ethers.utils.formatUnits(results[1], address2.decimals)),
       ];
     } catch (err) {
       console.log("no reserves yet");
@@ -147,20 +146,26 @@ export async function getAmountOut(
   export async function getReserves(
     address1: TokenMetadataResponse,
     address2: TokenMetadataResponse,
-    accountAddress: string
+    accountAddress: string,
+    signer: ethers.Signer,
+    apiType: string
   ) {
 
-    const signer = await getSigner() as ethers.Signer
-    const factory =  getFactory(uniswapContracts.factory, signer)
+    const factory =  getFactory(apiType, signer)
+    
+    if (address1.address === "0x0000000000000000000000000000000000000000") {
+      address1.address = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" // weth
+    }
+    
+    const pairAddress = await factory.getPair(address1.address, address2.address);
+    const pair = new ethers.Contract(pairAddress, PAIR.abi, signer)    
 
-    const pairAddress = await factory.getPair(address1, address2);
-    const pair = new ethers.Contract(pairAddress, PAIR.abi, signer)
-  
     const reservesRaw = await fetchReserves(address1, address2, pair);
     const liquidityTokens_BN = await pair.balanceOf(accountAddress);
+
     const liquidityTokens = Number(
       ethers.utils.formatEther(liquidityTokens_BN)
-    ).toFixed(2);
+    ).toFixed(2);    
   
     return [
       reservesRaw[0].toFixed(2),
