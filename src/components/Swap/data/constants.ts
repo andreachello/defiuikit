@@ -12,6 +12,8 @@ export const pancakeswapContracts = {
 
 export const nativeTokensList = ["0x0000000000000000000000000000000000000000", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"]
 export const ETH_ADDRESS = "0x0000000000000000000000000000000000000000"
+export const WETH_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+export const WBNB_ADDRESS = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"
 
 export const NATIVE_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 export const BASE_PATH_1INCH = "https://api.1inch.io/v5.0/1"

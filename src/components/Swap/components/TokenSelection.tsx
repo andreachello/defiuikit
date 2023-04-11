@@ -35,7 +35,7 @@ const TokenSelection: React.FunctionComponent<ITokenSelectionProps> = ({onTokenS
     const [value, setValue] = useState<number | string>("")
 
     const getMaxAmount = () => {
-        if (token && tokenBalance >= 0 && onAmountSelect) {
+        if (token && tokenBalance > 0 && onAmountSelect) {
             setValue(tokenBalance)
             onAmountSelect(tokenBalance);
         }

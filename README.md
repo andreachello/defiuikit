@@ -136,12 +136,22 @@ The swap component has already been integrated with several types of APIs to cho
 
 - Support/Implementation of features 
 
-| API Type | Gas Estimation | Price Impact | Source |
+| API Type | Gas Estimation | Price Impact | Routes |
 | -- | -- | -- | -- |
 | 0x | ✅ | ✅ | ✅ |
 | 1Inch | ✅ | ❌ | ✅ |
 | UniswapV2 | ❌ | ✅ | ❌ |
 | PancakeswapV2 | ❌ | ❌ | ❌ |
+
+## Swap Routes
+
+The swap supports all types of possible routes:
+
+- Single swaps 
+- MultiSource swaps
+- MultiHop swaps
+
+<img src="https://defi-reserach.s3.eu-west-2.amazonaws.com/Swap-Routes.png" /> 
 
 ### Calculations
 

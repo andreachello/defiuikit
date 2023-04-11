@@ -7,7 +7,7 @@ import { MdSettings } from 'react-icons/md';
 import TokenSelection from './components/TokenSelection';
 import { RadioButton, RadioGroup } from './components/ui/button/Radio';
 
-import { ethers, Signer } from 'ethers';
+import { BigNumber, ethers, Signer } from 'ethers';
 import SwapError from './components/SwapError';
 import ExtraInfo from './components/ExtraInfo';
 import SwapButton from './components/SwapButton';
@@ -15,7 +15,7 @@ import SwapButton from './components/SwapButton';
 import SwitchButton from './components/SwitchButton';
 import ChainDropdown from './components/ChainDropdown';
 import { getAmountOut, getReserves, swapTokens } from './utils/ethereumFunctions';
-import { BASE_PATH_0X, BASE_PATH_1INCH, NATIVE_TOKEN_ADDRESS, BASE_PATH_PORTALS } from './data/constants';
+import { BASE_PATH_0X, BASE_PATH_1INCH, NATIVE_TOKEN_ADDRESS, BASE_PATH_PORTALS, ETH_ADDRESS } from './data/constants';
 import cx from "classnames"
 import { useDeFiUIKitContext } from './context/DeFiUIKitContext';
 import { baseCurrencies } from './data/tokens';
@@ -90,6 +90,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
     const resetExtraInfo = () => {
         setSources([])
         setGas("")
+        setPriceImpact("")
+        setError("")
     }
 
     const resetAll = useCallback(() => {
@@ -98,6 +100,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
         setTokenFrom(null)
         setTokenTo(null)
         setError("")
+        setPriceImpact("")
     }, [])
 
     // ------------------------
@@ -164,12 +167,12 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
 
     const getPrice = async () => {
         if (!tokenFrom || !tokenTo || (tokenFrom.address === tokenTo.address) || amountFrom === 0 || !amountFrom) return
-        let amount = Number(amountFrom) * 10  ** tokenFrom.decimals
-            
+        let amount = Number(Number(amountFrom) * 10  ** tokenFrom.decimals)
+
         const params = {
             sellToken: tokenFrom.symbol.toUpperCase() === chain?.nativeCurrency.symbol.toUpperCase() ? tokenFrom.symbol : tokenFrom.address,
             buyToken: tokenTo.symbol.toUpperCase() === chain?.nativeCurrency.symbol.toUpperCase() ? tokenTo.symbol : tokenTo.address,
-            sellAmount: amount.toString(),
+            sellAmount: BigInt(amount).toString(),
         }
 
         const searchParams = new URLSearchParams(params).toString()
@@ -180,15 +183,18 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
 
                 const response = await axios.get(`${BASE_PATH_0X}/price?${searchParams}`)
                 const swapPrice = await response.data as SwapPriceResponse
+                console.log(swapPrice);
                 
                 setAmountTo(Number(swapPrice.buyAmount) / (10 ** tokenTo.decimals))
-                const g = (Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice));
+                // TODO: take care of bigdecimal
+                const g = BigInt(Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice));
                 
                 const ETHPrice = await getTokenPrice(baseCurrencies[0])
                 setGas(String(Number(ethers.utils.formatEther(g)) * Number(ETHPrice)));
                 
                 setError(null)
                 setSources([])
+                
 
                 setPriceImpact(swapPrice.estimatedPriceImpact)
     
@@ -198,6 +204,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                         setSources((prev) => [...prev, source])
                     }
                 })     
+                
 
                 } catch (error:any) {
                     if (error.response) {
@@ -211,7 +218,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
 
                 const tokenOneAddress = getTokenTicker(tokenFrom)
                 const tokenTwoAddress = getTokenTicker(tokenTo)
-                const response = await axios.get(`${BASE_PATH_1INCH}/quote?fromTokenAddress=${tokenOneAddress}&toTokenAddress=${tokenTwoAddress}&amount=${amount}`)
+                const response = await axios.get(`${BASE_PATH_1INCH}/quote?fromTokenAddress=${tokenOneAddress}&toTokenAddress=${tokenTwoAddress}&amount=${BigInt(amount).toString()}`)
                 const quoteData = response.data 
                 
                 setSources(quoteData.protocols[0][0]);
@@ -243,7 +250,6 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 .catch(err => console.log(err))
         }
     }
-
 
     const getTokenTicker = (token: TokenMetadataResponse) => {
         let tokenTicker;
@@ -320,8 +326,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 
                 const maxApproval = 2**(256-1)
 
-                // TODO needs to work with any chain
-                if (tokenFrom.name.toLowerCase() !== "ethereum") {
+                // TODO needs to work with any chain - CHECK
+                if (tokenFrom.address !== ETH_ADDRESS) {
                     await ERC20TokenContract.approve(
                         response?.allowanceTarget,
                         maxApproval
@@ -367,6 +373,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
            }
 
         } else if (apiType === "uniswapv2" || apiType === "pancakeswap") {
+            const signer = await fetchSigner()
+
             setError("")
             setIsLoading(true)
             swapTokens(
@@ -375,11 +383,13 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 amountFrom,
                 account.address,
                 apiType,
-                slippage
-            )
-            .then(() => setIsLoading(false))
-            .catch((error) =>{ 
-                setIsLoading(false)
+                slippage,
+                signer
+                )
+                .then(() => setIsLoading(false))
+                .catch((error) =>{ 
+                    setIsLoading(false)
+                    console.log(error);
                 setError(error)
             })
         }
@@ -545,7 +555,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
         <TokenSelection onTokenSelect={onSelectFrom} onAmountSelect={onAmountSelect} getPrice={getPrice} amountFrom={amountFrom} token={tokenFrom} tokenBalance={tokenFromBalance} tokenList={tokenList} primaryTokens={primaryTokens} tokenPrice={tokenFromPrice} apiType={apiType} chain={chain}/>
         <TokenSelection onTokenSelect={onSelectTo} amountTo={amountTo} getPrice={getPrice} token={tokenTo} disabled={true} tokenBalance={tokenToBalance} tokenList={tokenList} primaryTokens={primaryTokens} tokenPrice={tokenToPrice} apiType={apiType} chain={chain}/>
         <SwapError error={error}/>
-        <ExtraInfo gas={gas} sources={sources} priceImpact={priceImpact}/>
+        <ExtraInfo gas={gas} sources={sources} priceImpact={priceImpact} tokenFrom={tokenFrom} tokenTo={tokenTo}/>
         <SwapButton 
                 canSwap={canSwap} 
                 swapFunction={trySwap} 

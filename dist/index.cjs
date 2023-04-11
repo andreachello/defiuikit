@@ -2830,21 +2830,21 @@ var require_axios = __commonJS({
       utils.extend(instance, context);
       return instance;
     }
-    var axios2 = createInstance(defaults);
-    axios2.Axios = Axios;
-    axios2.create = function create(instanceConfig) {
-      return createInstance(mergeConfig(axios2.defaults, instanceConfig));
+    var axios3 = createInstance(defaults);
+    axios3.Axios = Axios;
+    axios3.create = function create(instanceConfig) {
+      return createInstance(mergeConfig(axios3.defaults, instanceConfig));
     };
-    axios2.Cancel = require_Cancel();
-    axios2.CancelToken = require_CancelToken();
-    axios2.isCancel = require_isCancel();
-    axios2.all = function all(promises) {
+    axios3.Cancel = require_Cancel();
+    axios3.CancelToken = require_CancelToken();
+    axios3.isCancel = require_isCancel();
+    axios3.all = function all(promises) {
       return Promise.all(promises);
     };
-    axios2.spread = require_spread();
-    axios2.isAxiosError = require_isAxiosError();
-    module2.exports = axios2;
-    module2.exports.default = axios2;
+    axios3.spread = require_spread();
+    axios3.isAxiosError = require_isAxiosError();
+    module2.exports = axios3;
+    module2.exports.default = axios3;
   }
 });
 
@@ -2864,8 +2864,8 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/components/Swap/Swap.tsx
-var import_react8 = __toESM(require("react"), 1);
-var import_axios = __toESM(require_axios2(), 1);
+var import_react10 = __toESM(require("react"), 1);
+var import_axios2 = __toESM(require_axios2(), 1);
 var import_ri = require("react-icons/ri");
 
 // src/components/Swap/contracts/ERC20/ERC20.abi.json
@@ -3318,7 +3318,7 @@ var TokenSelection = ({ onTokenSelect, onAmountSelect, getPrice, amountTo, amoun
   const [shouldShowModal, setShouldShowModal] = (0, import_react5.useState)(false);
   const [value, setValue] = (0, import_react5.useState)("");
   const getMaxAmount = () => {
-    if (token && tokenBalance >= 0 && onAmountSelect) {
+    if (token && tokenBalance > 0 && onAmountSelect) {
       setValue(tokenBalance);
       onAmountSelect(tokenBalance);
     }
@@ -3384,189 +3384,13 @@ var import_ethers3 = require("ethers");
 // src/components/Swap/components/SwapError.tsx
 var React6 = __toESM(require("react"), 1);
 var SwapError = ({ error }) => {
-  return /* @__PURE__ */ React6.createElement(React6.Fragment, null, error ? /* @__PURE__ */ React6.createElement("div", { className: "bg-red-900 text-center py-4 lg:px-4" }, /* @__PURE__ */ React6.createElement("div", { className: "p-2 bg-red-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex", role: "alert" }, /* @__PURE__ */ React6.createElement("span", { className: "flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3" }, "Error"), /* @__PURE__ */ React6.createElement("span", { className: "font-semibold mr-2 text-left flex-auto text-xs" }, error.reason ? error.reason : error))) : null);
+  return /* @__PURE__ */ React6.createElement(React6.Fragment, null, error ? /* @__PURE__ */ React6.createElement("div", { className: "bg-red-900 text-center py-4 lg:px-4" }, /* @__PURE__ */ React6.createElement("div", { className: "p-2 bg-red-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex", role: "alert" }, /* @__PURE__ */ React6.createElement("span", { className: "flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3" }, "Error"), /* @__PURE__ */ React6.createElement("span", { className: "font-semibold mr-2 text-left flex-auto text-xs" }, error.reason ? error.reason : JSON.stringify(error)))) : null);
 };
 var SwapError_default = SwapError;
 
 // src/components/Swap/components/ExtraInfo.tsx
-var React7 = __toESM(require("react"), 1);
-var import_classnames2 = __toESM(require("classnames"), 1);
-var ExtraInfo = ({ gas, sources, priceImpact }) => {
-  return /* @__PURE__ */ React7.createElement(React7.Fragment, null, /* @__PURE__ */ React7.createElement(React7.Fragment, null, sources && gas && /* @__PURE__ */ React7.createElement("div", { className: "flex justify-between mt-4 mb-2" }, /* @__PURE__ */ React7.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React7.createElement("p", { className: "text-white " }, "Estimated Gas:"), /* @__PURE__ */ React7.createElement("p", { className: " text-gray-400" }, "$", gas && Number(gas).toFixed(2))), /* @__PURE__ */ React7.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React7.createElement("p", { className: "text-white" }, "Source:"), sources && sources.map((source, i) => /* @__PURE__ */ React7.createElement("div", { key: i }, source.hops ? source.hops.map((hop, j) => {
-    /* @__PURE__ */ React7.createElement("p", { key: hop, className: "text-gray-400" }, hop);
-  }) : /* @__PURE__ */ React7.createElement("p", { key: source.name, className: "text-gray-400" }, source.name))))), priceImpact && /* @__PURE__ */ React7.createElement("div", { className: "flex justify-between mt-4 mb-2" }, /* @__PURE__ */ React7.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React7.createElement("p", { className: "text-white" }, "Price Impact"), /* @__PURE__ */ React7.createElement("p", { className: (0, import_classnames2.default)(Number(priceImpact) < 1 ? "text-green-400" : "text-red-400") }, "~ ", Number(priceImpact).toFixed(2), "%")))));
-};
-var ExtraInfo_default = ExtraInfo;
-
-// src/components/Swap/components/SwapButton.tsx
 var React9 = __toESM(require("react"), 1);
-
-// src/components/Swap/components/ui/loaders/Spinner.tsx
-var React8 = __toESM(require("react"), 1);
-var Spinner = () => {
-  return /* @__PURE__ */ React8.createElement(
-    "div",
-    {
-      className: "inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]",
-      role: "status"
-    },
-    /* @__PURE__ */ React8.createElement(
-      "span",
-      {
-        className: "!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-      },
-      "Loading..."
-    )
-  );
-};
-var Spinner_default = Spinner;
-
-// src/components/Swap/components/SwapButton.tsx
-var import_classnames3 = __toESM(require("classnames"), 1);
-var SwapButton = ({
-  canSwap,
-  swapFunction,
-  isLoading,
-  isFilledOut,
-  tokenFromBalance,
-  amountFrom,
-  tokenSymbol
-}) => {
-  return /* @__PURE__ */ React9.createElement(
-    "button",
-    {
-      disabled: !canSwap,
-      className: (0, import_classnames3.default)(
-        "text-white text-center rounded-md py-2 w-full",
-        canSwap ? "cursor-pointer bg-indigo-500" : "cursor-not-allowed bg-gray-600"
-      ),
-      onClick: swapFunction
-    },
-    isLoading ? /* @__PURE__ */ React9.createElement(Spinner_default, null) : isFilledOut && (!tokenFromBalance || amountFrom > tokenFromBalance) ? `Insufficient Balance of ${tokenSymbol}` : "Swap"
-  );
-};
-var SwapButton_default = SwapButton;
-
-// src/components/Swap/components/SwitchButton.tsx
-var React10 = __toESM(require("react"), 1);
-var SwitchButton = ({ children, onSwitch }) => {
-  return /* @__PURE__ */ React10.createElement("div", { className: "absolute top-[9.7rem] left-[9.5rem]", onClick: onSwitch }, children);
-};
-var SwitchButton_default = SwitchButton;
-
-// src/components/Swap/components/ChainDropdown.tsx
-var import_react7 = __toESM(require("react"), 1);
-
-// src/components/Swap/data/providers.ts
-var providerList = [
-  {
-    name: "Ethereum",
-    icon: "https://chain-icons.s3.amazonaws.com/ethereum.png",
-    id: 1
-  },
-  {
-    name: "Arbitrum One",
-    icon: "https://chain-icons.s3.amazonaws.com/arbitrum.png",
-    id: 42161
-  },
-  // {
-  //     name: "Avalanche",
-  //     icon: "https://chain-icons.s3.amazonaws.com/avalanche.png",
-  //     id: 43114
-  // },
-  {
-    name: "BNB Smart Chain",
-    icon: "https://chain-icons.s3.amazonaws.com/bsc.png",
-    id: 56
-  },
-  {
-    name: "Optimism",
-    icon: "https://chain-icons.s3.amazonaws.com/optimism.png",
-    id: 10
-  },
-  {
-    name: "Polygon",
-    icon: "https://chain-icons.s3.amazonaws.com/polygon.png",
-    id: 137
-  }
-];
-
-// src/components/Swap/context/DeFiUIKitContext.tsx
-var import_react6 = __toESM(require("react"), 1);
-var DeFiUIKitContext = (0, import_react6.createContext)({
-  account: null,
-  fetchSigner: null,
-  signerPromise: null,
-  chains: null,
-  currentProvider: null,
-  useSwitchNetwork: null
-});
-var DeFiUIKitProvider = ({ children, config }) => {
-  return /* @__PURE__ */ import_react6.default.createElement(DeFiUIKitContext.Provider, { value: config }, children);
-};
-var useDeFiUIKitContext = () => {
-  const context = (0, import_react6.useContext)(DeFiUIKitContext);
-  if (context === void 0)
-    throw new Error("useDeFiUIKitContext must be within a DeFiUIKitProvider");
-  return context;
-};
-
-// src/components/Swap/components/ChainDropdown.tsx
-var ChainDropdown = ({ resetAll, apiType, chain }) => {
-  const [provider, setProvider] = (0, import_react7.useState)();
-  const [isOpen, setIsOpen] = (0, import_react7.useState)(false);
-  const { useSwitchNetwork } = useDeFiUIKitContext();
-  const { switchNetwork } = useSwitchNetwork();
-  (0, import_react7.useEffect)(() => {
-    const currentChain = providerList.find(
-      (provider2) => provider2.name === (chain == null ? void 0 : chain.name)
-    );
-    const rightNetwork = apiType === "uniswapv2" && (chain == null ? void 0 : chain.name.toLowerCase()) != "ethereum" || apiType === "pancakeswap" && (chain == null ? void 0 : chain.name) != "BNB Smart Chain" ? { name: "Wrong Network", icon: "" } : currentChain;
-    setProvider(rightNetwork);
-    resetAll();
-  }, [chain]);
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
-  const filteredProviderList = providerList.filter(
-    (provider2) => {
-      if (apiType === "uniswapv2") {
-        return provider2.name.toLowerCase() === "ethereum";
-      } else if (apiType === "pancakeswap") {
-        return provider2.name === "BNB Smart Chain";
-      } else {
-        return provider2;
-      }
-    }
-  );
-  const handleProvider = (e) => {
-    const newProviderName = e.currentTarget.getAttribute("value");
-    if (newProviderName) {
-      const newProvider = providerList.find(
-        (provider2) => provider2.name === newProviderName
-      );
-      if (newProvider) {
-        switchNetwork == null ? void 0 : switchNetwork(newProvider.id);
-      }
-    }
-    setIsOpen(false);
-  };
-  return /* @__PURE__ */ import_react7.default.createElement(import_react7.default.Fragment, null, /* @__PURE__ */ import_react7.default.createElement(
-    "button",
-    {
-      onClick: handleOpen,
-      className: "text-white font-medium rounded-lg text-sm py-2.5 text-center inline-flex items-center space-x-2",
-      type: "button"
-    },
-    (provider == null ? void 0 : provider.icon) && /* @__PURE__ */ import_react7.default.createElement("img", { src: provider == null ? void 0 : provider.icon, width: 20, height: 30, alt: "provider icon" }),
-    /* @__PURE__ */ import_react7.default.createElement("p", null, provider == null ? void 0 : provider.name),
-    /* @__PURE__ */ import_react7.default.createElement("svg", { className: "w-4 h-4 ml-2", "aria-hidden": "true", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react7.default.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 9l-7 7-7-7" }))
-  ), isOpen && /* @__PURE__ */ import_react7.default.createElement("div", { id: "dropdown", className: "z-10 mt-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#1f1f21] absolute" }, /* @__PURE__ */ import_react7.default.createElement("ul", { className: "mt-1 py-1 text-sm text-gray-700 dark:text-gray-200 space-y-2", "aria-labelledby": "dropdownDefaultButton" }, filteredProviderList.map((provider2) => /* @__PURE__ */ import_react7.default.createElement("li", { key: provider2.name, onClick: handleProvider, value: provider2.name, className: "p-2 flex space-x-2 hover:bg-[#28282a] cursor-pointer" }, (provider2 == null ? void 0 : provider2.icon) && /* @__PURE__ */ import_react7.default.createElement("img", { src: provider2 == null ? void 0 : provider2.icon, width: 20, height: 30, alt: "provider icon" }), /* @__PURE__ */ import_react7.default.createElement("p", null, provider2 == null ? void 0 : provider2.name))))));
-};
-var ChainDropdown_default = ChainDropdown;
-
-// src/components/Swap/utils/helpers/helpers.ts
-var import_ethers = require("ethers");
+var import_classnames2 = __toESM(require("classnames"), 1);
 
 // src/components/Swap/data/constants.ts
 var uniswapContracts = {
@@ -3582,10 +3406,16 @@ var pancakeswapContracts = {
 };
 var nativeTokensList = ["0x0000000000000000000000000000000000000000", "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"];
 var ETH_ADDRESS = "0x0000000000000000000000000000000000000000";
+var WETH_ADDRESS = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+var WBNB_ADDRESS = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
 var NATIVE_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 var BASE_PATH_1INCH = "https://api.1inch.io/v5.0/1";
 var BASE_PATH_0X = "https://api.0x.org/swap/v1";
 var BASE_PATH_PORTALS = "https://api.portals.fi/v2";
+
+// src/components/Swap/utils/helpers/helpers.ts
+var import_axios = __toESM(require_axios2(), 1);
+var import_ethers = require("ethers");
 
 // src/components/Swap/contracts/Uniswap/UniswapV2/UniswapV2Router02.json
 var UniswapV2Router02_default = {
@@ -6310,6 +6140,26 @@ var IPancakeFactory_default = [
 ];
 
 // src/components/Swap/utils/helpers/helpers.ts
+var getWrappedToken = (token) => __async(void 0, null, function* () {
+  if (token.chainId === 1 && token.address === ETH_ADDRESS) {
+    const weth = yield getTokenMetadata(WETH_ADDRESS);
+    return weth;
+  } else if (token.chainId === 56 && token.address === ETH_ADDRESS) {
+    const wbnb = yield getTokenMetadata(WBNB_ADDRESS);
+    return wbnb;
+  }
+});
+var getTokenMetadata = (address) => __async(void 0, null, function* () {
+  const query = "https://tokens.coingecko.com/uniswap/all.json";
+  const response = yield import_axios.default.get(query);
+  const tokenList = response.data.tokens;
+  if (address) {
+    const token = tokenList.find((token2) => {
+      return token2.address === address.toLowerCase();
+    });
+    return token;
+  }
+});
 var formatNativeAddress = (address1, address2, apiType) => {
   let addressFrom = "";
   let addressTo = "";
@@ -6334,11 +6184,6 @@ var formatTokenAmount = (address1, amountIn) => {
   }
   return formattedAmount;
 };
-var getSigner = () => __async(void 0, null, function* () {
-  const { fetchSigner } = useDeFiUIKitContext();
-  const signer = yield fetchSigner();
-  return signer;
-});
 var getRouter = (apiType, signer) => {
   const routerContract = apiType === "uniswapv2" ? uniswapContracts.router : apiType === "pancakeswap" ? pancakeswapContracts.router : "";
   const routerABI = apiType === "uniswapv2" ? UniswapV2Router02_default.abi : apiType === "pancakeswap" ? PancakeRouter01_default : "";
@@ -6362,6 +6207,255 @@ var formatAmountOut = (valuesOut, address2) => {
   }
   return amountOut;
 };
+
+// src/components/Swap/components/ui/accordion/index.tsx
+var import_react6 = __toESM(require("react"), 1);
+var import_bs2 = require("react-icons/bs");
+var Accordion = ({ title, content }) => {
+  const [active, setActive] = (0, import_react6.useState)(false);
+  const contentSpace = (0, import_react6.useRef)(null);
+  function toggleAccordion() {
+    setActive((prevState) => !prevState);
+  }
+  return /* @__PURE__ */ import_react6.default.createElement("div", { className: "flex flex-col justify-end" }, /* @__PURE__ */ import_react6.default.createElement(
+    "button",
+    {
+      className: "pb-2 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-end",
+      onClick: toggleAccordion
+    },
+    /* @__PURE__ */ import_react6.default.createElement("p", { className: "inline-block text-footnote text-gray-400 light" }, title),
+    active ? /* @__PURE__ */ import_react6.default.createElement(import_bs2.BsChevronUp, { className: "text-white ml-2" }) : /* @__PURE__ */ import_react6.default.createElement(import_bs2.BsChevronDown, { className: "text-white ml-2" })
+  ), active && /* @__PURE__ */ import_react6.default.createElement("div", { className: "pb-10" }, content));
+};
+
+// src/components/Swap/components/ExtraInfo.tsx
+var import_react7 = require("react");
+
+// src/components/Swap/components/Routes.tsx
+var React8 = __toESM(require("react"), 1);
+var Routes = ({ intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources }) => {
+  console.log(sources);
+  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, !intermediateToken ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("div", { className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("img", { src: tokenFrom == null ? void 0 : tokenFrom.logoURI }), wrappedToken ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenTo == null ? void 0 : tokenTo.logoURI, alt: "" })) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React8.createElement("svg", { width: "300", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("img", { src: tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, sources && sources.map((source, i) => source.name !== "MultiHop" && /* @__PURE__ */ React8.createElement("p", { key: source.name + i, className: "text-gray-400" }, source.name, source.proportion ? " - " + (source.proportion * 100).toFixed(1) + "%" : "")))) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, sources && sources.map((source, i) => /* @__PURE__ */ React8.createElement("div", { key: i }, source.name === "MultiHop" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, source.hops.map((hop, j) => /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("div", { key: hop + j, className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("img", { src: j === 0 ? tokenFrom == null ? void 0 : tokenFrom.logoURI : intermediateToken }), wrappedToken && j === 0 ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: intermediateToken, alt: "" })) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React8.createElement("svg", { width: "250", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("img", { src: j === 0 ? intermediateToken : tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("p", { key: j + hop, className: "text-gray-400" }, hop))))) : null))));
+};
+var Routes_default = Routes;
+
+// src/components/Swap/components/ExtraInfo.tsx
+var ExtraInfo = ({ gas, sources, priceImpact, tokenFrom, tokenTo }) => {
+  const [intermediateToken, setIntermediateToken] = React9.useState();
+  const [wrappedToken, setWrappedToken] = React9.useState();
+  const [wrappedDirection, setWrappedDirection] = React9.useState("");
+  const extraInfoDirection = "vertical";
+  (0, import_react7.useEffect)(() => {
+    if (tokenFrom) {
+      getWrappedToken(tokenFrom).then((token) => {
+        if (token) {
+          setWrappedToken(token);
+          setWrappedDirection("from");
+        }
+      });
+    }
+    if (tokenTo) {
+      getWrappedToken(tokenTo).then((token) => {
+        setWrappedToken(token);
+        setWrappedDirection("to");
+      });
+    }
+  }, [tokenFrom]);
+  if (sources[0]) {
+    getTokenMetadata(sources[0].intermediateToken).then(
+      (data) => {
+        if (data) {
+          setIntermediateToken(data.logoURI);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement(React9.Fragment, null, gas && sources && /* @__PURE__ */ React9.createElement("div", { className: (0, import_classnames2.default)("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React9.createElement("div", { className: (0, import_classnames2.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React9.createElement("p", { className: "text-white " }, "Estimated Gas:"), /* @__PURE__ */ React9.createElement("p", { className: " text-gray-400" }, "$", gas && Number(gas).toFixed(2))), /* @__PURE__ */ React9.createElement("div", { className: (0, import_classnames2.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between" : "") }, /* @__PURE__ */ React9.createElement("p", { className: "text-white" }, "Source:"), /* @__PURE__ */ React9.createElement(
+    Accordion,
+    {
+      title: sources.length > 1 ? "MultiSource" : sources[0].name,
+      content: /* @__PURE__ */ React9.createElement(
+        Routes_default,
+        {
+          intermediateToken,
+          wrappedToken,
+          tokenFrom,
+          tokenTo,
+          wrappedDirection,
+          sources
+        }
+      )
+    }
+  ))), priceImpact && /* @__PURE__ */ React9.createElement("div", { className: (0, import_classnames2.default)("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React9.createElement("div", { className: (0, import_classnames2.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React9.createElement("p", { className: "text-white" }, "Price Impact"), /* @__PURE__ */ React9.createElement("p", { className: (0, import_classnames2.default)(Number(priceImpact) < 5 ? "text-green-400" : "text-red-400") }, "~ ", Number(priceImpact).toFixed(2), "%")))));
+};
+var ExtraInfo_default = ExtraInfo;
+
+// src/components/Swap/components/SwapButton.tsx
+var React11 = __toESM(require("react"), 1);
+
+// src/components/Swap/components/ui/loaders/Spinner.tsx
+var React10 = __toESM(require("react"), 1);
+var Spinner = () => {
+  return /* @__PURE__ */ React10.createElement(
+    "div",
+    {
+      className: "inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]",
+      role: "status"
+    },
+    /* @__PURE__ */ React10.createElement(
+      "span",
+      {
+        className: "!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+      },
+      "Loading..."
+    )
+  );
+};
+var Spinner_default = Spinner;
+
+// src/components/Swap/components/SwapButton.tsx
+var import_classnames3 = __toESM(require("classnames"), 1);
+var SwapButton = ({
+  canSwap,
+  swapFunction,
+  isLoading,
+  isFilledOut,
+  tokenFromBalance,
+  amountFrom,
+  tokenSymbol
+}) => {
+  return /* @__PURE__ */ React11.createElement(
+    "button",
+    {
+      disabled: !canSwap,
+      className: (0, import_classnames3.default)(
+        "text-white text-center rounded-md py-2 w-full",
+        canSwap ? "cursor-pointer bg-indigo-500" : "cursor-not-allowed bg-gray-600"
+      ),
+      onClick: swapFunction
+    },
+    isLoading ? /* @__PURE__ */ React11.createElement(Spinner_default, null) : isFilledOut && (!tokenFromBalance || amountFrom > tokenFromBalance) ? `Insufficient Balance of ${tokenSymbol}` : "Swap"
+  );
+};
+var SwapButton_default = SwapButton;
+
+// src/components/Swap/components/SwitchButton.tsx
+var React12 = __toESM(require("react"), 1);
+var SwitchButton = ({ children, onSwitch }) => {
+  return /* @__PURE__ */ React12.createElement("div", { className: "absolute top-[9.7rem] left-[9.5rem]", onClick: onSwitch }, children);
+};
+var SwitchButton_default = SwitchButton;
+
+// src/components/Swap/components/ChainDropdown.tsx
+var import_react9 = __toESM(require("react"), 1);
+
+// src/components/Swap/data/providers.ts
+var providerList = [
+  {
+    name: "Ethereum",
+    icon: "https://chain-icons.s3.amazonaws.com/ethereum.png",
+    id: 1
+  },
+  {
+    name: "Arbitrum One",
+    icon: "https://chain-icons.s3.amazonaws.com/arbitrum.png",
+    id: 42161
+  },
+  // {
+  //     name: "Avalanche",
+  //     icon: "https://chain-icons.s3.amazonaws.com/avalanche.png",
+  //     id: 43114
+  // },
+  {
+    name: "BNB Smart Chain",
+    icon: "https://chain-icons.s3.amazonaws.com/bsc.png",
+    id: 56
+  },
+  {
+    name: "Optimism",
+    icon: "https://chain-icons.s3.amazonaws.com/optimism.png",
+    id: 10
+  },
+  {
+    name: "Polygon",
+    icon: "https://chain-icons.s3.amazonaws.com/polygon.png",
+    id: 137
+  }
+];
+
+// src/components/Swap/context/DeFiUIKitContext.tsx
+var import_react8 = __toESM(require("react"), 1);
+var DeFiUIKitContext = (0, import_react8.createContext)({
+  account: null,
+  fetchSigner: null,
+  signerPromise: null,
+  chains: null,
+  currentProvider: null,
+  useSwitchNetwork: null
+});
+var DeFiUIKitProvider = ({ children, config }) => {
+  return /* @__PURE__ */ import_react8.default.createElement(DeFiUIKitContext.Provider, { value: config }, children);
+};
+var useDeFiUIKitContext = () => {
+  const context = (0, import_react8.useContext)(DeFiUIKitContext);
+  if (context === void 0)
+    throw new Error("useDeFiUIKitContext must be within a DeFiUIKitProvider");
+  return context;
+};
+
+// src/components/Swap/components/ChainDropdown.tsx
+var ChainDropdown = ({ resetAll, apiType, chain }) => {
+  const [provider, setProvider] = (0, import_react9.useState)();
+  const [isOpen, setIsOpen] = (0, import_react9.useState)(false);
+  const { useSwitchNetwork } = useDeFiUIKitContext();
+  const { switchNetwork } = useSwitchNetwork();
+  (0, import_react9.useEffect)(() => {
+    const currentChain = providerList.find(
+      (provider2) => provider2.name === (chain == null ? void 0 : chain.name)
+    );
+    const rightNetwork = apiType === "uniswapv2" && (chain == null ? void 0 : chain.name.toLowerCase()) != "ethereum" || apiType === "pancakeswap" && (chain == null ? void 0 : chain.name) != "BNB Smart Chain" ? { name: "Wrong Network", icon: "" } : currentChain;
+    setProvider(rightNetwork);
+    resetAll();
+  }, [chain]);
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const filteredProviderList = providerList.filter(
+    (provider2) => {
+      if (apiType === "uniswapv2") {
+        return provider2.name.toLowerCase() === "ethereum";
+      } else if (apiType === "pancakeswap") {
+        return provider2.name === "BNB Smart Chain";
+      } else {
+        return provider2;
+      }
+    }
+  );
+  const handleProvider = (e) => {
+    const newProviderName = e.currentTarget.getAttribute("value");
+    if (newProviderName) {
+      const newProvider = providerList.find(
+        (provider2) => provider2.name === newProviderName
+      );
+      if (newProvider) {
+        switchNetwork == null ? void 0 : switchNetwork(newProvider.id);
+      }
+    }
+    setIsOpen(false);
+  };
+  return /* @__PURE__ */ import_react9.default.createElement(import_react9.default.Fragment, null, /* @__PURE__ */ import_react9.default.createElement(
+    "button",
+    {
+      onClick: handleOpen,
+      className: "text-white font-medium rounded-lg text-sm py-2.5 text-center inline-flex items-center space-x-2",
+      type: "button"
+    },
+    (provider == null ? void 0 : provider.icon) && /* @__PURE__ */ import_react9.default.createElement("img", { src: provider == null ? void 0 : provider.icon, width: 20, height: 30, alt: "provider icon" }),
+    /* @__PURE__ */ import_react9.default.createElement("p", null, provider == null ? void 0 : provider.name),
+    /* @__PURE__ */ import_react9.default.createElement("svg", { className: "w-4 h-4 ml-2", "aria-hidden": "true", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react9.default.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 9l-7 7-7-7" }))
+  ), isOpen && /* @__PURE__ */ import_react9.default.createElement("div", { id: "dropdown", className: "z-10 mt-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#1f1f21] absolute" }, /* @__PURE__ */ import_react9.default.createElement("ul", { className: "mt-1 py-1 text-sm text-gray-700 dark:text-gray-200 space-y-2", "aria-labelledby": "dropdownDefaultButton" }, filteredProviderList.map((provider2) => /* @__PURE__ */ import_react9.default.createElement("li", { key: provider2.name, onClick: handleProvider, value: provider2.name, className: "p-2 flex space-x-2 hover:bg-[#28282a] cursor-pointer" }, (provider2 == null ? void 0 : provider2.icon) && /* @__PURE__ */ import_react9.default.createElement("img", { src: provider2 == null ? void 0 : provider2.icon, width: 20, height: 30, alt: "provider icon" }), /* @__PURE__ */ import_react9.default.createElement("p", null, provider2 == null ? void 0 : provider2.name))))));
+};
+var ChainDropdown_default = ChainDropdown;
 
 // src/components/Swap/contracts/Uniswap/UniswapV2/IUniswapV2Pair.json
 var IUniswapV2Pair_default = {
@@ -7038,9 +7132,8 @@ var IUniswapV2Pair_default = {
 
 // src/components/Swap/utils/ethereumFunctions.ts
 var import_ethers2 = require("ethers");
-function swapTokens(address1, address2, amount, accountAddress, apiType, slippage) {
+function swapTokens(address1, address2, amount, accountAddress, apiType, slippage, signer) {
   return __async(this, null, function* () {
-    const signer = yield getSigner();
     const router = getRouter(apiType, signer);
     const time = Math.floor(Date.now() / 1e3) + 2e5;
     const deadline = import_ethers2.ethers.BigNumber.from(time);
@@ -7120,8 +7213,10 @@ function fetchReserves(address1, address2, pair) {
 function getReserves(address1, address2, accountAddress, signer, apiType) {
   return __async(this, null, function* () {
     const factory = getFactory(apiType, signer);
-    if (address1.address === "0x0000000000000000000000000000000000000000") {
-      address1.address = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+    if (address1.address === ETH_ADDRESS) {
+      address1.address = apiType === "uniswapv2" ? uniswapContracts.weth : apiType === "pancakeswap" ? pancakeswapContracts.weth : "";
+    } else if (address2.address === ETH_ADDRESS) {
+      address2.address = apiType === "uniswapv2" ? uniswapContracts.weth : apiType === "pancakeswap" ? pancakeswapContracts.weth : "";
     }
     const pairAddress = yield factory.getPair(address1.address, address2.address);
     const pair = new import_ethers2.ethers.Contract(pairAddress, IUniswapV2Pair_default.abi, signer);
@@ -7150,40 +7245,40 @@ var Swap = ({
   variant = "bidirectional"
 }) => {
   const { account, chains, currentProvider, fetchSigner } = useDeFiUIKitContext();
-  const [chainId, setChainId] = (0, import_react8.useState)();
+  const [chainId, setChainId] = (0, import_react10.useState)();
   const chain = chains.find((c) => {
     return c.id === chainId;
   });
-  const [swapState, setSwapState] = (0, import_react8.useState)("buy");
-  const [openPopover, setOpenPopover] = (0, import_react8.useState)(false);
-  const [slippage, setSlippage] = (0, import_react8.useState)(2.5);
+  const [swapState, setSwapState] = (0, import_react10.useState)("buy");
+  const [openPopover, setOpenPopover] = (0, import_react10.useState)(false);
+  const [slippage, setSlippage] = (0, import_react10.useState)(2.5);
   const fetchNetwork = () => __async(void 0, null, function* () {
     const { chainId: chainId2 } = yield currentProvider.getNetwork();
     setChainId(chainId2);
   });
-  const [tokenFrom, setTokenFrom] = (0, import_react8.useState)(null);
-  const [tokenTo, setTokenTo] = (0, import_react8.useState)(null);
-  (0, import_react8.useEffect)(() => {
+  const [tokenFrom, setTokenFrom] = (0, import_react10.useState)(null);
+  const [tokenTo, setTokenTo] = (0, import_react10.useState)(null);
+  (0, import_react10.useEffect)(() => {
     if (!tokenFrom && !tokenTo) {
       setTokenFrom(tokenA);
       setTokenTo(tokenB);
       fetchNetwork();
     }
   }, [tokenFrom, tokenTo]);
-  const [tokenFromPrice, setTokenFromPrice] = (0, import_react8.useState)("");
-  const [tokenToPrice, setTokenToPrice] = (0, import_react8.useState)("");
-  const [tokenFromBalance, setTokenFromBalance] = (0, import_react8.useState)(0);
-  const [tokenToBalance, setTokenToBalance] = (0, import_react8.useState)(0);
-  const [amountFrom, setAmountFrom] = (0, import_react8.useState)(Number("x"));
-  const [amountTo, setAmountTo] = (0, import_react8.useState)(0);
-  const [gas, setGas] = (0, import_react8.useState)("");
-  const [error, setError] = (0, import_react8.useState)();
-  const [isLoading, setIsLoading] = (0, import_react8.useState)(false);
-  const [hasBalance, setHasBalance] = (0, import_react8.useState)();
-  const [sources, setSources] = (0, import_react8.useState)([]);
-  const [priceImpact, setPriceImpact] = (0, import_react8.useState)("");
-  const [reserves, setReserves] = (0, import_react8.useState)([]);
-  const [txDetails, setTxDetails] = (0, import_react8.useState)({
+  const [tokenFromPrice, setTokenFromPrice] = (0, import_react10.useState)("");
+  const [tokenToPrice, setTokenToPrice] = (0, import_react10.useState)("");
+  const [tokenFromBalance, setTokenFromBalance] = (0, import_react10.useState)(0);
+  const [tokenToBalance, setTokenToBalance] = (0, import_react10.useState)(0);
+  const [amountFrom, setAmountFrom] = (0, import_react10.useState)(Number("x"));
+  const [amountTo, setAmountTo] = (0, import_react10.useState)(0);
+  const [gas, setGas] = (0, import_react10.useState)("");
+  const [error, setError] = (0, import_react10.useState)();
+  const [isLoading, setIsLoading] = (0, import_react10.useState)(false);
+  const [hasBalance, setHasBalance] = (0, import_react10.useState)();
+  const [sources, setSources] = (0, import_react10.useState)([]);
+  const [priceImpact, setPriceImpact] = (0, import_react10.useState)("");
+  const [reserves, setReserves] = (0, import_react10.useState)([]);
+  const [txDetails, setTxDetails] = (0, import_react10.useState)({
     to: "",
     data: "",
     value: 0
@@ -7194,13 +7289,16 @@ var Swap = ({
   const resetExtraInfo = () => {
     setSources([]);
     setGas("");
+    setPriceImpact("");
+    setError("");
   };
-  const resetAll = (0, import_react8.useCallback)(() => {
+  const resetAll = (0, import_react10.useCallback)(() => {
     setSources([]);
     setGas("");
     setTokenFrom(null);
     setTokenTo(null);
     setError("");
+    setPriceImpact("");
   }, []);
   const onSelectFrom = (token, balance) => {
     resetExtraInfo();
@@ -7238,7 +7336,7 @@ var Swap = ({
       switchTokens();
     }
   };
-  (0, import_react8.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const debouncePrice = setTimeout(() => {
       getPrice();
     }, 500);
@@ -7247,19 +7345,20 @@ var Swap = ({
   const getPrice = () => __async(void 0, null, function* () {
     if (!tokenFrom || !tokenTo || tokenFrom.address === tokenTo.address || amountFrom === 0 || !amountFrom)
       return;
-    let amount = Number(amountFrom) * __pow(10, tokenFrom.decimals);
+    let amount = Number(Number(amountFrom) * __pow(10, tokenFrom.decimals));
     const params = {
       sellToken: tokenFrom.symbol.toUpperCase() === (chain == null ? void 0 : chain.nativeCurrency.symbol.toUpperCase()) ? tokenFrom.symbol : tokenFrom.address,
       buyToken: tokenTo.symbol.toUpperCase() === (chain == null ? void 0 : chain.nativeCurrency.symbol.toUpperCase()) ? tokenTo.symbol : tokenTo.address,
-      sellAmount: amount.toString()
+      sellAmount: BigInt(amount).toString()
     };
     const searchParams = new URLSearchParams(params).toString();
     if (apiType === "0x") {
       try {
-        const response = yield import_axios.default.get(`${BASE_PATH_0X}/price?${searchParams}`);
+        const response = yield import_axios2.default.get(`${BASE_PATH_0X}/price?${searchParams}`);
         const swapPrice = yield response.data;
+        console.log(swapPrice);
         setAmountTo(Number(swapPrice.buyAmount) / __pow(10, tokenTo.decimals));
-        const g = Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice);
+        const g = BigInt(Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice));
         const ETHPrice = yield getTokenPrice(baseCurrencies[0]);
         setGas(String(Number(import_ethers3.ethers.utils.formatEther(g)) * Number(ETHPrice)));
         setError(null);
@@ -7281,7 +7380,7 @@ var Swap = ({
       try {
         const tokenOneAddress = getTokenTicker(tokenFrom);
         const tokenTwoAddress = getTokenTicker(tokenTo);
-        const response = yield import_axios.default.get(`${BASE_PATH_1INCH}/quote?fromTokenAddress=${tokenOneAddress}&toTokenAddress=${tokenTwoAddress}&amount=${amount}`);
+        const response = yield import_axios2.default.get(`${BASE_PATH_1INCH}/quote?fromTokenAddress=${tokenOneAddress}&toTokenAddress=${tokenTwoAddress}&amount=${BigInt(amount).toString()}`);
         const quoteData = response.data;
         setSources(quoteData.protocols[0][0]);
         const ETHPrice = yield getTokenPrice(baseCurrencies[0]);
@@ -7333,7 +7432,7 @@ var Swap = ({
     }
     const searchParams = new URLSearchParams(params).toString();
     try {
-      const response = yield import_axios.default.get(`${BASE_PATH_0X}/quote?${searchParams}`);
+      const response = yield import_axios2.default.get(`${BASE_PATH_0X}/quote?${searchParams}`);
       const quotePrice = yield response.data;
       setAmountTo(Number(quotePrice.buyAmount) / __pow(10, tokenTo.decimals));
       const g = Number(quotePrice.estimatedGas) * Number(quotePrice.gasPrice);
@@ -7362,7 +7461,7 @@ var Swap = ({
         const signer = yield fetchSigner();
         const ERC20TokenContract = new import_ethers3.ethers.Contract(tokenFrom.address, ERC20_abi_default, signer);
         const maxApproval = __pow(2, 256 - 1);
-        if (tokenFrom.name.toLowerCase() !== "ethereum") {
+        if (tokenFrom.address !== ETH_ADDRESS) {
           yield ERC20TokenContract.approve(
             response == null ? void 0 : response.allowanceTarget,
             maxApproval
@@ -7383,12 +7482,12 @@ var Swap = ({
         const tokenOneAddress = tokenFrom.symbol.toUpperCase() === (chain == null ? void 0 : chain.nativeCurrency.symbol.toUpperCase()) ? NATIVE_TOKEN_ADDRESS : tokenFrom.address;
         const tokenTwoAddress = tokenTo.symbol.toUpperCase() === (chain == null ? void 0 : chain.nativeCurrency.symbol.toUpperCase()) ? NATIVE_TOKEN_ADDRESS : tokenTo.address;
         setIsLoading(true);
-        const allowance = yield import_axios.default.get(`${BASE_PATH_1INCH}/approve/allowance?tokenAddress=${tokenOneAddress}&walletAddress=${account.address}`);
+        const allowance = yield import_axios2.default.get(`${BASE_PATH_1INCH}/approve/allowance?tokenAddress=${tokenOneAddress}&walletAddress=${account.address}`);
         if (allowance.data.allowance === "0") {
-          const approve = yield import_axios.default.get(`${BASE_PATH_1INCH}/approve/transaction?tokenAddress=${tokenOneAddress}`);
+          const approve = yield import_axios2.default.get(`${BASE_PATH_1INCH}/approve/transaction?tokenAddress=${tokenOneAddress}`);
           setTxDetails(approve.data);
         }
-        const transaction = yield (0, import_axios.default)(
+        const transaction = yield (0, import_axios2.default)(
           `${BASE_PATH_1INCH}/swap?fromTokenAddress=${tokenOneAddress}&toTokenAddress=${tokenTwoAddress}&amount=${convertedAmount}&fromAddress=${account.address}&slippage=${slippage}`
         );
         let decimals = Number(`1E${tokenTo.decimals}`);
@@ -7401,6 +7500,7 @@ var Swap = ({
         setIsLoading(false);
       }
     } else if (apiType === "uniswapv2" || apiType === "pancakeswap") {
+      const signer = yield fetchSigner();
       setError("");
       setIsLoading(true);
       swapTokens(
@@ -7409,9 +7509,11 @@ var Swap = ({
         amountFrom,
         account.address,
         apiType,
-        slippage
+        slippage,
+        signer
       ).then(() => setIsLoading(false)).catch((error2) => {
         setIsLoading(false);
+        console.log(error2);
         setError(error2);
       });
     }
@@ -7447,7 +7549,7 @@ var Swap = ({
     }
     let query = `${BASE_PATH_PORTALS}/tokens?addresses=${network}%3A${token == null ? void 0 : token.address}&platforms=${tokenType}&networks=${network}&sortDirection=asc&limit=25&page=0`;
     try {
-      const resp = yield import_axios.default.get(query);
+      const resp = yield import_axios2.default.get(query);
       return resp.data.tokens[0].price;
     } catch (error2) {
       console.log(error2);
@@ -7492,7 +7594,7 @@ var Swap = ({
       }
     }
   });
-  (0, import_react8.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const updateTokenBalance = () => __async(void 0, null, function* () {
       if (tokenFrom) {
         yield getBalance(tokenFrom, "from");
@@ -7500,7 +7602,7 @@ var Swap = ({
     });
     updateTokenBalance();
   }, [tokenFromBalance, tokenFrom]);
-  (0, import_react8.useEffect)(() => {
+  (0, import_react10.useEffect)(() => {
     const updateTokenBalance = () => __async(void 0, null, function* () {
       if (tokenTo) {
         yield getBalance(tokenTo, "to");
@@ -7510,21 +7612,21 @@ var Swap = ({
   }, [tokenToBalance, tokenTo]);
   const canSwap = !!hasBalance && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance;
   const isFilledOut = tokenFrom && tokenTo && Number(amountFrom) && amountTo && !!account;
-  return /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ import_react8.default.createElement(SwitchButton_default, { onSwitch: switchTokens }, typeof switchIcon === "object" ? switchIcon : switchIcon === "none" || variant === "unidirectional" ? null : /* @__PURE__ */ import_react8.default.createElement("div", { className: "rounded-full border w-fit p-2 cursor-pointer" }, /* @__PURE__ */ import_react8.default.createElement(import_ri.RiArrowUpDownLine, { className: "text-white text-xl " }))), variant && variant === "unidirectional" && /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex justify-evenly items-center text-center text-white cursor-pointer mb-4" }, /* @__PURE__ */ import_react8.default.createElement(
+  return /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ import_react10.default.createElement(SwitchButton_default, { onSwitch: switchTokens }, typeof switchIcon === "object" ? switchIcon : switchIcon === "none" || variant === "unidirectional" ? null : /* @__PURE__ */ import_react10.default.createElement("div", { className: "rounded-full border w-fit p-2 cursor-pointer" }, /* @__PURE__ */ import_react10.default.createElement(import_ri.RiArrowUpDownLine, { className: "text-white text-xl " }))), variant && variant === "unidirectional" && /* @__PURE__ */ import_react10.default.createElement("div", { className: "flex justify-evenly items-center text-center text-white cursor-pointer mb-4" }, /* @__PURE__ */ import_react10.default.createElement(
     "p",
     {
       className: (0, import_classnames4.default)("px-4 w-1/2", swapState === "buy" ? "bg-indigo-500 " : ""),
       onClick: () => handleSwitch("buy")
     },
     "Buy"
-  ), /* @__PURE__ */ import_react8.default.createElement(
+  ), /* @__PURE__ */ import_react10.default.createElement(
     "p",
     {
       className: (0, import_classnames4.default)("px-4 w-1/2", swapState === "sell" ? "bg-indigo-500 " : ""),
       onClick: () => handleSwitch("sell")
     },
     "Sell"
-  )), /* @__PURE__ */ import_react8.default.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ import_react8.default.createElement(ChainDropdown_default, { resetAll, apiType, chain }), /* @__PURE__ */ import_react8.default.createElement(import_md.MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ import_react8.default.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ import_react8.default.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ import_react8.default.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance"), /* @__PURE__ */ import_react8.default.createElement(RadioGroup, { onChange: handleSlippageChange }, /* @__PURE__ */ import_react8.default.createElement(RadioButton, { value: 0.5 }, "0.5%"), /* @__PURE__ */ import_react8.default.createElement(RadioButton, { checked: true, value: 2.5 }, "2.5%"), /* @__PURE__ */ import_react8.default.createElement(RadioButton, { value: 5 }, "5.0%"))) : null), /* @__PURE__ */ import_react8.default.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect, getPrice, amountFrom, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ import_react8.default.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, amountTo, getPrice, token: tokenTo, disabled: true, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ import_react8.default.createElement(SwapError_default, { error }), /* @__PURE__ */ import_react8.default.createElement(ExtraInfo_default, { gas, sources, priceImpact }), /* @__PURE__ */ import_react8.default.createElement(
+  )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ import_react10.default.createElement(ChainDropdown_default, { resetAll, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(import_md.MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ import_react10.default.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance"), /* @__PURE__ */ import_react10.default.createElement(RadioGroup, { onChange: handleSlippageChange }, /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 0.5 }, "0.5%"), /* @__PURE__ */ import_react10.default.createElement(RadioButton, { checked: true, value: 2.5 }, "2.5%"), /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 5 }, "5.0%"))) : null), /* @__PURE__ */ import_react10.default.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect, getPrice, amountFrom, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, amountTo, getPrice, token: tokenTo, disabled: true, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(SwapError_default, { error }), /* @__PURE__ */ import_react10.default.createElement(ExtraInfo_default, { gas, sources, priceImpact, tokenFrom, tokenTo }), /* @__PURE__ */ import_react10.default.createElement(
     SwapButton_default,
     {
       canSwap,

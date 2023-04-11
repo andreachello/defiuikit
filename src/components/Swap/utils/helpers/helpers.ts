@@ -1,3 +1,5 @@
+import { WETH_ADDRESS, WBNB_ADDRESS } from './../../data/constants';
+import axios from 'axios';
 import { ethers } from "ethers"
 import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts, nativeTokensList } from "../../data/constants"
 import ROUTER from "../../contracts/Uniswap/UniswapV2/UniswapV2Router02.json";
@@ -8,7 +10,32 @@ import PANCAKEROUTER from "../../contracts/Pancakeswap/PancakeRouter01.json";
 import PANCAKEFACTORY from "../../contracts/Pancakeswap/Interfaces/IPancakeFactory.json";
 import PANCAKEPAIR from "../../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
 import { TokenMetadataResponse } from "../../Swap";
-import { useDeFiUIKitContext } from "./../../context/DeFiUIKitContext";
+
+export const getWrappedToken = async(token: TokenMetadataResponse) => {
+  
+  if (token.chainId === 1 && token.address === ETH_ADDRESS) {
+    const weth = await getTokenMetadata(WETH_ADDRESS)
+    return weth
+  } else if (token.chainId === 56 && token.address === ETH_ADDRESS) {
+    const wbnb = await getTokenMetadata(WBNB_ADDRESS)
+    return wbnb
+  }
+}
+
+export const getTokenMetadata = async(address: string) => {
+  // get name from 
+  const query = "https://tokens.coingecko.com/uniswap/all.json"
+  const response = await axios.get(query)
+  const tokenList = response.data.tokens
+
+  if (address) {
+    const token =  tokenList.find((token: TokenMetadataResponse) => {
+      return token.address === address.toLowerCase()
+    })
+    return token
+  }
+
+}
 
 export const formatNativeAddress = (address1: string, address2: string, apiType: string) => {
     // Wrap the ETH to make it compatible with UniswapV2
@@ -36,12 +63,6 @@ export const formatTokenAmount = (address1: any, amountIn: number) => {
         formattedAmount = amountIn * 10 ** address1.decimals
     }
     return formattedAmount
-  }
-
-  export const getSigner = async() => {
-    const {fetchSigner} = useDeFiUIKitContext()
-    const signer = await fetchSigner()
-    return signer
   }
 
   export const getRouter = (apiType: string, signer:ethers.Signer) => {

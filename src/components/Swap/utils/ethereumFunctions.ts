@@ -1,8 +1,8 @@
-import { formatAmountOut, formatAmountOutMin, formatNativeAddress, formatTokenAmount, getFactory, getRouter, getSigner} from './helpers/helpers';
+import { formatAmountOut, formatAmountOutMin, formatNativeAddress, formatTokenAmount, getFactory, getRouter } from './helpers/helpers';
 import ERC20 from "../contracts/ERC20/ERC20.json";
 import PAIR from "../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
 import { ethers } from "ethers";
-import { ETH_ADDRESS, uniswapContracts,  } from '../data/constants';
+import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts} from '../data/constants';
 import { TokenMetadataResponse } from '../Swap';
 
 export function doesTokenExist(address: string, signer: ethers.Signer) {
@@ -30,10 +30,10 @@ export function doesTokenExist(address: string, signer: ethers.Signer) {
     amount: number,
     accountAddress: string | undefined,
     apiType: string,
-    slippage: number
+    slippage: number,
+    signer: ethers.Signer
   ) {
 
-    const signer = await getSigner() as ethers.Signer
     const router = getRouter(apiType, signer)
     const time = Math.floor(Date.now() / 1000) + 200000;
     const deadline = ethers.BigNumber.from(time);
@@ -121,9 +121,6 @@ export async function getAmountOut(
 // Reserves
 // -------------------------------------------------------------------
 
-// TODO: Get reserves and calc price impact
-// TODO: Get reserves and show them
-
   export async function fetchReserves(address1: TokenMetadataResponse, address2: TokenMetadataResponse, pair: any) {
     try {
       const reservesRaw = await pair.getReserves();
@@ -153,8 +150,10 @@ export async function getAmountOut(
 
     const factory =  getFactory(apiType, signer)
     
-    if (address1.address === "0x0000000000000000000000000000000000000000") {
-      address1.address = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" // weth
+    if (address1.address === ETH_ADDRESS) {
+      address1.address = apiType === "uniswapv2" ? uniswapContracts.weth : apiType === "pancakeswap" ? pancakeswapContracts.weth : ""
+    } else if (address2.address === ETH_ADDRESS) {
+      address2.address = apiType === "uniswapv2" ? uniswapContracts.weth : apiType === "pancakeswap" ? pancakeswapContracts.weth : ""
     }
     
     const pairAddress = await factory.getPair(address1.address, address2.address);
