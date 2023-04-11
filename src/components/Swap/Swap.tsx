@@ -7,7 +7,7 @@ import { MdSettings } from 'react-icons/md';
 import TokenSelection from './components/TokenSelection';
 import { RadioButton, RadioGroup } from './components/ui/button/Radio';
 
-import { BigNumber, ethers, Signer } from 'ethers';
+import { ethers, Signer } from 'ethers';
 import SwapError from './components/SwapError';
 import ExtraInfo from './components/ExtraInfo';
 import SwapButton from './components/SwapButton';
@@ -29,8 +29,6 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
     switchIcon, 
     variant="bidirectional"
 }) => {
-
-    // TODO: price impact Uniswapv2
 
     const {account, chains, currentProvider, fetchSigner} = useDeFiUIKitContext()
     const [chainId, setChainId] = useState()
@@ -186,6 +184,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 console.log(swapPrice);
                 
                 setAmountTo(Number(swapPrice.buyAmount) / (10 ** tokenTo.decimals))
+                
                 // TODO: take care of bigdecimal
                 const g = BigInt(Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice));
                 

@@ -80,44 +80,42 @@ const Routes: React.FunctionComponent<IRoutesProps> = ({intermediateToken, wrapp
             {source.hops.map((hop: any, j: number) => (
                 <>
                 <div key={hop + j} className='flex mt-6' style={wrappedToken ? {marginLeft: "-14.5rem"} : {marginLeft: "-2.5rem"}}>
-
-                <img src={j === 0 ? tokenFrom?.logoURI : intermediateToken} />
-                {wrappedToken && j === 0 ? 
-                <>
-                <svg width="100%" height="35" viewBox="850 0 300 200" xmlns="http://www.w3.org/2000/svg" className='text-gray-400'>
-                <line x1="0" x2="3000" y1="100" y2="100" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeDasharray="1, 45">
-                </line>
-                </svg>
-
-                <div className="flex mt-1" style={{marginRight: "1rem", marginLeft: "0.2rem"}}>
-                {wrappedDirection === "from" ?
-                <>
-                    <img style={{height: "24px", width: "24px"}} className="border-2 border-white rounded-full dark:border-gray-800" src={wrappedToken?.logoURI} alt="" />
-                    <img className="border-2 border-white rounded-full dark:border-gray-800" style={{marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px"}} src={intermediateToken} alt="" />
-                </>
-                :
-                <>
-                    <img className="border-2 border-white rounded-full dark:border-gray-800" style={{marginBottom: "0.3rem", height: "26px", width: "64px"}} src={tokenFrom?.logoURI} alt="" />
-                    <img style={{height: "24px", width: "24px", marginLeft: "-0.5rem"}} className="border-2 border-white rounded-full dark:border-gray-800" src={wrappedToken?.logoURI} alt="" />
-                </>}
-
-                </div>
-
-                <svg width="100%" height="35" viewBox="850 0 300 200" xmlns="http://www.w3.org/2000/svg" className='text-gray-400'>
+                    <img src={j === 0 ? tokenFrom?.logoURI : intermediateToken} style={j === 0 ? {} : {height: "27px", width: "27px", marginTop: "0.2rem"}}/>
+                    {wrappedToken && j === 0 ? 
+                    <>
+                    <svg width="100%" height="35" viewBox="850 0 300 200" xmlns="http://www.w3.org/2000/svg" className='text-gray-400'>
                     <line x1="0" x2="3000" y1="100" y2="100" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeDasharray="1, 45">
                     </line>
-                </svg>    
-                </>
-                : 
-                <svg width="250" height="35" viewBox="850 0 300 200" xmlns="http://www.w3.org/2000/svg" className='text-gray-400'>
-                    <line x1="0" x2="3000" y1="100" y2="100" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeDasharray="1, 45">
-                    </line>
-                </svg>    
-                }
-                <img src={j === 0 ? intermediateToken : tokenTo?.logoURI}/>
+                    </svg>
+
+                    <div className="flex mt-1" style={{marginRight: "1rem", marginLeft: "0.2rem"}}>
+                    {wrappedDirection === "from" ?
+                    <>
+                        <img style={{height: "24px", width: "24px"}} className="border-2 border-white rounded-full dark:border-gray-800" src={wrappedToken?.logoURI} alt="" />
+                        <img className="border-2 border-white rounded-full dark:border-gray-800" style={{marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px"}} src={intermediateToken} alt="" />
+                    </>
+                    :
+                    <>
+                        <img className="border-2 border-white rounded-full dark:border-gray-800" style={{marginBottom: "0.3rem", height: "26px", width: "64px"}} src={tokenFrom?.logoURI} alt="" />
+                        <img style={{height: "24px", width: "24px", marginLeft: "-0.5rem"}} className="border-2 border-white rounded-full dark:border-gray-800" src={wrappedToken?.logoURI} alt="" />
+                    </>}
+                    </div>
+
+                    <svg width="100%" height="35" viewBox="850 0 300 200" xmlns="http://www.w3.org/2000/svg" className='text-gray-400'>
+                        <line x1="0" x2="3000" y1="100" y2="100" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeDasharray="1, 45">
+                        </line>
+                    </svg>    
+                    </>
+                    : 
+                    <svg width="250" height="35" viewBox="850 0 300 200" xmlns="http://www.w3.org/2000/svg" className='text-gray-400'>
+                        <line x1="0" x2="3000" y1="100" y2="100" stroke="currentColor" strokeWidth="20" strokeLinecap="round" strokeDasharray="1, 45">
+                        </line>
+                    </svg>    
+                    }
+                    <img src={j === 0 ? intermediateToken : tokenTo?.logoURI} style={{height: "27px", width: "27px", marginTop: "0.2rem"}}/>
                 </div>
-                <div className='flex flex-col' style={wrappedToken ? {marginLeft: "-14.5rem"} : {marginLeft: "-2.5rem"}}>
-                    <p key={j+hop} className='text-gray-400'>{hop}</p>
+                <div key={j+4+hop} className='flex flex-col' style={wrappedToken ? {marginLeft: "-14.5rem"} : {marginLeft: "-2.5rem"}}>
+                    <p className='text-gray-400'>{hop}</p>
                 </div>
                 </>
             ))}
