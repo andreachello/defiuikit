@@ -16,7 +16,6 @@ interface IRoutesProps {
 }
 
 const Routes: React.FunctionComponent<IRoutesProps> = ({intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources}) => {
-    console.log(sources);
     
   return (
     <>

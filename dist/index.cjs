@@ -3373,8 +3373,8 @@ var React5 = __toESM(require("react"), 1);
 var RadioGroup = ({ children, onChange }) => {
   return /* @__PURE__ */ React5.createElement("form", { onChange: (e) => onChange(e) }, children);
 };
-var RadioButton = ({ value, children, checked }) => {
-  const isChecked = checked ? true : false;
+var RadioButton = ({ value, children, checked, slippage }) => {
+  const isChecked = value === slippage ? true : false;
   return /* @__PURE__ */ React5.createElement("div", { className: "flex items-center mb-4" }, /* @__PURE__ */ React5.createElement("input", { defaultChecked: isChecked, id: "default-radio-1", type: "radio", value, name: "default-radio", className: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }), /* @__PURE__ */ React5.createElement("label", { htmlFor: "default-radio-1", className: "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" }, children));
 };
 
@@ -6234,7 +6234,6 @@ var import_react7 = require("react");
 // src/components/Swap/components/Routes.tsx
 var React8 = __toESM(require("react"), 1);
 var Routes = ({ intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources }) => {
-  console.log(sources);
   return /* @__PURE__ */ React8.createElement(React8.Fragment, null, !intermediateToken ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("div", { className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("img", { src: tokenFrom == null ? void 0 : tokenFrom.logoURI }), wrappedToken ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenTo == null ? void 0 : tokenTo.logoURI, alt: "" })) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React8.createElement("svg", { width: "300", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("img", { src: tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, sources && sources.map((source, i) => source.name !== "MultiHop" && /* @__PURE__ */ React8.createElement("p", { key: source.name + i, className: "text-gray-400" }, source.name, source.proportion ? " - " + (source.proportion * 100).toFixed(1) + "%" : "")))) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, sources && sources.map((source, i) => /* @__PURE__ */ React8.createElement("div", { key: i }, source.name === "MultiHop" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, source.hops.map((hop, j) => /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("div", { key: hop + j, className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("img", { src: j === 0 ? tokenFrom == null ? void 0 : tokenFrom.logoURI : intermediateToken, style: j === 0 ? {} : { height: "27px", width: "27px", marginTop: "0.2rem" } }), wrappedToken && j === 0 ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: intermediateToken, alt: "" })) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React8.createElement("svg", { width: "250", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("img", { src: j === 0 ? intermediateToken : tokenTo == null ? void 0 : tokenTo.logoURI, style: { height: "27px", width: "27px", marginTop: "0.2rem" } })), /* @__PURE__ */ React8.createElement("div", { key: j + 4 + hop, className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("p", { className: "text-gray-400" }, hop))))) : null))));
 };
 var Routes_default = Routes;
@@ -7416,7 +7415,7 @@ var Swap = ({
       return;
     let amount = Number(amountFrom) * __pow(10, tokenFrom.decimals);
     let params;
-    if (tokenFrom.symbol !== "ETH") {
+    if (tokenFrom.address !== ETH_ADDRESS) {
       params = {
         sellToken: getTokenTicker(tokenFrom),
         buyToken: getTokenTicker(tokenTo),
@@ -7530,6 +7529,8 @@ var Swap = ({
     const tx = yield signer.sendTransaction(txObject);
   });
   const getTokenPrice = (token) => __async(void 0, null, function* () {
+    if (!token || !account.address)
+      return;
     let network;
     let tokenType;
     let supportedNetworks = ["ethereum", "optimism", "fantom", "arbitrum one", "polygon", "avalanche", "bnb smart chain"];
@@ -7547,12 +7548,15 @@ var Swap = ({
     } else {
       tokenType = "basic";
     }
+    if (!network || !token.address)
+      return;
     let query = `${BASE_PATH_PORTALS}/tokens?addresses=${network}%3A${token == null ? void 0 : token.address}&platforms=${tokenType}&networks=${network}&sortDirection=asc&limit=25&page=0`;
     try {
       const resp = yield import_axios2.default.get(query);
       return resp.data.tokens[0].price;
     } catch (error2) {
       console.log(error2);
+      setError(error2);
     }
   });
   const getBalance = (token, tokenType) => __async(void 0, null, function* () {
@@ -7590,7 +7594,7 @@ var Swap = ({
         }
         return result;
       } catch (error2) {
-        setError(error2);
+        setError(error2.reason);
       }
     }
   });
@@ -7600,7 +7604,9 @@ var Swap = ({
         yield getBalance(tokenFrom, "from");
       }
     });
-    updateTokenBalance();
+    if (account.address) {
+      updateTokenBalance();
+    }
   }, [tokenFromBalance, tokenFrom]);
   (0, import_react10.useEffect)(() => {
     const updateTokenBalance = () => __async(void 0, null, function* () {
@@ -7608,7 +7614,9 @@ var Swap = ({
         yield getBalance(tokenTo, "to");
       }
     });
-    updateTokenBalance();
+    if (account.address) {
+      updateTokenBalance();
+    }
   }, [tokenToBalance, tokenTo]);
   const canSwap = !!hasBalance && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance;
   const isFilledOut = tokenFrom && tokenTo && Number(amountFrom) && amountTo && !!account;
@@ -7626,7 +7634,7 @@ var Swap = ({
       onClick: () => handleSwitch("sell")
     },
     "Sell"
-  )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ import_react10.default.createElement(ChainDropdown_default, { resetAll, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(import_md.MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ import_react10.default.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance"), /* @__PURE__ */ import_react10.default.createElement(RadioGroup, { onChange: handleSlippageChange }, /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 0.5 }, "0.5%"), /* @__PURE__ */ import_react10.default.createElement(RadioButton, { checked: true, value: 2.5 }, "2.5%"), /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 5 }, "5.0%"))) : null), /* @__PURE__ */ import_react10.default.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect, getPrice, amountFrom, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, amountTo, getPrice, token: tokenTo, disabled: true, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(SwapError_default, { error }), /* @__PURE__ */ import_react10.default.createElement(ExtraInfo_default, { gas, sources, priceImpact, tokenFrom, tokenTo }), /* @__PURE__ */ import_react10.default.createElement(
+  )), /* @__PURE__ */ import_react10.default.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ import_react10.default.createElement(ChainDropdown_default, { resetAll, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(import_md.MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ import_react10.default.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ import_react10.default.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ import_react10.default.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance"), /* @__PURE__ */ import_react10.default.createElement(RadioGroup, { onChange: handleSlippageChange }, /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 0.5, slippage }, "0.5%"), /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 2.5, slippage }, "2.5%"), /* @__PURE__ */ import_react10.default.createElement(RadioButton, { value: 5, slippage }, "5.0%"))) : null), /* @__PURE__ */ import_react10.default.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect, getPrice, amountFrom, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, amountTo, getPrice, token: tokenTo, disabled: true, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ import_react10.default.createElement(SwapError_default, { error }), /* @__PURE__ */ import_react10.default.createElement(ExtraInfo_default, { gas, sources, priceImpact, tokenFrom, tokenTo }), /* @__PURE__ */ import_react10.default.createElement(
     SwapButton_default,
     {
       canSwap,

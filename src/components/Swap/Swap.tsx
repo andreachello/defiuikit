@@ -184,7 +184,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 console.log(swapPrice);
                 
                 setAmountTo(Number(swapPrice.buyAmount) / (10 ** tokenTo.decimals))
-                
+
                 // TODO: take care of bigdecimal
                 const g = BigInt(Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice));
                 
@@ -266,8 +266,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
 
         let params;
 
-        // TODO: not just for ETH
-        if (tokenFrom.symbol !== "ETH") {
+        // CHECK: not just for ETH
+        if (tokenFrom.address !== ETH_ADDRESS) {
             params = {
                 sellToken: getTokenTicker(tokenFrom),
                 buyToken: getTokenTicker(tokenTo),
@@ -325,7 +325,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 
                 const maxApproval = 2**(256-1)
 
-                // TODO needs to work with any chain - CHECK
+                // CHECK needs to work with any chain
                 if (tokenFrom.address !== ETH_ADDRESS) {
                     await ERC20TokenContract.approve(
                         response?.allowanceTarget,
@@ -409,6 +409,9 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
     }
   
     const getTokenPrice = async(token: any) => {
+
+        if (!token || !account.address) return
+
         let network;
         let tokenType;
         let supportedNetworks = [ "ethereum", "optimism", "fantom", "arbitrum one", "polygon", "avalanche", "bnb smart chain"]
@@ -428,6 +431,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
         } else {
             tokenType = "basic"
         }
+
+        if (!network || !token.address) return
         
         let query = `${BASE_PATH_PORTALS}/tokens?addresses=${network}%3A${token?.address}&platforms=${tokenType}&networks=${network}&sortDirection=asc&limit=25&page=0`
         
@@ -436,6 +441,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
             return resp.data.tokens[0].price
         } catch (error) {
             console.log(error);
+            setError(error)
         }
     }
 
@@ -450,6 +456,7 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
             if (token?.symbol === chain?.nativeCurrency.symbol) {
                 balance = await currentProvider.getBalance(account.address)   
                 balance = ethers.utils.formatEther(balance) 
+
             } else {
                 let signer;
                 while (!signer) {
@@ -458,10 +465,10 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                         await new Promise(resolve => setTimeout(resolve, 1000)); // wait for 1 second before trying again
                     }
                 }
+                
                 const ERC20TokenContract = new ethers.Contract(token.address, ERC20ABI, signer)
 
                 balance = await ERC20TokenContract.balanceOf(account.address)
-
             }
 
             const result = Number(Number(balance).toFixed(7))
@@ -482,8 +489,8 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 setTokenToPrice(priceTo)
             }
             return result
-            } catch (error) {
-                setError(error)
+            } catch (error: any) {
+                setError(error.reason)
             }
         } 
     }
@@ -496,7 +503,9 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
           } 
         }
       
-        updateTokenBalance()
+        if (account.address) {
+            updateTokenBalance()
+        }
       }, [tokenFromBalance, tokenFrom])
 
     useEffect(() => {
@@ -506,7 +515,9 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
           } 
         }
       
-        updateTokenBalance()
+        if (account.address) {
+            updateTokenBalance()
+        }
       }, [tokenToBalance, tokenTo])
       
     const canSwap = !!(hasBalance) && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance
@@ -544,9 +555,9 @@ export const Swap: React.FunctionComponent<ISwapProps> = ({
                 <p className='text-white'>Settings</p>
                <div className='mt-3 text-gray-400 mb-2'>Slippage Tolerance</div>
               <RadioGroup onChange={handleSlippageChange}>
-                <RadioButton value={0.5}>0.5%</RadioButton>
-                <RadioButton checked={true} value={2.5}>2.5%</RadioButton>
-                <RadioButton value={5}>5.0%</RadioButton>
+                <RadioButton value={0.5} slippage={slippage}>0.5%</RadioButton>
+                <RadioButton value={2.5} slippage={slippage}>2.5%</RadioButton>
+                <RadioButton value={5} slippage={slippage}>5.0%</RadioButton>
               </RadioGroup>
             </div> : null}
             </div>
