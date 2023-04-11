@@ -60,13 +60,11 @@ const wagmiClient = createClient({
 })
 
 const account = getAccount()
-const signerPromise = fetchSigner()
 const currentProvider = getProvider()
 
 const DeFiUIConfig = {
   account,
   fetchSigner,
-  signerPromise,
   chains,
   currentProvider,
   useSwitchNetwork

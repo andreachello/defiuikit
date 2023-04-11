@@ -4,7 +4,7 @@
     "type": "git",
     "url": ""
   },
-  "version": "0.0.1",
+  "version": "0.0.13",
   "description": "A React component library to streamline DeFi platform building",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
