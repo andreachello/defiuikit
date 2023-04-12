@@ -1,2 +1,2 @@
 export * from "./Swap"
-export * from "./context/DeFiUIKitContext"
+export * from "../shared/context/DeFiUIKitContext"

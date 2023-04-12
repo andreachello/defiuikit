@@ -1,7 +1,7 @@
-import { WETH_ADDRESS, WBNB_ADDRESS } from './../../data/constants';
+import { WETH_ADDRESS, WBNB_ADDRESS } from '../../../shared/data/constants';
 import axios from 'axios';
 import { ethers } from "ethers"
-import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts, nativeTokensList } from "../../data/constants"
+import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts, nativeTokensList } from "../../../shared/data/constants"
 import ROUTER from "../../contracts/Uniswap/UniswapV2/UniswapV2Router02.json";
 import ERC20 from "../../contracts/ERC20/ERC20.json";
 import FACTORY from "../../contracts/Uniswap/UniswapV2/IUniswapV2Factory.json";
@@ -9,7 +9,7 @@ import PAIR from "../../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
 import PANCAKEROUTER from "../../contracts/Pancakeswap/PancakeRouter01.json";
 import PANCAKEFACTORY from "../../contracts/Pancakeswap/Interfaces/IPancakeFactory.json";
 import PANCAKEPAIR from "../../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
-import { TokenMetadataResponse } from "../../Swap";
+import { TokenMetadataResponse } from "../../../Swap";
 
 export const getWrappedToken = async(token: TokenMetadataResponse) => {
   

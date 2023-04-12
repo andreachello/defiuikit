@@ -1,8 +1,8 @@
 // import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Searchbar from './ui/search/Searchbar';
+import Searchbar from '../../shared/ui/search/Searchbar';
 import { TokenMetadataResponse } from '..';
-import { baseCurrencies } from '../data/tokens';
+import { baseCurrencies } from '../../shared/data/tokens';
 import React from 'react';
 
 interface ITokenListProps {

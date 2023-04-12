@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TokenMetadataResponse } from '../Swap';
+import { TokenMetadataResponse } from '../../shared/types/types';
 
 interface IRoutesProps {
     intermediateToken: string | undefined,

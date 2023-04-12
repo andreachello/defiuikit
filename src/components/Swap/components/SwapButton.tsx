@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Spinner from './ui/loaders/Spinner';
+import Spinner from '../../shared/ui/loaders/Spinner';
 import cx from "classnames"
 
 interface ISwapButtonProps {

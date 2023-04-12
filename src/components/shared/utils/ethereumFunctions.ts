@@ -2,8 +2,8 @@ import { formatAmountOut, formatAmountOutMin, formatNativeAddress, formatTokenAm
 import ERC20 from "../contracts/ERC20/ERC20.json";
 import PAIR from "../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
 import { ethers } from "ethers";
-import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts} from '../data/constants';
-import { TokenMetadataResponse } from '../Swap';
+import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts} from '../../shared/data/constants';
+import { TokenMetadataResponse } from '../../Swap';
 
 export function doesTokenExist(address: string, signer: ethers.Signer) {
     try {

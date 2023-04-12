@@ -1,7 +1,7 @@
 // import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import {providerList} from "../data/providers"
-import { useDeFiUIKitContext } from "../context/DeFiUIKitContext";
+import {providerList} from "../../shared/data/providers"
+import { useDeFiUIKitContext } from "../../shared/context/DeFiUIKitContext";
 
 interface IDropdownProps {
   resetAll: () => void,

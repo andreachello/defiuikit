@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import cx from "classnames"
 import {BsChevronDown} from "react-icons/bs"
 
-import Modal from './ui/modal/Modal';
+import Modal from '../../shared/ui/modal/Modal';
 import TokenList from './TokenList';
-import { TokenMetadataResponse } from '../Swap';
+import { TokenMetadataResponse } from '../../shared/types/types';
 
 type ChainType = {
     id: number;
@@ -17,7 +17,7 @@ type ChainType = {
 interface ITokenSelectionProps {
     onTokenSelect: (token: TokenMetadataResponse, balance: number) => void,
     onAmountSelect?: (value: number) => void,
-    getPrice: () => void,
+    onBlur: () => void,
     amountTo?: number,
     amountFrom?: number,
     token: TokenMetadataResponse | null,
@@ -30,7 +30,7 @@ interface ITokenSelectionProps {
     chain: ChainType
 }
 
-const TokenSelection: React.FunctionComponent<ITokenSelectionProps> = ({onTokenSelect, onAmountSelect, getPrice, amountTo, amountFrom, token, disabled, tokenBalance, tokenList, primaryTokens, tokenPrice, apiType, chain}) => {
+const TokenSelection: React.FunctionComponent<ITokenSelectionProps> = ({onTokenSelect, onAmountSelect, onBlur, amountTo, amountFrom, token, disabled, tokenBalance, tokenList, primaryTokens, tokenPrice, apiType, chain}) => {
     const [shouldShowModal, setShouldShowModal] = useState(false)
     const [value, setValue] = useState<number | string>("")
 
@@ -95,7 +95,7 @@ const TokenSelection: React.FunctionComponent<ITokenSelectionProps> = ({onTokenS
             value={amountTo ? amountTo : value}
             placeholder={"0"}
             onChange={handleAmountSelect}
-            onBlur={getPrice}
+            onBlur={onBlur}
             disabled={disabled ? disabled : false}
             />
         <p className='text-right text-gray-500 cursor-pointer' onClick={getMaxAmount}>Max</p>

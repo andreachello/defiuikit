@@ -1,10 +1,10 @@
 import * as React from 'react';
 import cx from 'classnames'
-import { getTokenMetadata, getWrappedToken } from '../utils/helpers/helpers';
-import {Accordion} from './ui/accordion';
-import { TokenMetadataResponse } from '../Swap';
+import { getTokenMetadata, getWrappedToken } from '../../shared/utils/helpers/helpers';
+import {Accordion} from '../../shared/ui/accordion';
 import { useEffect } from 'react';
 import Routes from './Routes';
+import { TokenMetadataResponse } from '../../shared/types/types';
 
 interface IExtraInfoProps {
     tokenFrom: TokenMetadataResponse | null,

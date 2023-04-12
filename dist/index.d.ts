@@ -1,5 +1,15 @@
 import React, { ReactNode } from 'react';
 
+interface TokenMetadataResponse {
+    chainId: number;
+    address: string;
+    name: string;
+    symbol: string;
+    decimals: number;
+    logoURI: string;
+    image?: string;
+}
+
 declare const Swap: React.FunctionComponent<ISwapProps>;
 interface ISwapProps {
     tokenA?: TokenMetadataResponse;
@@ -9,15 +19,6 @@ interface ISwapProps {
     primaryTokens?: TokenMetadataResponse[];
     switchIcon?: "none" | React.ReactNode;
     variant?: "bidirectional" | "unidirectional";
-}
-interface TokenMetadataResponse {
-    chainId: number;
-    address: string;
-    name: string;
-    symbol: string;
-    decimals: number;
-    logoURI: string;
-    image?: string;
 }
 
 interface IDeFiUI {
