@@ -7418,9 +7418,9 @@ var sendTx = (accountAddress, txData, fetchSigner) => __async(void 0, null, func
     from: accountAddress,
     to,
     data,
-    value
+    value: BigInt(value)
   };
-  const tx = yield signer.sendTransaction(txObject);
+  yield signer.sendTransaction(txObject);
 });
 var trySwap = (canSwap, apiType, setIsLoading, tokenFrom, tokenTo, accountAddress, amountFrom, chain, setAmountTo, setError, setGas, setSources, fetchSigner, setTxDetails, slippage) => __async(void 0, null, function* () {
   if (!canSwap || !tokenFrom || !tokenTo)
@@ -7449,6 +7449,7 @@ var trySwap = (canSwap, apiType, setIsLoading, tokenFrom, tokenTo, accountAddres
         );
       }
       if (signer && (response == null ? void 0 : response.to) && response.data && response.value) {
+        console.log({ to: response.to, data: response.data, value: Number(response.value) });
         setTxDetails({ to: response.to, data: response.data, value: Number(response.value) });
         sendTx(accountAddress, { to: response.to, data: response.data, value: Number(response.value) }, fetchSigner).catch((err) => setError(err));
         setIsLoading(false);

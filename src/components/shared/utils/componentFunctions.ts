@@ -299,10 +299,11 @@ const sendTx = async(
         from: accountAddress,
         to,
         data,
-        value
+        value: BigInt(value)
     }
     
-    const tx = await signer.sendTransaction(txObject)
+    await signer.sendTransaction(txObject)
+    
 }
 
 export const trySwap = async(
@@ -357,9 +358,12 @@ export const trySwap = async(
                     maxApproval
                 )
             }
+        
     
             // send transaction
             if (signer && response?.to && response.data && response.value) {
+                console.log({to:response.to, data:response.data, value: Number(response.value)});
+                
                 setTxDetails({to:response.to, data:response.data, value: Number(response.value)})
                 sendTx(accountAddress, {to: response.to, data: response.data, value: Number(response.value)}, fetchSigner).catch(err => setError(err))
                 setIsLoading(false)
