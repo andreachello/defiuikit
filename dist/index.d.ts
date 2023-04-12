@@ -10,6 +10,16 @@ interface TokenMetadataResponse {
     image?: string;
 }
 
+declare const LiquidityPool: React.FunctionComponent<ISwapProps$1>;
+interface ISwapProps$1 {
+    tokenA?: TokenMetadataResponse;
+    tokenB?: TokenMetadataResponse;
+    apiType?: 'uniswapv2' | 'pancakeswap';
+    tokenList: TokenMetadataResponse[] | undefined;
+    primaryTokens: TokenMetadataResponse[];
+    switchIcon?: "none" | React.ReactNode;
+}
+
 declare const Swap: React.FunctionComponent<ISwapProps>;
 interface ISwapProps {
     tokenA?: TokenMetadataResponse;
@@ -34,4 +44,4 @@ declare const DeFiUIKitProvider: ({ children, config }: {
     config: IDeFiUI;
 }) => JSX.Element;
 
-export { DeFiUIKitProvider, Swap };
+export { DeFiUIKitProvider, LiquidityPool, Swap };

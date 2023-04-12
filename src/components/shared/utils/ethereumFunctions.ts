@@ -3,7 +3,7 @@ import ERC20 from "../contracts/ERC20/ERC20.json";
 import PAIR from "../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
 import { ethers } from "ethers";
 import { ETH_ADDRESS, uniswapContracts, pancakeswapContracts} from '../../shared/data/constants';
-import { TokenMetadataResponse } from '../../Swap';
+import { TokenMetadataResponse } from '../types/types';
 
 export function doesTokenExist(address: string, signer: ethers.Signer) {
     try {
@@ -14,13 +14,15 @@ export function doesTokenExist(address: string, signer: ethers.Signer) {
   }
 
   export async function getDecimals(token: any) {
+    
     const decimals = await token.decimals().then((result: number) => {
-        return result;
-      }).catch((error: unknown) => {
+      return result;
+    }).catch((error: unknown) => {
         console.log('No tokenDecimals function for this token, set to 0');
         return 0;
       });
-      return decimals;
+    
+    return decimals;
   }
 
  
@@ -88,7 +90,6 @@ export function doesTokenExist(address: string, signer: ethers.Signer) {
     }
 
   }
-
   
 export async function getAmountOut(
     address1: TokenMetadataResponse,
@@ -135,7 +136,7 @@ export async function getAmountOut(
         Number(ethers.utils.formatUnits(results[1], address2.decimals)),
       ];
     } catch (err) {
-      console.log("no reserves yet");
+      // no reserves yet
       return [0, 0];
     }
   }
@@ -143,7 +144,6 @@ export async function getAmountOut(
   export async function getReserves(
     address1: TokenMetadataResponse,
     address2: TokenMetadataResponse,
-    accountAddress: string,
     signer: ethers.Signer,
     apiType: string
   ) {
@@ -160,16 +160,16 @@ export async function getAmountOut(
     const pair = new ethers.Contract(pairAddress, PAIR.abi, signer)    
 
     const reservesRaw = await fetchReserves(address1, address2, pair);
-    const liquidityTokens_BN = await pair.balanceOf(accountAddress);
+    // const liquidityTokens_BN = await pair.balanceOf(accountAddress);
 
-    const liquidityTokens = Number(
-      ethers.utils.formatEther(liquidityTokens_BN)
-    ).toFixed(2);    
+    // const liquidityTokens = Number(
+    //   ethers.utils.formatEther(liquidityTokens_BN)
+    // ).toFixed(2);    
   
     return [
       reservesRaw[0].toFixed(2),
       reservesRaw[1].toFixed(2),
-      liquidityTokens,
+      // liquidityTokens,
     ];
   }
 

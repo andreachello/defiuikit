@@ -9,7 +9,7 @@ import PAIR from "../../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
 import PANCAKEROUTER from "../../contracts/Pancakeswap/PancakeRouter01.json";
 import PANCAKEFACTORY from "../../contracts/Pancakeswap/Interfaces/IPancakeFactory.json";
 import PANCAKEPAIR from "../../contracts/Uniswap/UniswapV2/IUniswapV2Pair.json";
-import { TokenMetadataResponse } from "../../../Swap";
+import { TokenMetadataResponse } from '../../types/types';
 
 export const getWrappedToken = async(token: TokenMetadataResponse) => {
   

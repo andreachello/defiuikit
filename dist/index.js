@@ -2856,9 +2856,8 @@ var require_axios2 = __commonJS({
   }
 });
 
-// src/components/Swap/Swap.tsx
-import React15, { useCallback, useEffect as useEffect5, useState as useState7 } from "react";
-import { RiArrowUpDownLine } from "react-icons/ri";
+// src/components/LiquidityPool/LiquidityPool.tsx
+import React10, { useCallback, useEffect as useEffect3, useState as useState4 } from "react";
 import { MdSettings } from "react-icons/md";
 
 // src/components/Swap/components/TokenSelection.tsx
@@ -3134,26 +3133,61 @@ var TokenSelection = ({ onTokenSelect, onAmountSelect, onBlur, amountTo, amountF
 };
 var TokenSelection_default = TokenSelection;
 
-// src/components/shared/ui/button/Radio.tsx
-import * as React5 from "react";
-var RadioGroup = ({ children, onChange }) => {
-  return /* @__PURE__ */ React5.createElement("form", { onChange: (e) => onChange(e) }, children);
-};
-var RadioButton = ({ value, children, checked, slippage }) => {
-  const isChecked = value === slippage ? true : false;
-  return /* @__PURE__ */ React5.createElement("div", { className: "flex items-center mb-4" }, /* @__PURE__ */ React5.createElement("input", { defaultChecked: isChecked, id: "default-radio-1", type: "radio", value, name: "default-radio", className: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }), /* @__PURE__ */ React5.createElement("label", { htmlFor: "default-radio-1", className: "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" }, children));
-};
-
 // src/components/Swap/components/SwapError.tsx
-import * as React6 from "react";
+import * as React5 from "react";
 var SwapError = ({ error }) => {
-  return /* @__PURE__ */ React6.createElement(React6.Fragment, null, error ? /* @__PURE__ */ React6.createElement("div", { className: "bg-red-900 text-center py-4 lg:px-4" }, /* @__PURE__ */ React6.createElement("div", { className: "p-2 bg-red-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex", role: "alert" }, /* @__PURE__ */ React6.createElement("span", { className: "flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3" }, "Error"), /* @__PURE__ */ React6.createElement("span", { className: "font-semibold mr-2 text-left flex-auto text-xs" }, error.reason ? error.reason : JSON.stringify(error)))) : null);
+  return /* @__PURE__ */ React5.createElement(React5.Fragment, null, error ? /* @__PURE__ */ React5.createElement("div", { className: "bg-red-900 text-center py-4 lg:px-4" }, /* @__PURE__ */ React5.createElement("div", { className: "p-2 bg-red-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex", role: "alert" }, /* @__PURE__ */ React5.createElement("span", { className: "flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3" }, "Error"), /* @__PURE__ */ React5.createElement("span", { className: "font-semibold mr-2 text-left flex-auto text-xs" }, error.reason ? error.reason : JSON.stringify(error)))) : null);
 };
 var SwapError_default = SwapError;
 
-// src/components/Swap/components/ExtraInfo.tsx
-import * as React9 from "react";
+// src/components/Swap/components/SwapButton.tsx
+import * as React7 from "react";
+
+// src/components/shared/ui/loaders/Spinner.tsx
+import * as React6 from "react";
+var Spinner = () => {
+  return /* @__PURE__ */ React6.createElement(
+    "div",
+    {
+      className: "inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]",
+      role: "status"
+    },
+    /* @__PURE__ */ React6.createElement(
+      "span",
+      {
+        className: "!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+      },
+      "Loading..."
+    )
+  );
+};
+var Spinner_default = Spinner;
+
+// src/components/Swap/components/SwapButton.tsx
 import cx2 from "classnames";
+var SwapButton = ({
+  canSwap,
+  swapFunction,
+  isLoading,
+  isFilledOut,
+  tokenFromBalance,
+  amountFrom,
+  tokenSymbol
+}) => {
+  return /* @__PURE__ */ React7.createElement(
+    "button",
+    {
+      disabled: !canSwap,
+      className: cx2(
+        "text-white text-center rounded-md py-2 w-full",
+        canSwap ? "cursor-pointer bg-indigo-500" : "cursor-not-allowed bg-gray-600"
+      ),
+      onClick: swapFunction
+    },
+    isLoading ? /* @__PURE__ */ React7.createElement(Spinner_default, null) : isFilledOut && (!tokenFromBalance || amountFrom > tokenFromBalance) ? `Insufficient Balance of ${tokenSymbol}` : "Swap"
+  );
+};
+var SwapButton_default = SwapButton;
 
 // src/components/shared/data/constants.ts
 var uniswapContracts = {
@@ -5971,485 +6005,6 @@ var formatAmountOut = (valuesOut, address2) => {
   return amountOut;
 };
 
-// src/components/shared/ui/accordion/index.tsx
-import React7, { useRef, useState as useState4 } from "react";
-import { BsChevronDown as BsChevronDown2, BsChevronUp } from "react-icons/bs";
-var Accordion = ({ title, content }) => {
-  const [active, setActive] = useState4(false);
-  const contentSpace = useRef(null);
-  function toggleAccordion() {
-    setActive((prevState) => !prevState);
-  }
-  return /* @__PURE__ */ React7.createElement("div", { className: "flex flex-col justify-end" }, /* @__PURE__ */ React7.createElement(
-    "button",
-    {
-      className: "pb-2 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-end",
-      onClick: toggleAccordion
-    },
-    /* @__PURE__ */ React7.createElement("p", { className: "inline-block text-footnote text-gray-400 light" }, title),
-    active ? /* @__PURE__ */ React7.createElement(BsChevronUp, { className: "text-white ml-2" }) : /* @__PURE__ */ React7.createElement(BsChevronDown2, { className: "text-white ml-2" })
-  ), active && /* @__PURE__ */ React7.createElement("div", { className: "pb-10" }, content));
-};
-
-// src/components/Swap/components/ExtraInfo.tsx
-import { useEffect as useEffect3 } from "react";
-
-// src/components/Swap/components/Routes.tsx
-import * as React8 from "react";
-var Routes = ({ intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources }) => {
-  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, !intermediateToken ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("div", { className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("img", { src: tokenFrom == null ? void 0 : tokenFrom.logoURI }), wrappedToken ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenTo == null ? void 0 : tokenTo.logoURI, alt: "" })) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React8.createElement("svg", { width: "300", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("img", { src: tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, sources && sources.map((source, i) => source.name !== "MultiHop" && /* @__PURE__ */ React8.createElement("p", { key: source.name + i, className: "text-gray-400" }, source.name, source.proportion ? " - " + (source.proportion * 100).toFixed(1) + "%" : "")))) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, sources && sources.map((source, i) => /* @__PURE__ */ React8.createElement("div", { key: i }, source.name === "MultiHop" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, source.hops.map((hop, j) => /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("div", { key: hop + j, className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("img", { src: j === 0 ? tokenFrom == null ? void 0 : tokenFrom.logoURI : intermediateToken, style: j === 0 ? {} : { height: "27px", width: "27px", marginTop: "0.2rem" } }), wrappedToken && j === 0 ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: intermediateToken, alt: "" })) : /* @__PURE__ */ React8.createElement(React8.Fragment, null, /* @__PURE__ */ React8.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React8.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React8.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React8.createElement("svg", { width: "250", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React8.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React8.createElement("img", { src: j === 0 ? intermediateToken : tokenTo == null ? void 0 : tokenTo.logoURI, style: { height: "27px", width: "27px", marginTop: "0.2rem" } })), /* @__PURE__ */ React8.createElement("div", { key: j + 4 + hop, className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React8.createElement("p", { className: "text-gray-400" }, hop))))) : null))));
-};
-var Routes_default = Routes;
-
-// src/components/Swap/components/ExtraInfo.tsx
-var ExtraInfo = ({ gas, sources, priceImpact, tokenFrom, tokenTo }) => {
-  const [intermediateToken, setIntermediateToken] = React9.useState();
-  const [wrappedToken, setWrappedToken] = React9.useState();
-  const [wrappedDirection, setWrappedDirection] = React9.useState("");
-  const extraInfoDirection = "vertical";
-  useEffect3(() => {
-    if (tokenFrom) {
-      getWrappedToken(tokenFrom).then((token) => {
-        if (token) {
-          setWrappedToken(token);
-          setWrappedDirection("from");
-        }
-      });
-    }
-    if (tokenTo) {
-      getWrappedToken(tokenTo).then((token) => {
-        setWrappedToken(token);
-        setWrappedDirection("to");
-      });
-    }
-  }, [tokenFrom]);
-  if (sources[0]) {
-    getTokenMetadata(sources[0].intermediateToken).then(
-      (data) => {
-        if (data) {
-          setIntermediateToken(data.logoURI);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ React9.createElement(React9.Fragment, null, /* @__PURE__ */ React9.createElement(React9.Fragment, null, gas && sources && /* @__PURE__ */ React9.createElement("div", { className: cx2("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React9.createElement("div", { className: cx2("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React9.createElement("p", { className: "text-white " }, "Estimated Gas:"), /* @__PURE__ */ React9.createElement("p", { className: " text-gray-400" }, "$", gas && Number(gas).toFixed(2))), /* @__PURE__ */ React9.createElement("div", { className: cx2("text-xs", extraInfoDirection === "vertical" ? "flex justify-between" : "") }, /* @__PURE__ */ React9.createElement("p", { className: "text-white" }, "Source:"), /* @__PURE__ */ React9.createElement(
-    Accordion,
-    {
-      title: sources.length > 1 ? "MultiSource" : sources[0].name,
-      content: /* @__PURE__ */ React9.createElement(
-        Routes_default,
-        {
-          intermediateToken,
-          wrappedToken,
-          tokenFrom,
-          tokenTo,
-          wrappedDirection,
-          sources
-        }
-      )
-    }
-  ))), priceImpact && /* @__PURE__ */ React9.createElement("div", { className: cx2("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React9.createElement("div", { className: cx2("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React9.createElement("p", { className: "text-white" }, "Price Impact"), /* @__PURE__ */ React9.createElement("p", { className: cx2(Number(priceImpact) < 5 ? "text-green-400" : "text-red-400") }, "~ ", Number(priceImpact).toFixed(2), "%")))));
-};
-var ExtraInfo_default = ExtraInfo;
-
-// src/components/Swap/components/SwapButton.tsx
-import * as React11 from "react";
-
-// src/components/shared/ui/loaders/Spinner.tsx
-import * as React10 from "react";
-var Spinner = () => {
-  return /* @__PURE__ */ React10.createElement(
-    "div",
-    {
-      className: "inline-block h-5 w-5 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-primary motion-reduce:animate-[spin_1.5s_linear_infinite]",
-      role: "status"
-    },
-    /* @__PURE__ */ React10.createElement(
-      "span",
-      {
-        className: "!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-      },
-      "Loading..."
-    )
-  );
-};
-var Spinner_default = Spinner;
-
-// src/components/Swap/components/SwapButton.tsx
-import cx3 from "classnames";
-var SwapButton = ({
-  canSwap,
-  swapFunction,
-  isLoading,
-  isFilledOut,
-  tokenFromBalance,
-  amountFrom,
-  tokenSymbol
-}) => {
-  return /* @__PURE__ */ React11.createElement(
-    "button",
-    {
-      disabled: !canSwap,
-      className: cx3(
-        "text-white text-center rounded-md py-2 w-full",
-        canSwap ? "cursor-pointer bg-indigo-500" : "cursor-not-allowed bg-gray-600"
-      ),
-      onClick: swapFunction
-    },
-    isLoading ? /* @__PURE__ */ React11.createElement(Spinner_default, null) : isFilledOut && (!tokenFromBalance || amountFrom > tokenFromBalance) ? `Insufficient Balance of ${tokenSymbol}` : "Swap"
-  );
-};
-var SwapButton_default = SwapButton;
-
-// src/components/Swap/components/SwitchButton.tsx
-import * as React12 from "react";
-var SwitchButton = ({ children, onSwitch }) => {
-  return /* @__PURE__ */ React12.createElement("div", { className: "absolute top-[9.7rem] left-[9.5rem]", onClick: onSwitch }, children);
-};
-var SwitchButton_default = SwitchButton;
-
-// src/components/Swap/components/ChainDropdown.tsx
-import React14, { useEffect as useEffect4, useState as useState6 } from "react";
-
-// src/components/shared/data/providers.ts
-var providerList = [
-  {
-    name: "Ethereum",
-    icon: "https://chain-icons.s3.amazonaws.com/ethereum.png",
-    id: 1
-  },
-  {
-    name: "Arbitrum One",
-    icon: "https://chain-icons.s3.amazonaws.com/arbitrum.png",
-    id: 42161
-  },
-  // {
-  //     name: "Avalanche",
-  //     icon: "https://chain-icons.s3.amazonaws.com/avalanche.png",
-  //     id: 43114
-  // },
-  {
-    name: "BNB Smart Chain",
-    icon: "https://chain-icons.s3.amazonaws.com/bsc.png",
-    id: 56
-  },
-  {
-    name: "Optimism",
-    icon: "https://chain-icons.s3.amazonaws.com/optimism.png",
-    id: 10
-  },
-  {
-    name: "Polygon",
-    icon: "https://chain-icons.s3.amazonaws.com/polygon.png",
-    id: 137
-  }
-];
-
-// src/components/shared/context/DeFiUIKitContext.tsx
-import React13, { createContext, useContext } from "react";
-var DeFiUIKitContext = createContext({
-  account: null,
-  fetchSigner: null,
-  signerPromise: null,
-  chains: null,
-  currentProvider: null,
-  useSwitchNetwork: null
-});
-var DeFiUIKitProvider = ({ children, config }) => {
-  return /* @__PURE__ */ React13.createElement(DeFiUIKitContext.Provider, { value: config }, children);
-};
-var useDeFiUIKitContext = () => {
-  const context = useContext(DeFiUIKitContext);
-  if (context === void 0)
-    throw new Error("useDeFiUIKitContext must be within a DeFiUIKitProvider");
-  return context;
-};
-
-// src/components/Swap/components/ChainDropdown.tsx
-var ChainDropdown = ({ resetAll, apiType, chain }) => {
-  const [provider, setProvider] = useState6();
-  const [isOpen, setIsOpen] = useState6(false);
-  const { useSwitchNetwork } = useDeFiUIKitContext();
-  const { switchNetwork } = useSwitchNetwork();
-  useEffect4(() => {
-    const currentChain = providerList.find(
-      (provider2) => provider2.name === (chain == null ? void 0 : chain.name)
-    );
-    const rightNetwork = apiType === "uniswapv2" && (chain == null ? void 0 : chain.name.toLowerCase()) != "ethereum" || apiType === "pancakeswap" && (chain == null ? void 0 : chain.name) != "BNB Smart Chain" ? { name: "Wrong Network", icon: "" } : currentChain;
-    setProvider(rightNetwork);
-    resetAll();
-  }, [chain]);
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
-  const filteredProviderList = providerList.filter(
-    (provider2) => {
-      if (apiType === "uniswapv2") {
-        return provider2.name.toLowerCase() === "ethereum";
-      } else if (apiType === "pancakeswap") {
-        return provider2.name === "BNB Smart Chain";
-      } else {
-        return provider2;
-      }
-    }
-  );
-  const handleProvider = (e) => {
-    const newProviderName = e.currentTarget.getAttribute("value");
-    if (newProviderName) {
-      const newProvider = providerList.find(
-        (provider2) => provider2.name === newProviderName
-      );
-      if (newProvider) {
-        switchNetwork == null ? void 0 : switchNetwork(newProvider.id);
-      }
-    }
-    setIsOpen(false);
-  };
-  return /* @__PURE__ */ React14.createElement(React14.Fragment, null, /* @__PURE__ */ React14.createElement(
-    "button",
-    {
-      onClick: handleOpen,
-      className: "text-white font-medium rounded-lg text-sm py-2.5 text-center inline-flex items-center space-x-2",
-      type: "button"
-    },
-    (provider == null ? void 0 : provider.icon) && /* @__PURE__ */ React14.createElement("img", { src: provider == null ? void 0 : provider.icon, width: 20, height: 30, alt: "provider icon" }),
-    /* @__PURE__ */ React14.createElement("p", null, provider == null ? void 0 : provider.name),
-    /* @__PURE__ */ React14.createElement("svg", { className: "w-4 h-4 ml-2", "aria-hidden": "true", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ React14.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 9l-7 7-7-7" }))
-  ), isOpen && /* @__PURE__ */ React14.createElement("div", { id: "dropdown", className: "z-10 mt-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#1f1f21] absolute" }, /* @__PURE__ */ React14.createElement("ul", { className: "mt-1 py-1 text-sm text-gray-700 dark:text-gray-200 space-y-2", "aria-labelledby": "dropdownDefaultButton" }, filteredProviderList.map((provider2) => /* @__PURE__ */ React14.createElement("li", { key: provider2.name, onClick: handleProvider, value: provider2.name, className: "p-2 flex space-x-2 hover:bg-[#28282a] cursor-pointer" }, (provider2 == null ? void 0 : provider2.icon) && /* @__PURE__ */ React14.createElement("img", { src: provider2 == null ? void 0 : provider2.icon, width: 20, height: 30, alt: "provider icon" }), /* @__PURE__ */ React14.createElement("p", null, provider2 == null ? void 0 : provider2.name))))));
-};
-var ChainDropdown_default = ChainDropdown;
-
-// src/components/Swap/Swap.tsx
-import cx4 from "classnames";
-
-// src/components/shared/utils/componentFunctions.ts
-var import_axios2 = __toESM(require_axios2(), 1);
-import { ethers as ethers3 } from "ethers";
-
-// src/components/shared/contracts/ERC20/ERC20.abi.json
-var ERC20_abi_default = [
-  {
-    constant: true,
-    inputs: [],
-    name: "name",
-    outputs: [
-      {
-        name: "",
-        type: "string"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "_spender",
-        type: "address"
-      },
-      {
-        name: "_value",
-        type: "uint256"
-      }
-    ],
-    name: "approve",
-    outputs: [
-      {
-        name: "",
-        type: "bool"
-      }
-    ],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "totalSupply",
-    outputs: [
-      {
-        name: "",
-        type: "uint256"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "_from",
-        type: "address"
-      },
-      {
-        name: "_to",
-        type: "address"
-      },
-      {
-        name: "_value",
-        type: "uint256"
-      }
-    ],
-    name: "transferFrom",
-    outputs: [
-      {
-        name: "",
-        type: "bool"
-      }
-    ],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "decimals",
-    outputs: [
-      {
-        name: "",
-        type: "uint8"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        name: "_owner",
-        type: "address"
-      }
-    ],
-    name: "balanceOf",
-    outputs: [
-      {
-        name: "balance",
-        type: "uint256"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [],
-    name: "symbol",
-    outputs: [
-      {
-        name: "",
-        type: "string"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: "_to",
-        type: "address"
-      },
-      {
-        name: "_value",
-        type: "uint256"
-      }
-    ],
-    name: "transfer",
-    outputs: [
-      {
-        name: "",
-        type: "bool"
-      }
-    ],
-    payable: false,
-    stateMutability: "nonpayable",
-    type: "function"
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        name: "_owner",
-        type: "address"
-      },
-      {
-        name: "_spender",
-        type: "address"
-      }
-    ],
-    name: "allowance",
-    outputs: [
-      {
-        name: "",
-        type: "uint256"
-      }
-    ],
-    payable: false,
-    stateMutability: "view",
-    type: "function"
-  },
-  {
-    payable: true,
-    stateMutability: "payable",
-    type: "fallback"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: "owner",
-        type: "address"
-      },
-      {
-        indexed: true,
-        name: "spender",
-        type: "address"
-      },
-      {
-        indexed: false,
-        name: "value",
-        type: "uint256"
-      }
-    ],
-    name: "Approval",
-    type: "event"
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        name: "from",
-        type: "address"
-      },
-      {
-        indexed: true,
-        name: "to",
-        type: "address"
-      },
-      {
-        indexed: false,
-        name: "value",
-        type: "uint256"
-      }
-    ],
-    name: "Transfer",
-    type: "event"
-  }
-];
-
 // src/components/shared/contracts/Uniswap/UniswapV2/IUniswapV2Pair.json
 var IUniswapV2Pair_default = {
   abi: [
@@ -7123,8 +6678,22 @@ var IUniswapV2Pair_default = {
   bytecode: ""
 };
 
+// src/components/shared/utils/liquidityFunctions.ts
+import { ethers as ethers3 } from "ethers";
+
 // src/components/shared/utils/ethereumFunctions.ts
 import { ethers as ethers2 } from "ethers";
+function getDecimals(token) {
+  return __async(this, null, function* () {
+    const decimals = yield token.decimals().then((result) => {
+      return result;
+    }).catch((error) => {
+      console.log("No tokenDecimals function for this token, set to 0");
+      return 0;
+    });
+    return decimals;
+  });
+}
 function swapTokens(address1, address2, amount, accountAddress, apiType, slippage, signer) {
   return __async(this, null, function* () {
     const router = getRouter(apiType, signer);
@@ -7198,12 +6767,11 @@ function fetchReserves(address1, address2, pair) {
         Number(ethers2.utils.formatUnits(results[1], address2.decimals))
       ];
     } catch (err) {
-      console.log("no reserves yet");
       return [0, 0];
     }
   });
 }
-function getReserves(address1, address2, accountAddress, signer, apiType) {
+function getReserves(address1, address2, signer, apiType) {
   return __async(this, null, function* () {
     const factory = getFactory(apiType, signer);
     if (address1.address === ETH_ADDRESS) {
@@ -7214,17 +6782,702 @@ function getReserves(address1, address2, accountAddress, signer, apiType) {
     const pairAddress = yield factory.getPair(address1.address, address2.address);
     const pair = new ethers2.Contract(pairAddress, IUniswapV2Pair_default.abi, signer);
     const reservesRaw = yield fetchReserves(address1, address2, pair);
-    const liquidityTokens_BN = yield pair.balanceOf(accountAddress);
-    const liquidityTokens = Number(
-      ethers2.utils.formatEther(liquidityTokens_BN)
-    ).toFixed(2);
     return [
       reservesRaw[0].toFixed(2),
-      reservesRaw[1].toFixed(2),
-      liquidityTokens
+      reservesRaw[1].toFixed(2)
+      // liquidityTokens,
     ];
   });
 }
+
+// src/components/shared/utils/liquidityFunctions.ts
+var quote = (amount1, reserve1, reserve2) => {
+  const amount2 = amount1 * (reserve2 / reserve1);
+  return [amount2];
+};
+var quoteMintLiquidity = (tokenA, tokenB, amountA, amountB, factory, signer) => __async(void 0, null, function* () {
+  const MINIMUM_LIQUIDITY = 1e3;
+  const [_reserveA, _reserveB, totalSupply] = yield factory.getPair(tokenA.address, tokenB.address).then(
+    (pairAddress) => __async(void 0, null, function* () {
+      if (pairAddress != ETH_ADDRESS) {
+        const pair = new ethers3.Contract(pairAddress, IUniswapV2Pair_default.abi, signer);
+        const reserves = yield fetchReserves(tokenA, tokenB, pair);
+        const reserveA2 = reserves[0];
+        const reserveB2 = reserves[1];
+        const _totalSupply = yield pair.totalSupply();
+        const totalSupply2 = Number(ethers3.utils.formatEther(_totalSupply));
+        return [reserveA2, reserveB2, totalSupply2];
+      } else {
+        return [0, 0, 0];
+      }
+    })
+  );
+  const token1 = new ethers3.Contract(tokenA.address, ERC20_default.abi, signer);
+  const token2 = new ethers3.Contract(tokenB.address, ERC20_default.abi, signer);
+  const token1Decimals = yield getDecimals(token1);
+  const token2Decimals = yield getDecimals(token2);
+  const valueA = amountA * __pow(10, token1Decimals);
+  const valueB = amountB * __pow(10, token2Decimals);
+  const reserveA = _reserveA * __pow(10, token1Decimals);
+  const reserveB = _reserveB * __pow(10, token2Decimals);
+  if (totalSupply == 0) {
+    return Math.sqrt(valueA * valueB - MINIMUM_LIQUIDITY) * __pow(10, -18);
+  }
+  ;
+  return Math.min(valueA * totalSupply / reserveA, valueB * totalSupply / reserveB);
+});
+var quoteAddLiquidity = (tokenFrom, tokenTo, amountADesired, amountBDesired, apiType, signer) => __async(void 0, null, function* () {
+  const factory = getFactory(apiType, signer);
+  const pairAddress = yield factory.getPair(tokenFrom.address, tokenTo.address);
+  const pair = new ethers3.Contract(pairAddress, IUniswapV2Pair_default.abi, signer);
+  const reservesRaw = yield fetchReserves(tokenFrom, tokenTo, pair);
+  const reserveA = reservesRaw[0];
+  const reserveB = reservesRaw[1];
+  if (reserveA === 0 && reserveB === 0) {
+    const amountOut = yield quoteMintLiquidity(
+      tokenFrom,
+      tokenTo,
+      amountADesired,
+      amountBDesired,
+      factory,
+      signer
+    );
+    return [
+      amountADesired,
+      amountBDesired,
+      amountOut.toPrecision(8)
+    ];
+  } else {
+    const amountBOptimal = quote(amountADesired, reserveA, reserveB);
+    if (amountBOptimal <= amountBDesired) {
+      const amountOut = yield quoteMintLiquidity(
+        tokenFrom,
+        tokenTo,
+        amountADesired,
+        amountBOptimal,
+        factory,
+        signer
+      );
+      return [
+        amountADesired,
+        amountBOptimal,
+        amountOut.toPrecision(8)
+      ];
+    } else {
+      const amountAOptimal = quote(
+        amountBDesired,
+        reserveB,
+        reserveA
+      );
+      const amountOut = yield quoteMintLiquidity(
+        tokenFrom,
+        tokenTo,
+        amountAOptimal,
+        amountBDesired,
+        factory,
+        signer
+      );
+      return [
+        amountAOptimal,
+        amountBDesired,
+        amountOut.toPrecision(8)
+      ];
+    }
+  }
+});
+
+// src/components/LiquidityPool/components/LiquidityInfo.tsx
+import * as React8 from "react";
+var LiquidityInfo = ({ liquidityOut, reserves }) => {
+  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, reserves && /* @__PURE__ */ React8.createElement("div", { className: "flex justify-between mt-4 mb-2" }, /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Reserves A:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[0]).toLocaleString()), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Reserves B:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[1]).toLocaleString()), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Token A:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, "$", liquidityOut[0]), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Token B:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, "$", liquidityOut[1]), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Amount Out:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, "$", liquidityOut[2])), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" })));
+};
+var LiquidityInfo_default = LiquidityInfo;
+
+// src/components/shared/context/DeFiUIKitContext.tsx
+import React9, { createContext, useContext } from "react";
+var DeFiUIKitContext = createContext({
+  account: null,
+  fetchSigner: null,
+  signerPromise: null,
+  chains: null,
+  currentProvider: null,
+  useSwitchNetwork: null
+});
+var DeFiUIKitProvider = ({ children, config }) => {
+  return /* @__PURE__ */ React9.createElement(DeFiUIKitContext.Provider, { value: config }, children);
+};
+var useDeFiUIKitContext = () => {
+  const context = useContext(DeFiUIKitContext);
+  if (context === void 0)
+    throw new Error("useDeFiUIKitContext must be within a DeFiUIKitProvider");
+  return context;
+};
+
+// src/components/LiquidityPool/LiquidityPool.tsx
+var LiquidityPool = ({
+  tokenA = null,
+  tokenB = null,
+  apiType = "uniswapv2",
+  tokenList,
+  primaryTokens,
+  switchIcon
+}) => {
+  const { account, chains, currentProvider, fetchSigner } = useDeFiUIKitContext();
+  const [chainId, setChainId] = useState4();
+  const chain = chains.find((c) => {
+    return c.id === chainId;
+  });
+  const [swapState, setSwapState] = useState4("buy");
+  const [reserves, setReserves] = useState4([]);
+  const [openPopover, setOpenPopover] = useState4(false);
+  const [slippage, setSlippage] = useState4(2.5);
+  const fetchNetwork = () => __async(void 0, null, function* () {
+    const { chainId: chainId2 } = yield currentProvider.getNetwork();
+    setChainId(chainId2);
+  });
+  const [tokenFrom, setTokenFrom] = useState4(null);
+  const [tokenTo, setTokenTo] = useState4(null);
+  useEffect3(() => {
+    if (!tokenFrom && !tokenTo) {
+      setTokenFrom(tokenA);
+      setTokenTo(tokenB);
+      fetchNetwork();
+    }
+  }, [tokenFrom, tokenTo]);
+  const [tokenFromPrice, setTokenFromPrice] = useState4("");
+  const [tokenToPrice, setTokenToPrice] = useState4("");
+  const [tokenFromBalance, setTokenFromBalance] = useState4(0);
+  const [tokenToBalance, setTokenToBalance] = useState4(0);
+  const [amountFrom, setAmountFrom] = useState4();
+  const [amountTo, setAmountTo] = useState4(0);
+  const [liquidityOut, setLiquidityOut] = useState4([0, 0, 0]);
+  const [error, setError] = useState4();
+  const [isLoading, setIsLoading] = useState4(false);
+  const [hasBalance, setHasBalance] = useState4();
+  const [txDetails, setTxDetails] = useState4({
+    to: "",
+    data: "",
+    value: 0
+  });
+  const handleSlippageChange = (e) => {
+    setSlippage(Number(e.target.value));
+  };
+  const resetExtraInfo = () => {
+  };
+  const resetAll = useCallback(() => {
+    setTokenFrom(null);
+    setTokenTo(null);
+    setError("");
+  }, []);
+  const onSelectFrom = (token, balance) => {
+    resetExtraInfo();
+    setTokenFrom(token);
+    if (balance > 0) {
+      setHasBalance(true);
+      setTokenFromBalance(balance);
+    } else {
+      setHasBalance(false);
+    }
+  };
+  const onSelectTo = (token, balance) => {
+    resetExtraInfo();
+    setTokenTo(token);
+    setTokenToBalance(balance);
+  };
+  const onAmountFromSelect = (value) => {
+    resetExtraInfo();
+    setAmountFrom(value);
+  };
+  const onAmountToSelect = (value) => {
+    resetExtraInfo();
+    setAmountTo(value);
+  };
+  useEffect3(() => {
+    const debouncePrice = setTimeout(() => {
+      getLiquidityQuote();
+    }, 500);
+    return () => clearTimeout(debouncePrice);
+  }, [amountFrom]);
+  const getLiquidityQuote = () => __async(void 0, null, function* () {
+    if (!tokenFrom || !tokenTo || tokenFrom.address === tokenTo.address || amountFrom == 0 || amountTo == 0)
+      return;
+    if (apiType !== "pancakeswap" && apiType !== "uniswapv2")
+      return;
+    const signer = yield fetchSigner();
+    console.log(account.address);
+    getReserves(tokenFrom, tokenTo, signer, apiType).then(
+      (data) => setReserves(data)
+    );
+    quoteAddLiquidity(
+      tokenFrom,
+      tokenTo,
+      amountFrom,
+      amountTo,
+      apiType,
+      signer
+    ).then((data) => {
+      setLiquidityOut([data[0], data[1], data[2]]);
+    });
+  });
+  const trySwap2 = () => __async(void 0, null, function* () {
+    if (!canSwap)
+      return;
+    try {
+    } catch (error2) {
+      setError(error2);
+      setIsLoading(false);
+    }
+  });
+  const canSwap = !!hasBalance && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance;
+  const isFilledOut = tokenFrom && tokenTo && Number(amountFrom) && amountTo && !!account;
+  return /* @__PURE__ */ React10.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ React10.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ React10.createElement(MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ React10.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ React10.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ React10.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance")) : null), /* @__PURE__ */ React10.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect: onAmountFromSelect, onBlur: getLiquidityQuote, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ React10.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, onAmountSelect: onAmountToSelect, onBlur: getLiquidityQuote, token: tokenTo, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ React10.createElement(SwapError_default, { error }), /* @__PURE__ */ React10.createElement(
+    LiquidityInfo_default,
+    {
+      liquidityOut,
+      reserves
+    }
+  ), /* @__PURE__ */ React10.createElement(
+    SwapButton_default,
+    {
+      canSwap,
+      swapFunction: trySwap2,
+      isLoading,
+      isFilledOut,
+      tokenFromBalance,
+      amountFrom: Number(amountFrom),
+      tokenSymbol: tokenFrom == null ? void 0 : tokenFrom.symbol
+    }
+  ));
+};
+
+// src/components/Swap/Swap.tsx
+import React17, { useCallback as useCallback2, useEffect as useEffect6, useState as useState8 } from "react";
+import { RiArrowUpDownLine } from "react-icons/ri";
+import { MdSettings as MdSettings2 } from "react-icons/md";
+
+// src/components/shared/ui/button/Radio.tsx
+import * as React11 from "react";
+var RadioGroup = ({ children, onChange }) => {
+  return /* @__PURE__ */ React11.createElement("form", { onChange: (e) => onChange(e) }, children);
+};
+var RadioButton = ({ value, children, checked, slippage }) => {
+  const isChecked = value === slippage ? true : false;
+  return /* @__PURE__ */ React11.createElement("div", { className: "flex items-center mb-4" }, /* @__PURE__ */ React11.createElement("input", { defaultChecked: isChecked, id: "default-radio-1", type: "radio", value, name: "default-radio", className: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }), /* @__PURE__ */ React11.createElement("label", { htmlFor: "default-radio-1", className: "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" }, children));
+};
+
+// src/components/Swap/components/ExtraInfo.tsx
+import * as React14 from "react";
+import cx3 from "classnames";
+
+// src/components/shared/ui/accordion/index.tsx
+import React12, { useRef, useState as useState5 } from "react";
+import { BsChevronDown as BsChevronDown2, BsChevronUp } from "react-icons/bs";
+var Accordion = ({ title, content }) => {
+  const [active, setActive] = useState5(false);
+  const contentSpace = useRef(null);
+  function toggleAccordion() {
+    setActive((prevState) => !prevState);
+  }
+  return /* @__PURE__ */ React12.createElement("div", { className: "flex flex-col justify-end" }, /* @__PURE__ */ React12.createElement(
+    "button",
+    {
+      className: "pb-2 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-end",
+      onClick: toggleAccordion
+    },
+    /* @__PURE__ */ React12.createElement("p", { className: "inline-block text-footnote text-gray-400 light" }, title),
+    active ? /* @__PURE__ */ React12.createElement(BsChevronUp, { className: "text-white ml-2" }) : /* @__PURE__ */ React12.createElement(BsChevronDown2, { className: "text-white ml-2" })
+  ), active && /* @__PURE__ */ React12.createElement("div", { className: "pb-10" }, content));
+};
+
+// src/components/Swap/components/ExtraInfo.tsx
+import { useEffect as useEffect4 } from "react";
+
+// src/components/Swap/components/Routes.tsx
+import * as React13 from "react";
+var Routes = ({ intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources }) => {
+  return /* @__PURE__ */ React13.createElement(React13.Fragment, null, !intermediateToken ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("div", { className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("img", { src: tokenFrom == null ? void 0 : tokenFrom.logoURI }), wrappedToken ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenTo == null ? void 0 : tokenTo.logoURI, alt: "" })) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React13.createElement("svg", { width: "300", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("img", { src: tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React13.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, sources && sources.map((source, i) => source.name !== "MultiHop" && /* @__PURE__ */ React13.createElement("p", { key: source.name + i, className: "text-gray-400" }, source.name, source.proportion ? " - " + (source.proportion * 100).toFixed(1) + "%" : "")))) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, sources && sources.map((source, i) => /* @__PURE__ */ React13.createElement("div", { key: i }, source.name === "MultiHop" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, source.hops.map((hop, j) => /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("div", { key: hop + j, className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("img", { src: j === 0 ? tokenFrom == null ? void 0 : tokenFrom.logoURI : intermediateToken, style: j === 0 ? {} : { height: "27px", width: "27px", marginTop: "0.2rem" } }), wrappedToken && j === 0 ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: intermediateToken, alt: "" })) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React13.createElement("svg", { width: "250", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("img", { src: j === 0 ? intermediateToken : tokenTo == null ? void 0 : tokenTo.logoURI, style: { height: "27px", width: "27px", marginTop: "0.2rem" } })), /* @__PURE__ */ React13.createElement("div", { key: j + 4 + hop, className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("p", { className: "text-gray-400" }, hop))))) : null))));
+};
+var Routes_default = Routes;
+
+// src/components/Swap/components/ExtraInfo.tsx
+var ExtraInfo = ({ gas, sources, priceImpact, tokenFrom, tokenTo }) => {
+  const [intermediateToken, setIntermediateToken] = React14.useState();
+  const [wrappedToken, setWrappedToken] = React14.useState();
+  const [wrappedDirection, setWrappedDirection] = React14.useState("");
+  const extraInfoDirection = "vertical";
+  useEffect4(() => {
+    if (tokenFrom) {
+      getWrappedToken(tokenFrom).then((token) => {
+        if (token) {
+          setWrappedToken(token);
+          setWrappedDirection("from");
+        }
+      });
+    }
+    if (tokenTo) {
+      getWrappedToken(tokenTo).then((token) => {
+        setWrappedToken(token);
+        setWrappedDirection("to");
+      });
+    }
+  }, [tokenFrom]);
+  if (sources[0]) {
+    getTokenMetadata(sources[0].intermediateToken).then(
+      (data) => {
+        if (data) {
+          setIntermediateToken(data.logoURI);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ React14.createElement(React14.Fragment, null, /* @__PURE__ */ React14.createElement(React14.Fragment, null, gas && sources && /* @__PURE__ */ React14.createElement("div", { className: cx3("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React14.createElement("div", { className: cx3("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white " }, "Estimated Gas:"), /* @__PURE__ */ React14.createElement("p", { className: " text-gray-400" }, "$", gas && Number(gas).toFixed(2))), /* @__PURE__ */ React14.createElement("div", { className: cx3("text-xs", extraInfoDirection === "vertical" ? "flex justify-between" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white" }, "Source:"), /* @__PURE__ */ React14.createElement(
+    Accordion,
+    {
+      title: sources.length > 1 ? "MultiSource" : sources[0].name,
+      content: /* @__PURE__ */ React14.createElement(
+        Routes_default,
+        {
+          intermediateToken,
+          wrappedToken,
+          tokenFrom,
+          tokenTo,
+          wrappedDirection,
+          sources
+        }
+      )
+    }
+  ))), priceImpact && /* @__PURE__ */ React14.createElement("div", { className: cx3("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React14.createElement("div", { className: cx3("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white" }, "Price Impact"), /* @__PURE__ */ React14.createElement("p", { className: cx3(Number(priceImpact) < 5 ? "text-green-400" : "text-red-400") }, "~ ", Number(priceImpact).toFixed(2), "%")))));
+};
+var ExtraInfo_default = ExtraInfo;
+
+// src/components/Swap/components/SwitchButton.tsx
+import * as React15 from "react";
+var SwitchButton = ({ children, onSwitch }) => {
+  return /* @__PURE__ */ React15.createElement("div", { className: "absolute top-[9.7rem] left-[9.5rem]", onClick: onSwitch }, children);
+};
+var SwitchButton_default = SwitchButton;
+
+// src/components/Swap/components/ChainDropdown.tsx
+import React16, { useEffect as useEffect5, useState as useState7 } from "react";
+
+// src/components/shared/data/providers.ts
+var providerList = [
+  {
+    name: "Ethereum",
+    icon: "https://chain-icons.s3.amazonaws.com/ethereum.png",
+    id: 1
+  },
+  {
+    name: "Arbitrum One",
+    icon: "https://chain-icons.s3.amazonaws.com/arbitrum.png",
+    id: 42161
+  },
+  // {
+  //     name: "Avalanche",
+  //     icon: "https://chain-icons.s3.amazonaws.com/avalanche.png",
+  //     id: 43114
+  // },
+  {
+    name: "BNB Smart Chain",
+    icon: "https://chain-icons.s3.amazonaws.com/bsc.png",
+    id: 56
+  },
+  {
+    name: "Optimism",
+    icon: "https://chain-icons.s3.amazonaws.com/optimism.png",
+    id: 10
+  },
+  {
+    name: "Polygon",
+    icon: "https://chain-icons.s3.amazonaws.com/polygon.png",
+    id: 137
+  }
+];
+
+// src/components/Swap/components/ChainDropdown.tsx
+var ChainDropdown = ({ resetAll, apiType, chain }) => {
+  const [provider, setProvider] = useState7();
+  const [isOpen, setIsOpen] = useState7(false);
+  const { useSwitchNetwork } = useDeFiUIKitContext();
+  const { switchNetwork } = useSwitchNetwork();
+  useEffect5(() => {
+    const currentChain = providerList.find(
+      (provider2) => provider2.name === (chain == null ? void 0 : chain.name)
+    );
+    const rightNetwork = apiType === "uniswapv2" && (chain == null ? void 0 : chain.name.toLowerCase()) != "ethereum" || apiType === "pancakeswap" && (chain == null ? void 0 : chain.name) != "BNB Smart Chain" ? { name: "Wrong Network", icon: "" } : currentChain;
+    setProvider(rightNetwork);
+    resetAll();
+  }, [chain]);
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const filteredProviderList = providerList.filter(
+    (provider2) => {
+      if (apiType === "uniswapv2") {
+        return provider2.name.toLowerCase() === "ethereum";
+      } else if (apiType === "pancakeswap") {
+        return provider2.name === "BNB Smart Chain";
+      } else {
+        return provider2;
+      }
+    }
+  );
+  const handleProvider = (e) => {
+    const newProviderName = e.currentTarget.getAttribute("value");
+    if (newProviderName) {
+      const newProvider = providerList.find(
+        (provider2) => provider2.name === newProviderName
+      );
+      if (newProvider) {
+        switchNetwork == null ? void 0 : switchNetwork(newProvider.id);
+      }
+    }
+    setIsOpen(false);
+  };
+  return /* @__PURE__ */ React16.createElement(React16.Fragment, null, /* @__PURE__ */ React16.createElement(
+    "button",
+    {
+      onClick: handleOpen,
+      className: "text-white font-medium rounded-lg text-sm py-2.5 text-center inline-flex items-center space-x-2",
+      type: "button"
+    },
+    (provider == null ? void 0 : provider.icon) && /* @__PURE__ */ React16.createElement("img", { src: provider == null ? void 0 : provider.icon, width: 20, height: 30, alt: "provider icon" }),
+    /* @__PURE__ */ React16.createElement("p", null, provider == null ? void 0 : provider.name),
+    /* @__PURE__ */ React16.createElement("svg", { className: "w-4 h-4 ml-2", "aria-hidden": "true", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ React16.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 9l-7 7-7-7" }))
+  ), isOpen && /* @__PURE__ */ React16.createElement("div", { id: "dropdown", className: "z-10 mt-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#1f1f21] absolute" }, /* @__PURE__ */ React16.createElement("ul", { className: "mt-1 py-1 text-sm text-gray-700 dark:text-gray-200 space-y-2", "aria-labelledby": "dropdownDefaultButton" }, filteredProviderList.map((provider2) => /* @__PURE__ */ React16.createElement("li", { key: provider2.name, onClick: handleProvider, value: provider2.name, className: "p-2 flex space-x-2 hover:bg-[#28282a] cursor-pointer" }, (provider2 == null ? void 0 : provider2.icon) && /* @__PURE__ */ React16.createElement("img", { src: provider2 == null ? void 0 : provider2.icon, width: 20, height: 30, alt: "provider icon" }), /* @__PURE__ */ React16.createElement("p", null, provider2 == null ? void 0 : provider2.name))))));
+};
+var ChainDropdown_default = ChainDropdown;
+
+// src/components/Swap/Swap.tsx
+import cx4 from "classnames";
+
+// src/components/shared/utils/componentFunctions.ts
+var import_axios2 = __toESM(require_axios2(), 1);
+import { ethers as ethers4 } from "ethers";
+
+// src/components/shared/contracts/ERC20/ERC20.abi.json
+var ERC20_abi_default = [
+  {
+    constant: true,
+    inputs: [],
+    name: "name",
+    outputs: [
+      {
+        name: "",
+        type: "string"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_spender",
+        type: "address"
+      },
+      {
+        name: "_value",
+        type: "uint256"
+      }
+    ],
+    name: "approve",
+    outputs: [
+      {
+        name: "",
+        type: "bool"
+      }
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_from",
+        type: "address"
+      },
+      {
+        name: "_to",
+        type: "address"
+      },
+      {
+        name: "_value",
+        type: "uint256"
+      }
+    ],
+    name: "transferFrom",
+    outputs: [
+      {
+        name: "",
+        type: "bool"
+      }
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "decimals",
+    outputs: [
+      {
+        name: "",
+        type: "uint8"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "_owner",
+        type: "address"
+      }
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        name: "balance",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: "symbol",
+    outputs: [
+      {
+        name: "",
+        type: "string"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: false,
+    inputs: [
+      {
+        name: "_to",
+        type: "address"
+      },
+      {
+        name: "_value",
+        type: "uint256"
+      }
+    ],
+    name: "transfer",
+    outputs: [
+      {
+        name: "",
+        type: "bool"
+      }
+    ],
+    payable: false,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "_owner",
+        type: "address"
+      },
+      {
+        name: "_spender",
+        type: "address"
+      }
+    ],
+    name: "allowance",
+    outputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    payable: true,
+    stateMutability: "payable",
+    type: "fallback"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "owner",
+        type: "address"
+      },
+      {
+        indexed: true,
+        name: "spender",
+        type: "address"
+      },
+      {
+        indexed: false,
+        name: "value",
+        type: "uint256"
+      }
+    ],
+    name: "Approval",
+    type: "event"
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        name: "from",
+        type: "address"
+      },
+      {
+        indexed: true,
+        name: "to",
+        type: "address"
+      },
+      {
+        indexed: false,
+        name: "value",
+        type: "uint256"
+      }
+    ],
+    name: "Transfer",
+    type: "event"
+  }
+];
 
 // src/components/shared/utils/componentFunctions.ts
 var getTokenPrice = (token, chain, error) => __async(void 0, null, function* () {
@@ -7263,7 +7516,7 @@ var getBalance = (token, tokenType, chain, provider, accountAddress, fetchSigner
     try {
       if ((token == null ? void 0 : token.symbol) === (chain == null ? void 0 : chain.nativeCurrency.symbol)) {
         balance = yield provider.getBalance(accountAddress);
-        balance = ethers3.utils.formatEther(balance);
+        balance = ethers4.utils.formatEther(balance);
       } else {
         let signer;
         while (!signer) {
@@ -7272,7 +7525,7 @@ var getBalance = (token, tokenType, chain, provider, accountAddress, fetchSigner
             yield new Promise((resolve) => setTimeout(resolve, 1e3));
           }
         }
-        const ERC20TokenContract = new ethers3.Contract(token.address, ERC20_abi_default, signer);
+        const ERC20TokenContract = new ethers4.Contract(token.address, ERC20_abi_default, signer);
         balance = yield ERC20TokenContract.balanceOf(accountAddress);
       }
       const result = Number(Number(balance).toFixed(7));
@@ -7310,11 +7563,10 @@ var getPrice = (tokenFrom, tokenTo, amountFrom, chain, apiType, setAmountTo, set
     try {
       const response = yield import_axios2.default.get(`${BASE_PATH_0X}/price?${searchParams}`);
       const swapPrice = yield response.data;
-      console.log(swapPrice);
       setAmountTo(Number(swapPrice.buyAmount) / __pow(10, tokenTo.decimals));
       const g = BigInt(Number(swapPrice.estimatedGas) * Number(swapPrice.gasPrice));
       const ETHPrice = yield getTokenPrice(baseCurrencies[0], chain, setError);
-      setGas(String(Number(ethers3.utils.formatEther(g)) * Number(ETHPrice)));
+      setGas(String(Number(ethers4.utils.formatEther(g)) * Number(ETHPrice)));
       setError(null);
       setSources([]);
       setPriceImpact(swapPrice.estimatedPriceImpact);
@@ -7339,7 +7591,7 @@ var getPrice = (tokenFrom, tokenTo, amountFrom, chain, apiType, setAmountTo, set
       setSources(quoteData.protocols[0][0]);
       const ETHPrice = yield getTokenPrice(baseCurrencies[0], chain, setError);
       const gasPriceRaw = yield provider.getGasPrice();
-      const gasPrice = ethers3.utils.formatUnits(gasPriceRaw, "ether");
+      const gasPrice = ethers4.utils.formatUnits(gasPriceRaw, "ether");
       setGas(String(quoteData.estimatedGas * Number(gasPrice) * ETHPrice));
       setError("");
       const convertedToAmount = (Number(quoteData.toTokenAmount) / __pow(10, tokenTo.decimals)).toFixed(8);
@@ -7391,7 +7643,7 @@ var getQuote = (tokenFrom, tokenTo, accountAddress, amountFrom, chain, setAmount
     setAmountTo(Number(quotePrice.buyAmount) / __pow(10, tokenTo.decimals));
     const g = Number(quotePrice.estimatedGas) * Number(quotePrice.gasPrice);
     const ETHPrice = yield getTokenPrice(baseCurrencies[0], chain, setError);
-    setGas(String(Number(ethers3.utils.formatEther(g.toString())) * Number(ETHPrice)));
+    setGas(String(Number(ethers4.utils.formatEther(g.toString())) * Number(ETHPrice)));
     setError(null);
     setSources([]);
     quotePrice.sources.map((source) => {
@@ -7433,7 +7685,7 @@ var trySwap = (canSwap, apiType, setIsLoading, tokenFrom, tokenTo, accountAddres
         setSources
       );
       const signer = yield fetchSigner();
-      const ERC20TokenContract = new ethers3.Contract(tokenFrom.address, ERC20_abi_default, signer);
+      const ERC20TokenContract = new ethers4.Contract(tokenFrom.address, ERC20_abi_default, signer);
       const maxApproval = __pow(2, 256 - 1);
       if (tokenFrom.address !== ETH_ADDRESS) {
         yield ERC20TokenContract.approve(
@@ -7442,7 +7694,6 @@ var trySwap = (canSwap, apiType, setIsLoading, tokenFrom, tokenTo, accountAddres
         );
       }
       if (signer && (response == null ? void 0 : response.to) && response.data && response.value) {
-        console.log({ to: response.to, data: response.data, value: Number(response.value) });
         setTxDetails({ to: response.to, data: response.data, value: Number(response.value) });
         sendTx(accountAddress, { to: response.to, data: response.data, value: Number(response.value) }, fetchSigner).catch((err) => setError(err));
         setIsLoading(false);
@@ -7488,7 +7739,6 @@ var trySwap = (canSwap, apiType, setIsLoading, tokenFrom, tokenTo, accountAddres
       signer
     ).then(() => setIsLoading(false)).catch((error) => {
       setIsLoading(false);
-      console.log(error);
       setError(error);
     });
   }
@@ -7505,40 +7755,40 @@ var Swap = ({
   variant = "bidirectional"
 }) => {
   const { account, chains, currentProvider, fetchSigner } = useDeFiUIKitContext();
-  const [chainId, setChainId] = useState7();
+  const [chainId, setChainId] = useState8();
   const chain = chains.find((c) => {
     return c.id === chainId;
   });
-  const [swapState, setSwapState] = useState7("buy");
-  const [openPopover, setOpenPopover] = useState7(false);
-  const [slippage, setSlippage] = useState7(2.5);
+  const [swapState, setSwapState] = useState8("buy");
+  const [openPopover, setOpenPopover] = useState8(false);
+  const [slippage, setSlippage] = useState8(2.5);
   const fetchNetwork = () => __async(void 0, null, function* () {
     const { chainId: chainId2 } = yield currentProvider.getNetwork();
     setChainId(chainId2);
   });
-  const [tokenFrom, setTokenFrom] = useState7(null);
-  const [tokenTo, setTokenTo] = useState7(null);
-  useEffect5(() => {
+  const [tokenFrom, setTokenFrom] = useState8(null);
+  const [tokenTo, setTokenTo] = useState8(null);
+  useEffect6(() => {
     if (!tokenFrom && !tokenTo) {
       setTokenFrom(tokenA);
       setTokenTo(tokenB);
       fetchNetwork();
     }
   }, [tokenFrom, tokenTo]);
-  const [tokenFromPrice, setTokenFromPrice] = useState7("");
-  const [tokenToPrice, setTokenToPrice] = useState7("");
-  const [tokenFromBalance, setTokenFromBalance] = useState7(0);
-  const [tokenToBalance, setTokenToBalance] = useState7(0);
-  const [amountFrom, setAmountFrom] = useState7(Number("x"));
-  const [amountTo, setAmountTo] = useState7(0);
-  const [gas, setGas] = useState7("");
-  const [error, setError] = useState7();
-  const [isLoading, setIsLoading] = useState7(false);
-  const [hasBalance, setHasBalance] = useState7();
-  const [sources, setSources] = useState7([]);
-  const [priceImpact, setPriceImpact] = useState7("");
-  const [reserves, setReserves] = useState7([]);
-  const [txDetails, setTxDetails] = useState7({
+  const [tokenFromPrice, setTokenFromPrice] = useState8("");
+  const [tokenToPrice, setTokenToPrice] = useState8("");
+  const [tokenFromBalance, setTokenFromBalance] = useState8(0);
+  const [tokenToBalance, setTokenToBalance] = useState8(0);
+  const [amountFrom, setAmountFrom] = useState8(Number("x"));
+  const [amountTo, setAmountTo] = useState8(0);
+  const [gas, setGas] = useState8("");
+  const [error, setError] = useState8();
+  const [isLoading, setIsLoading] = useState8(false);
+  const [hasBalance, setHasBalance] = useState8();
+  const [sources, setSources] = useState8([]);
+  const [priceImpact, setPriceImpact] = useState8("");
+  const [reserves, setReserves] = useState8([]);
+  const [txDetails, setTxDetails] = useState8({
     to: "",
     data: "",
     value: 0
@@ -7552,7 +7802,7 @@ var Swap = ({
     setPriceImpact("");
     setError("");
   };
-  const resetAll = useCallback(() => {
+  const resetAll = useCallback2(() => {
     setSources([]);
     setGas("");
     setTokenFrom(null);
@@ -7644,7 +7894,7 @@ var Swap = ({
       switchTokens();
     }
   };
-  useEffect5(() => {
+  useEffect6(() => {
     const debouncePrice = setTimeout(() => {
       getPrice(
         tokenFrom,
@@ -7684,7 +7934,7 @@ var Swap = ({
       slippage
     );
   };
-  useEffect5(() => {
+  useEffect6(() => {
     const updateTokenBalance = () => __async(void 0, null, function* () {
       if (tokenFrom) {
         yield getBalance(
@@ -7707,7 +7957,7 @@ var Swap = ({
       updateTokenBalance();
     }
   }, [tokenFromBalance, tokenFrom]);
-  useEffect5(() => {
+  useEffect6(() => {
     const updateTokenBalance = () => __async(void 0, null, function* () {
       if (tokenTo) {
         yield getBalance(
@@ -7732,21 +7982,21 @@ var Swap = ({
   }, [tokenToBalance, tokenTo]);
   const canSwap = !!hasBalance && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance;
   const isFilledOut = tokenFrom && tokenTo && Number(amountFrom) && amountTo && !!account;
-  return /* @__PURE__ */ React15.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ React15.createElement(SwitchButton_default, { onSwitch: switchTokens }, typeof switchIcon === "object" ? switchIcon : switchIcon === "none" || variant === "unidirectional" ? null : /* @__PURE__ */ React15.createElement("div", { className: "rounded-full border w-fit p-2 cursor-pointer" }, /* @__PURE__ */ React15.createElement(RiArrowUpDownLine, { className: "text-white text-xl " }))), variant && variant === "unidirectional" && /* @__PURE__ */ React15.createElement("div", { className: "flex justify-evenly items-center text-center text-white cursor-pointer mb-4" }, /* @__PURE__ */ React15.createElement(
+  return /* @__PURE__ */ React17.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ React17.createElement(SwitchButton_default, { onSwitch: switchTokens }, typeof switchIcon === "object" ? switchIcon : switchIcon === "none" || variant === "unidirectional" ? null : /* @__PURE__ */ React17.createElement("div", { className: "rounded-full border w-fit p-2 cursor-pointer" }, /* @__PURE__ */ React17.createElement(RiArrowUpDownLine, { className: "text-white text-xl " }))), variant && variant === "unidirectional" && /* @__PURE__ */ React17.createElement("div", { className: "flex justify-evenly items-center text-center text-white cursor-pointer mb-4" }, /* @__PURE__ */ React17.createElement(
     "p",
     {
       className: cx4("px-4 w-1/2", swapState === "buy" ? "bg-indigo-500 " : ""),
       onClick: () => handleSwitch("buy")
     },
     "Buy"
-  ), /* @__PURE__ */ React15.createElement(
+  ), /* @__PURE__ */ React17.createElement(
     "p",
     {
       className: cx4("px-4 w-1/2", swapState === "sell" ? "bg-indigo-500 " : ""),
       onClick: () => handleSwitch("sell")
     },
     "Sell"
-  )), /* @__PURE__ */ React15.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ React15.createElement(ChainDropdown_default, { resetAll, apiType, chain }), /* @__PURE__ */ React15.createElement(MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ React15.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ React15.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ React15.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance"), /* @__PURE__ */ React15.createElement(RadioGroup, { onChange: handleSlippageChange }, /* @__PURE__ */ React15.createElement(RadioButton, { value: 0.5, slippage }, "0.5%"), /* @__PURE__ */ React15.createElement(RadioButton, { value: 2.5, slippage }, "2.5%"), /* @__PURE__ */ React15.createElement(RadioButton, { value: 5, slippage }, "5.0%"))) : null), /* @__PURE__ */ React15.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect, onBlur, amountFrom, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ React15.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, amountTo, onBlur, token: tokenTo, disabled: true, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ React15.createElement(SwapError_default, { error }), /* @__PURE__ */ React15.createElement(ExtraInfo_default, { gas, sources, priceImpact, tokenFrom, tokenTo }), /* @__PURE__ */ React15.createElement(
+  )), /* @__PURE__ */ React17.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ React17.createElement(ChainDropdown_default, { resetAll, apiType, chain }), /* @__PURE__ */ React17.createElement(MdSettings2, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ React17.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ React17.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ React17.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance"), /* @__PURE__ */ React17.createElement(RadioGroup, { onChange: handleSlippageChange }, /* @__PURE__ */ React17.createElement(RadioButton, { value: 0.5, slippage }, "0.5%"), /* @__PURE__ */ React17.createElement(RadioButton, { value: 2.5, slippage }, "2.5%"), /* @__PURE__ */ React17.createElement(RadioButton, { value: 5, slippage }, "5.0%"))) : null), /* @__PURE__ */ React17.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect, onBlur, amountFrom, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ React17.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, amountTo, onBlur, token: tokenTo, disabled: true, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ React17.createElement(SwapError_default, { error }), /* @__PURE__ */ React17.createElement(ExtraInfo_default, { gas, sources, priceImpact, tokenFrom, tokenTo }), /* @__PURE__ */ React17.createElement(
     SwapButton_default,
     {
       canSwap,
@@ -7761,5 +8011,6 @@ var Swap = ({
 };
 export {
   DeFiUIKitProvider,
+  LiquidityPool,
   Swap
 };

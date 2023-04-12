@@ -9,7 +9,7 @@ import { getAmountOut, getReserves, swapTokens } from "./ethereumFunctions";
 export const getTokenPrice = async(
     token: any, 
     chain: any,
-    error: (err:any) => void
+    error: (err: any) => void
     ) => {
 
     if (!token) return
@@ -142,7 +142,6 @@ export const getPrice = async (
 
             const response = await axios.get(`${BASE_PATH_0X}/price?${searchParams}`)
             const swapPrice = await response.data as SwapPriceResponse
-            console.log(swapPrice);
             
             setAmountTo(Number(swapPrice.buyAmount) / (10 ** tokenTo.decimals))
 
@@ -358,12 +357,9 @@ export const trySwap = async(
                     maxApproval
                 )
             }
-        
     
             // send transaction
             if (signer && response?.to && response.data && response.value) {
-                console.log({to:response.to, data:response.data, value: Number(response.value)});
-                
                 setTxDetails({to:response.to, data:response.data, value: Number(response.value)})
                 sendTx(accountAddress, {to: response.to, data: response.data, value: Number(response.value)}, fetchSigner).catch(err => setError(err))
                 setIsLoading(false)
@@ -417,7 +413,6 @@ export const trySwap = async(
             .then(() => setIsLoading(false))
             .catch((error: any) =>{ 
                 setIsLoading(false)
-                console.log(error);
             setError(error)
         })
     }
