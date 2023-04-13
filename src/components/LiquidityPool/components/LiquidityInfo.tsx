@@ -9,6 +9,14 @@ interface ILiquidityInfoProps {
     amountFrom: number | undefined
 } 
 
+/**
+ * Share of Pool
+ * 
+ * shareA = \delta_x / (\delta_x + x) * 100
+ * shareB = \delta_y / (\delta_y + y) * 100
+ * sharePool = shareA = shareB
+ */
+
 const LiquidityInfo: React.FunctionComponent<ILiquidityInfoProps> = ({liquidityOut, reserves, tokenFrom, tokenTo, amountFrom}) => {
   return (
     <>
@@ -28,16 +36,16 @@ const LiquidityInfo: React.FunctionComponent<ILiquidityInfoProps> = ({liquidityO
               <div className='flex space-x-4 justify-between text-xs'>
                 <p className=' text-gray-400'>
                   {
-                  Number(liquidityOut[1]/liquidityOut[0]) > 0.01 ?
-                  Number(liquidityOut[1]/liquidityOut[0]).toFixed(2)
-                : Number(liquidityOut[1]/liquidityOut[0]).toFixed(10)
+                  (Number(reserves[1]) / Number(reserves[0])) > 0.01 ?
+                  (Number(reserves[1]) / Number(reserves[0])).toFixed(2)
+                : (Number(reserves[1]) / Number(reserves[0])).toFixed(10)
                 } {tokenFrom.symbol} per {tokenTo.symbol}
                 </p>
                 <p className=' text-gray-400'>
                 {
-                  Number(liquidityOut[0]/liquidityOut[1]) > 0.01 ?
-                  Number(liquidityOut[0]/liquidityOut[1]).toFixed(2)
-                : Number(liquidityOut[0]/liquidityOut[1]).toFixed(10)
+                  (Number(reserves[0]) / Number(reserves[1])) > 0.01 ?
+                  (Number(reserves[0]) / Number(reserves[1])).toFixed(2)
+                : (Number(reserves[0]) / Number(reserves[1])).toFixed(10)
                 } {tokenTo.symbol} per {tokenFrom.symbol}
                 </p>
               </div>
@@ -49,10 +57,15 @@ const LiquidityInfo: React.FunctionComponent<ILiquidityInfoProps> = ({liquidityO
               </div>
               <div className='text-xs'>
                   <p className='text-white text-sm mb-3'>Share of Pool</p>
-                  <p className=' text-gray-400'>{((amountFrom / reserves[0])*100).toFixed(2)} %</p>
+                  <p className=' text-gray-400'>
+                    {(
+                      (
+                        amountFrom / (Number(reserves[0]) + amountFrom) * 100 
+                      )
+                      ).toFixed(2)} %
+                  </p>
               </div>
             </div>
-        
        
         <div className='text-xs'>
        

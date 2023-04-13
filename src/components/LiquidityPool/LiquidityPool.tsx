@@ -178,55 +178,55 @@ export const LiquidityPool: React.FunctionComponent<ISwapProps> = ({
     }
     
 
-    // useEffect(() => {
-    //     const updateTokenBalance = async () => {
-    //       if (tokenFrom) {
-    //         await getBalance(
-    //             tokenFrom, 
-    //             "from",
-    //             chain,
-    //             currentProvider,
-    //             account.address,
-    //             fetchSigner,
-    //             setTokenFromBalance,
-    //             setTokenFromPrice,
-    //             setHasBalance,
-    //             setTokenToBalance,
-    //             setTokenToPrice,
-    //             setError
-    //             )
-    //       } 
-    //     }
+    useEffect(() => {
+        const updateTokenBalance = async () => {
+          if (tokenFrom) {
+            await getBalance(
+                tokenFrom, 
+                "from",
+                chain,
+                currentProvider,
+                account.address,
+                fetchSigner,
+                setTokenFromBalance,
+                setTokenFromPrice,
+                setHasBalance,
+                setTokenToBalance,
+                setTokenToPrice,
+                setError
+                )
+          } 
+        }
       
-    //     if (account.address) {
-    //         updateTokenBalance()
-    //     }
-    //   }, [tokenFromBalance, tokenFrom])
+        if (account.address) {
+            updateTokenBalance()
+        }
+      }, [tokenFromBalance, tokenFrom])
 
-    // useEffect(() => {
-    //     const updateTokenBalance = async () => {
-    //       if (tokenTo) {
-    //         await getBalance(
-    //             tokenTo, 
-    //             "to",
-    //             chain,
-    //             currentProvider,
-    //             account.address,
-    //             fetchSigner,
-    //             setTokenFromBalance,
-    //             setTokenFromPrice,
-    //             setHasBalance,
-    //             setTokenToBalance,
-    //             setTokenToPrice,
-    //             setError
-    //             )
-    //       } 
-    //     }
+    useEffect(() => {
+        const updateTokenBalance = async () => {
+          if (tokenTo) {
+            await getBalance(
+                tokenTo, 
+                "to",
+                chain,
+                currentProvider,
+                account.address,
+                fetchSigner,
+                setTokenFromBalance,
+                setTokenFromPrice,
+                setHasBalance,
+                setTokenToBalance,
+                setTokenToPrice,
+                setError
+                )
+          } 
+        }
       
-    //     if (account.address) {
-    //         updateTokenBalance()
-    //     }
-    //   }, [tokenToBalance, tokenTo])
+        if (account.address) {
+            updateTokenBalance()
+        }
+      }, [tokenToBalance, tokenTo])
       
 
     const canSwap = !!(hasBalance) && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance

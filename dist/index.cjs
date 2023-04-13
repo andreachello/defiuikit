@@ -6897,7 +6897,7 @@ var quoteAddLiquidity = (tokenFrom, tokenTo, amountADesired, amountBDesired, api
 // src/components/LiquidityPool/components/LiquidityInfo.tsx
 var React8 = __toESM(require("react"), 1);
 var LiquidityInfo = ({ liquidityOut, reserves, tokenFrom, tokenTo, amountFrom }) => {
-  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, reserves && tokenFrom && tokenTo && amountFrom && /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col justify-between mt-4 mb-2 space-y-4" }, /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Reserves"), /* @__PURE__ */ React8.createElement("div", { className: "flex space-x-4 justify-between text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[0]).toLocaleString(), " ", tokenFrom.symbol), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[1]).toLocaleString(), " ", tokenTo.symbol))), /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Prices"), /* @__PURE__ */ React8.createElement("div", { className: "flex space-x-4 justify-between text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(liquidityOut[1] / liquidityOut[0]) > 0.01 ? Number(liquidityOut[1] / liquidityOut[0]).toFixed(2) : Number(liquidityOut[1] / liquidityOut[0]).toFixed(10), " ", tokenFrom.symbol, " per ", tokenTo.symbol), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(liquidityOut[0] / liquidityOut[1]) > 0.01 ? Number(liquidityOut[0] / liquidityOut[1]).toFixed(2) : Number(liquidityOut[0] / liquidityOut[1]).toFixed(10), " ", tokenTo.symbol, " per ", tokenFrom.symbol))), /* @__PURE__ */ React8.createElement("div", { className: "flex justify-between" }, /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "LP Tokens:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, liquidityOut[2])), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Share of Pool"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, (amountFrom / reserves[0] * 100).toFixed(2), " %"))), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" })));
+  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, reserves && tokenFrom && tokenTo && amountFrom && /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col justify-between mt-4 mb-2 space-y-4" }, /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Reserves"), /* @__PURE__ */ React8.createElement("div", { className: "flex space-x-4 justify-between text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[0]).toLocaleString(), " ", tokenFrom.symbol), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[1]).toLocaleString(), " ", tokenTo.symbol))), /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Prices"), /* @__PURE__ */ React8.createElement("div", { className: "flex space-x-4 justify-between text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[1]) / Number(reserves[0]) > 0.01 ? (Number(reserves[1]) / Number(reserves[0])).toFixed(2) : (Number(reserves[1]) / Number(reserves[0])).toFixed(10), " ", tokenFrom.symbol, " per ", tokenTo.symbol), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[0]) / Number(reserves[1]) > 0.01 ? (Number(reserves[0]) / Number(reserves[1])).toFixed(2) : (Number(reserves[0]) / Number(reserves[1])).toFixed(10), " ", tokenTo.symbol, " per ", tokenFrom.symbol))), /* @__PURE__ */ React8.createElement("div", { className: "flex justify-between" }, /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "LP Tokens:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, liquidityOut[2])), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Share of Pool"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, (amountFrom / (Number(reserves[0]) + amountFrom) * 100).toFixed(2), " %"))), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" })));
 };
 var LiquidityInfo_default = LiquidityInfo;
 
@@ -6920,347 +6920,6 @@ var useDeFiUIKitContext = () => {
     throw new Error("useDeFiUIKitContext must be within a DeFiUIKitProvider");
   return context;
 };
-
-// src/components/LiquidityPool/LiquidityPool.tsx
-var LiquidityPool = ({
-  tokenA = null,
-  tokenB = null,
-  apiType = "uniswapv2",
-  tokenList,
-  primaryTokens,
-  switchIcon
-}) => {
-  const { account, chains, currentProvider, fetchSigner } = useDeFiUIKitContext();
-  const [chainId, setChainId] = (0, import_react7.useState)();
-  const chain = chains.find((c) => {
-    return c.id === chainId;
-  });
-  const [swapState, setSwapState] = (0, import_react7.useState)("buy");
-  const [reserves, setReserves] = (0, import_react7.useState)([]);
-  const [openPopover, setOpenPopover] = (0, import_react7.useState)(false);
-  const [slippage, setSlippage] = (0, import_react7.useState)(2.5);
-  const fetchNetwork = () => __async(void 0, null, function* () {
-    const { chainId: chainId2 } = yield currentProvider.getNetwork();
-    setChainId(chainId2);
-  });
-  const [tokenFrom, setTokenFrom] = (0, import_react7.useState)(null);
-  const [tokenTo, setTokenTo] = (0, import_react7.useState)(null);
-  (0, import_react7.useEffect)(() => {
-    if (!tokenFrom && !tokenTo) {
-      setTokenFrom(tokenA);
-      setTokenTo(tokenB);
-      fetchNetwork();
-    }
-  }, [tokenFrom, tokenTo]);
-  const [tokenFromPrice, setTokenFromPrice] = (0, import_react7.useState)("");
-  const [tokenToPrice, setTokenToPrice] = (0, import_react7.useState)("");
-  const [tokenFromBalance, setTokenFromBalance] = (0, import_react7.useState)(0);
-  const [tokenToBalance, setTokenToBalance] = (0, import_react7.useState)(0);
-  const [amountFrom, setAmountFrom] = (0, import_react7.useState)();
-  const [amountTo, setAmountTo] = (0, import_react7.useState)(0);
-  const [liquidityOut, setLiquidityOut] = (0, import_react7.useState)([0, 0, 0]);
-  const [error, setError] = (0, import_react7.useState)();
-  const [isLoading, setIsLoading] = (0, import_react7.useState)(false);
-  const [hasBalance, setHasBalance] = (0, import_react7.useState)();
-  const [txDetails, setTxDetails] = (0, import_react7.useState)({
-    to: "",
-    data: "",
-    value: 0
-  });
-  const handleSlippageChange = (e) => {
-    setSlippage(Number(e.target.value));
-  };
-  const resetExtraInfo = () => {
-  };
-  const resetAll = (0, import_react7.useCallback)(() => {
-    setTokenFrom(null);
-    setTokenTo(null);
-    setError("");
-  }, []);
-  const onSelectFrom = (token, balance) => {
-    resetExtraInfo();
-    setTokenFrom(token);
-    if (balance > 0) {
-      setHasBalance(true);
-      setTokenFromBalance(balance);
-    } else {
-      setHasBalance(false);
-    }
-  };
-  const onSelectTo = (token, balance) => {
-    resetExtraInfo();
-    setTokenTo(token);
-    setTokenToBalance(balance);
-  };
-  const onAmountFromSelect = (value) => {
-    resetExtraInfo();
-    setAmountFrom(value);
-  };
-  const onAmountToSelect = (value) => {
-    resetExtraInfo();
-    setAmountTo(value);
-  };
-  (0, import_react7.useEffect)(() => {
-    const debouncePrice = setTimeout(() => {
-      getLiquidityQuote();
-    }, 500);
-    return () => clearTimeout(debouncePrice);
-  }, [amountFrom]);
-  const getLiquidityQuote = () => __async(void 0, null, function* () {
-    if (!tokenFrom || !tokenTo || tokenFrom.address === tokenTo.address || amountFrom == 0 || amountTo == 0)
-      return;
-    if (apiType !== "pancakeswap" && apiType !== "uniswapv2")
-      return;
-    const signer = yield fetchSigner();
-    console.log(account.address);
-    getReserves(tokenFrom, tokenTo, signer, apiType).then(
-      (data) => setReserves(data)
-    );
-    quoteAddLiquidity(
-      tokenFrom,
-      tokenTo,
-      amountFrom,
-      amountTo,
-      apiType,
-      signer
-    ).then((data) => {
-      setLiquidityOut([data[0], data[1], data[2]]);
-    });
-  });
-  const trySwap2 = () => __async(void 0, null, function* () {
-    if (!canSwap)
-      return;
-    try {
-    } catch (error2) {
-      setError(error2);
-      setIsLoading(false);
-    }
-  });
-  const canSwap = !!hasBalance && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance;
-  const isFilledOut = tokenFrom && tokenTo && Number(amountFrom) && amountTo && !!account;
-  return /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ import_react7.default.createElement(import_md.MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ import_react7.default.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance")) : null), /* @__PURE__ */ import_react7.default.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect: onAmountFromSelect, onBlur: getLiquidityQuote, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ import_react7.default.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, onAmountSelect: onAmountToSelect, onBlur: getLiquidityQuote, token: tokenTo, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ import_react7.default.createElement(SwapError_default, { error }), /* @__PURE__ */ import_react7.default.createElement(
-    LiquidityInfo_default,
-    {
-      liquidityOut,
-      reserves,
-      tokenFrom,
-      tokenTo,
-      amountFrom
-    }
-  ), /* @__PURE__ */ import_react7.default.createElement(
-    SwapButton_default,
-    {
-      canSwap,
-      swapFunction: trySwap2,
-      isLoading,
-      isFilledOut,
-      tokenFromBalance,
-      amountFrom: Number(amountFrom),
-      tokenSymbol: tokenFrom == null ? void 0 : tokenFrom.symbol
-    }
-  ));
-};
-
-// src/components/Swap/Swap.tsx
-var import_react11 = __toESM(require("react"), 1);
-var import_ri = require("react-icons/ri");
-var import_md2 = require("react-icons/md");
-
-// src/components/shared/ui/button/Radio.tsx
-var React11 = __toESM(require("react"), 1);
-var RadioGroup = ({ children, onChange }) => {
-  return /* @__PURE__ */ React11.createElement("form", { onChange: (e) => onChange(e) }, children);
-};
-var RadioButton = ({ value, children, checked, slippage }) => {
-  const isChecked = value === slippage ? true : false;
-  return /* @__PURE__ */ React11.createElement("div", { className: "flex items-center mb-4" }, /* @__PURE__ */ React11.createElement("input", { defaultChecked: isChecked, id: "default-radio-1", type: "radio", value, name: "default-radio", className: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }), /* @__PURE__ */ React11.createElement("label", { htmlFor: "default-radio-1", className: "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" }, children));
-};
-
-// src/components/Swap/components/ExtraInfo.tsx
-var React14 = __toESM(require("react"), 1);
-var import_classnames3 = __toESM(require("classnames"), 1);
-
-// src/components/shared/ui/accordion/index.tsx
-var import_react8 = __toESM(require("react"), 1);
-var import_bs2 = require("react-icons/bs");
-var Accordion = ({ title, content }) => {
-  const [active, setActive] = (0, import_react8.useState)(false);
-  const contentSpace = (0, import_react8.useRef)(null);
-  function toggleAccordion() {
-    setActive((prevState) => !prevState);
-  }
-  return /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex flex-col justify-end" }, /* @__PURE__ */ import_react8.default.createElement(
-    "button",
-    {
-      className: "pb-2 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-end",
-      onClick: toggleAccordion
-    },
-    /* @__PURE__ */ import_react8.default.createElement("p", { className: "inline-block text-footnote text-gray-400 light" }, title),
-    active ? /* @__PURE__ */ import_react8.default.createElement(import_bs2.BsChevronUp, { className: "text-white ml-2" }) : /* @__PURE__ */ import_react8.default.createElement(import_bs2.BsChevronDown, { className: "text-white ml-2" })
-  ), active && /* @__PURE__ */ import_react8.default.createElement("div", { className: "pb-10" }, content));
-};
-
-// src/components/Swap/components/ExtraInfo.tsx
-var import_react9 = require("react");
-
-// src/components/Swap/components/Routes.tsx
-var React13 = __toESM(require("react"), 1);
-var Routes = ({ intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources }) => {
-  return /* @__PURE__ */ React13.createElement(React13.Fragment, null, !intermediateToken ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("div", { className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("img", { src: tokenFrom == null ? void 0 : tokenFrom.logoURI }), wrappedToken ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenTo == null ? void 0 : tokenTo.logoURI, alt: "" })) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React13.createElement("svg", { width: "300", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("img", { src: tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React13.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, sources && sources.map((source, i) => source.name !== "MultiHop" && /* @__PURE__ */ React13.createElement("p", { key: source.name + i, className: "text-gray-400" }, source.name, source.proportion ? " - " + (source.proportion * 100).toFixed(1) + "%" : "")))) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, sources && sources.map((source, i) => /* @__PURE__ */ React13.createElement("div", { key: i }, source.name === "MultiHop" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, source.hops.map((hop, j) => /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("div", { key: hop + j, className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("img", { src: j === 0 ? tokenFrom == null ? void 0 : tokenFrom.logoURI : intermediateToken, style: j === 0 ? {} : { height: "27px", width: "27px", marginTop: "0.2rem" } }), wrappedToken && j === 0 ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: intermediateToken, alt: "" })) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React13.createElement("svg", { width: "250", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("img", { src: j === 0 ? intermediateToken : tokenTo == null ? void 0 : tokenTo.logoURI, style: { height: "27px", width: "27px", marginTop: "0.2rem" } })), /* @__PURE__ */ React13.createElement("div", { key: j + 4 + hop, className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("p", { className: "text-gray-400" }, hop))))) : null))));
-};
-var Routes_default = Routes;
-
-// src/components/Swap/components/ExtraInfo.tsx
-var ExtraInfo = ({ gas, sources, priceImpact, tokenFrom, tokenTo }) => {
-  const [intermediateToken, setIntermediateToken] = React14.useState();
-  const [wrappedToken, setWrappedToken] = React14.useState();
-  const [wrappedDirection, setWrappedDirection] = React14.useState("");
-  const extraInfoDirection = "vertical";
-  (0, import_react9.useEffect)(() => {
-    if (tokenFrom) {
-      getWrappedToken(tokenFrom).then((token) => {
-        if (token) {
-          setWrappedToken(token);
-          setWrappedDirection("from");
-        }
-      });
-    }
-    if (tokenTo) {
-      getWrappedToken(tokenTo).then((token) => {
-        setWrappedToken(token);
-        setWrappedDirection("to");
-      });
-    }
-  }, [tokenFrom]);
-  if (sources[0]) {
-    getTokenMetadata(sources[0].intermediateToken).then(
-      (data) => {
-        if (data) {
-          setIntermediateToken(data.logoURI);
-        }
-      }
-    );
-  }
-  return /* @__PURE__ */ React14.createElement(React14.Fragment, null, /* @__PURE__ */ React14.createElement(React14.Fragment, null, gas && sources && /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white " }, "Estimated Gas:"), /* @__PURE__ */ React14.createElement("p", { className: " text-gray-400" }, "$", gas && Number(gas).toFixed(2))), /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white" }, "Source:"), /* @__PURE__ */ React14.createElement(
-    Accordion,
-    {
-      title: sources.length > 1 ? "MultiSource" : sources[0].name,
-      content: /* @__PURE__ */ React14.createElement(
-        Routes_default,
-        {
-          intermediateToken,
-          wrappedToken,
-          tokenFrom,
-          tokenTo,
-          wrappedDirection,
-          sources
-        }
-      )
-    }
-  ))), priceImpact && /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white" }, "Price Impact"), /* @__PURE__ */ React14.createElement("p", { className: (0, import_classnames3.default)(Number(priceImpact) < 5 ? "text-green-400" : "text-red-400") }, "~ ", Number(priceImpact).toFixed(2), "%")))));
-};
-var ExtraInfo_default = ExtraInfo;
-
-// src/components/Swap/components/SwitchButton.tsx
-var React15 = __toESM(require("react"), 1);
-var SwitchButton = ({ children, onSwitch }) => {
-  return /* @__PURE__ */ React15.createElement("div", { className: "absolute top-[9.7rem] left-[9.5rem]", onClick: onSwitch }, children);
-};
-var SwitchButton_default = SwitchButton;
-
-// src/components/Swap/components/ChainDropdown.tsx
-var import_react10 = __toESM(require("react"), 1);
-
-// src/components/shared/data/providers.ts
-var providerList = [
-  {
-    name: "Ethereum",
-    icon: "https://chain-icons.s3.amazonaws.com/ethereum.png",
-    id: 1
-  },
-  {
-    name: "Arbitrum One",
-    icon: "https://chain-icons.s3.amazonaws.com/arbitrum.png",
-    id: 42161
-  },
-  // {
-  //     name: "Avalanche",
-  //     icon: "https://chain-icons.s3.amazonaws.com/avalanche.png",
-  //     id: 43114
-  // },
-  {
-    name: "BNB Smart Chain",
-    icon: "https://chain-icons.s3.amazonaws.com/bsc.png",
-    id: 56
-  },
-  {
-    name: "Optimism",
-    icon: "https://chain-icons.s3.amazonaws.com/optimism.png",
-    id: 10
-  },
-  {
-    name: "Polygon",
-    icon: "https://chain-icons.s3.amazonaws.com/polygon.png",
-    id: 137
-  }
-];
-
-// src/components/Swap/components/ChainDropdown.tsx
-var ChainDropdown = ({ resetAll, apiType, chain }) => {
-  const [provider, setProvider] = (0, import_react10.useState)();
-  const [isOpen, setIsOpen] = (0, import_react10.useState)(false);
-  const { useSwitchNetwork } = useDeFiUIKitContext();
-  const { switchNetwork } = useSwitchNetwork();
-  (0, import_react10.useEffect)(() => {
-    const currentChain = providerList.find(
-      (provider2) => provider2.name === (chain == null ? void 0 : chain.name)
-    );
-    const rightNetwork = apiType === "uniswapv2" && (chain == null ? void 0 : chain.name.toLowerCase()) != "ethereum" || apiType === "pancakeswap" && (chain == null ? void 0 : chain.name) != "BNB Smart Chain" ? { name: "Wrong Network", icon: "" } : currentChain;
-    setProvider(rightNetwork);
-    resetAll();
-  }, [chain]);
-  const handleOpen = () => {
-    setIsOpen((prev) => !prev);
-  };
-  const filteredProviderList = providerList.filter(
-    (provider2) => {
-      if (apiType === "uniswapv2") {
-        return provider2.name.toLowerCase() === "ethereum";
-      } else if (apiType === "pancakeswap") {
-        return provider2.name === "BNB Smart Chain";
-      } else {
-        return provider2;
-      }
-    }
-  );
-  const handleProvider = (e) => {
-    const newProviderName = e.currentTarget.getAttribute("value");
-    if (newProviderName) {
-      const newProvider = providerList.find(
-        (provider2) => provider2.name === newProviderName
-      );
-      if (newProvider) {
-        switchNetwork == null ? void 0 : switchNetwork(newProvider.id);
-      }
-    }
-    setIsOpen(false);
-  };
-  return /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(
-    "button",
-    {
-      onClick: handleOpen,
-      className: "text-white font-medium rounded-lg text-sm py-2.5 text-center inline-flex items-center space-x-2",
-      type: "button"
-    },
-    (provider == null ? void 0 : provider.icon) && /* @__PURE__ */ import_react10.default.createElement("img", { src: provider == null ? void 0 : provider.icon, width: 20, height: 30, alt: "provider icon" }),
-    /* @__PURE__ */ import_react10.default.createElement("p", null, provider == null ? void 0 : provider.name),
-    /* @__PURE__ */ import_react10.default.createElement("svg", { className: "w-4 h-4 ml-2", "aria-hidden": "true", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react10.default.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 9l-7 7-7-7" }))
-  ), isOpen && /* @__PURE__ */ import_react10.default.createElement("div", { id: "dropdown", className: "z-10 mt-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#1f1f21] absolute" }, /* @__PURE__ */ import_react10.default.createElement("ul", { className: "mt-1 py-1 text-sm text-gray-700 dark:text-gray-200 space-y-2", "aria-labelledby": "dropdownDefaultButton" }, filteredProviderList.map((provider2) => /* @__PURE__ */ import_react10.default.createElement("li", { key: provider2.name, onClick: handleProvider, value: provider2.name, className: "p-2 flex space-x-2 hover:bg-[#28282a] cursor-pointer" }, (provider2 == null ? void 0 : provider2.icon) && /* @__PURE__ */ import_react10.default.createElement("img", { src: provider2 == null ? void 0 : provider2.icon, width: 20, height: 30, alt: "provider icon" }), /* @__PURE__ */ import_react10.default.createElement("p", null, provider2 == null ? void 0 : provider2.name))))));
-};
-var ChainDropdown_default = ChainDropdown;
-
-// src/components/Swap/Swap.tsx
-var import_classnames4 = __toESM(require("classnames"), 1);
 
 // src/components/shared/utils/componentFunctions.ts
 var import_axios2 = __toESM(require_axios2(), 1);
@@ -7755,7 +7414,392 @@ var trySwap = (canSwap, apiType, setIsLoading, tokenFrom, tokenTo, accountAddres
   }
 });
 
+// src/components/LiquidityPool/LiquidityPool.tsx
+var LiquidityPool = ({
+  tokenA = null,
+  tokenB = null,
+  apiType = "uniswapv2",
+  tokenList,
+  primaryTokens,
+  switchIcon
+}) => {
+  const { account, chains, currentProvider, fetchSigner } = useDeFiUIKitContext();
+  const [chainId, setChainId] = (0, import_react7.useState)();
+  const chain = chains.find((c) => {
+    return c.id === chainId;
+  });
+  const [swapState, setSwapState] = (0, import_react7.useState)("buy");
+  const [reserves, setReserves] = (0, import_react7.useState)([]);
+  const [openPopover, setOpenPopover] = (0, import_react7.useState)(false);
+  const [slippage, setSlippage] = (0, import_react7.useState)(2.5);
+  const fetchNetwork = () => __async(void 0, null, function* () {
+    const { chainId: chainId2 } = yield currentProvider.getNetwork();
+    setChainId(chainId2);
+  });
+  const [tokenFrom, setTokenFrom] = (0, import_react7.useState)(null);
+  const [tokenTo, setTokenTo] = (0, import_react7.useState)(null);
+  (0, import_react7.useEffect)(() => {
+    if (!tokenFrom && !tokenTo) {
+      setTokenFrom(tokenA);
+      setTokenTo(tokenB);
+      fetchNetwork();
+    }
+  }, [tokenFrom, tokenTo]);
+  const [tokenFromPrice, setTokenFromPrice] = (0, import_react7.useState)("");
+  const [tokenToPrice, setTokenToPrice] = (0, import_react7.useState)("");
+  const [tokenFromBalance, setTokenFromBalance] = (0, import_react7.useState)(0);
+  const [tokenToBalance, setTokenToBalance] = (0, import_react7.useState)(0);
+  const [amountFrom, setAmountFrom] = (0, import_react7.useState)();
+  const [amountTo, setAmountTo] = (0, import_react7.useState)(0);
+  const [liquidityOut, setLiquidityOut] = (0, import_react7.useState)([0, 0, 0]);
+  const [error, setError] = (0, import_react7.useState)();
+  const [isLoading, setIsLoading] = (0, import_react7.useState)(false);
+  const [hasBalance, setHasBalance] = (0, import_react7.useState)();
+  const [txDetails, setTxDetails] = (0, import_react7.useState)({
+    to: "",
+    data: "",
+    value: 0
+  });
+  const handleSlippageChange = (e) => {
+    setSlippage(Number(e.target.value));
+  };
+  const resetExtraInfo = () => {
+  };
+  const resetAll = (0, import_react7.useCallback)(() => {
+    setTokenFrom(null);
+    setTokenTo(null);
+    setError("");
+  }, []);
+  const onSelectFrom = (token, balance) => {
+    resetExtraInfo();
+    setTokenFrom(token);
+    if (balance > 0) {
+      setHasBalance(true);
+      setTokenFromBalance(balance);
+    } else {
+      setHasBalance(false);
+    }
+  };
+  const onSelectTo = (token, balance) => {
+    resetExtraInfo();
+    setTokenTo(token);
+    setTokenToBalance(balance);
+  };
+  const onAmountFromSelect = (value) => {
+    resetExtraInfo();
+    setAmountFrom(value);
+  };
+  const onAmountToSelect = (value) => {
+    resetExtraInfo();
+    setAmountTo(value);
+  };
+  (0, import_react7.useEffect)(() => {
+    const debouncePrice = setTimeout(() => {
+      getLiquidityQuote();
+    }, 500);
+    return () => clearTimeout(debouncePrice);
+  }, [amountFrom]);
+  const getLiquidityQuote = () => __async(void 0, null, function* () {
+    if (!tokenFrom || !tokenTo || tokenFrom.address === tokenTo.address || amountFrom == 0 || amountTo == 0)
+      return;
+    if (apiType !== "pancakeswap" && apiType !== "uniswapv2")
+      return;
+    const signer = yield fetchSigner();
+    console.log(account.address);
+    getReserves(tokenFrom, tokenTo, signer, apiType).then(
+      (data) => setReserves(data)
+    );
+    quoteAddLiquidity(
+      tokenFrom,
+      tokenTo,
+      amountFrom,
+      amountTo,
+      apiType,
+      signer
+    ).then((data) => {
+      setLiquidityOut([data[0], data[1], data[2]]);
+    });
+  });
+  const trySwap2 = () => __async(void 0, null, function* () {
+    if (!canSwap)
+      return;
+    try {
+    } catch (error2) {
+      setError(error2);
+      setIsLoading(false);
+    }
+  });
+  (0, import_react7.useEffect)(() => {
+    const updateTokenBalance = () => __async(void 0, null, function* () {
+      if (tokenFrom) {
+        yield getBalance(
+          tokenFrom,
+          "from",
+          chain,
+          currentProvider,
+          account.address,
+          fetchSigner,
+          setTokenFromBalance,
+          setTokenFromPrice,
+          setHasBalance,
+          setTokenToBalance,
+          setTokenToPrice,
+          setError
+        );
+      }
+    });
+    if (account.address) {
+      updateTokenBalance();
+    }
+  }, [tokenFromBalance, tokenFrom]);
+  (0, import_react7.useEffect)(() => {
+    const updateTokenBalance = () => __async(void 0, null, function* () {
+      if (tokenTo) {
+        yield getBalance(
+          tokenTo,
+          "to",
+          chain,
+          currentProvider,
+          account.address,
+          fetchSigner,
+          setTokenFromBalance,
+          setTokenFromPrice,
+          setHasBalance,
+          setTokenToBalance,
+          setTokenToPrice,
+          setError
+        );
+      }
+    });
+    if (account.address) {
+      updateTokenBalance();
+    }
+  }, [tokenToBalance, tokenTo]);
+  const canSwap = !!hasBalance && tokenFrom && tokenTo && Number(amountFrom) && amountTo && account && Number(amountFrom) <= tokenFromBalance;
+  const isFilledOut = tokenFrom && tokenTo && Number(amountFrom) && amountTo && !!account;
+  return /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative border border-[#353536] p-4 rounded-xl w-[22rem] shadow self-center" }, /* @__PURE__ */ import_react7.default.createElement("div", { className: "relative flex justify-between" }, /* @__PURE__ */ import_react7.default.createElement(import_md.MdSettings, { className: "text-gray-500 cursor-pointer mt-3 text-lg", onClick: () => setOpenPopover((prev) => !prev) }), openPopover ? /* @__PURE__ */ import_react7.default.createElement("div", { className: "absolute right-6 z-50 bg-gray-600 w-[16rem] h-[12rem] p-2 rounded-lg border border-gray-700" }, /* @__PURE__ */ import_react7.default.createElement("p", { className: "text-white" }, "Settings"), /* @__PURE__ */ import_react7.default.createElement("div", { className: "mt-3 text-gray-400 mb-2" }, "Slippage Tolerance")) : null), /* @__PURE__ */ import_react7.default.createElement(TokenSelection_default, { onTokenSelect: onSelectFrom, onAmountSelect: onAmountFromSelect, onBlur: getLiquidityQuote, token: tokenFrom, tokenBalance: tokenFromBalance, tokenList, primaryTokens, tokenPrice: tokenFromPrice, apiType, chain }), /* @__PURE__ */ import_react7.default.createElement(TokenSelection_default, { onTokenSelect: onSelectTo, onAmountSelect: onAmountToSelect, onBlur: getLiquidityQuote, token: tokenTo, tokenBalance: tokenToBalance, tokenList, primaryTokens, tokenPrice: tokenToPrice, apiType, chain }), /* @__PURE__ */ import_react7.default.createElement(SwapError_default, { error }), /* @__PURE__ */ import_react7.default.createElement(
+    LiquidityInfo_default,
+    {
+      liquidityOut,
+      reserves,
+      tokenFrom,
+      tokenTo,
+      amountFrom
+    }
+  ), /* @__PURE__ */ import_react7.default.createElement(
+    SwapButton_default,
+    {
+      canSwap,
+      swapFunction: trySwap2,
+      isLoading,
+      isFilledOut,
+      tokenFromBalance,
+      amountFrom: Number(amountFrom),
+      tokenSymbol: tokenFrom == null ? void 0 : tokenFrom.symbol
+    }
+  ));
+};
+
 // src/components/Swap/Swap.tsx
+var import_react11 = __toESM(require("react"), 1);
+var import_ri = require("react-icons/ri");
+var import_md2 = require("react-icons/md");
+
+// src/components/shared/ui/button/Radio.tsx
+var React11 = __toESM(require("react"), 1);
+var RadioGroup = ({ children, onChange }) => {
+  return /* @__PURE__ */ React11.createElement("form", { onChange: (e) => onChange(e) }, children);
+};
+var RadioButton = ({ value, children, checked, slippage }) => {
+  const isChecked = value === slippage ? true : false;
+  return /* @__PURE__ */ React11.createElement("div", { className: "flex items-center mb-4" }, /* @__PURE__ */ React11.createElement("input", { defaultChecked: isChecked, id: "default-radio-1", type: "radio", value, name: "default-radio", className: "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" }), /* @__PURE__ */ React11.createElement("label", { htmlFor: "default-radio-1", className: "ml-2 text-sm font-medium text-gray-900 dark:text-gray-300" }, children));
+};
+
+// src/components/Swap/components/ExtraInfo.tsx
+var React14 = __toESM(require("react"), 1);
+var import_classnames3 = __toESM(require("classnames"), 1);
+
+// src/components/shared/ui/accordion/index.tsx
+var import_react8 = __toESM(require("react"), 1);
+var import_bs2 = require("react-icons/bs");
+var Accordion = ({ title, content }) => {
+  const [active, setActive] = (0, import_react8.useState)(false);
+  const contentSpace = (0, import_react8.useRef)(null);
+  function toggleAccordion() {
+    setActive((prevState) => !prevState);
+  }
+  return /* @__PURE__ */ import_react8.default.createElement("div", { className: "flex flex-col justify-end" }, /* @__PURE__ */ import_react8.default.createElement(
+    "button",
+    {
+      className: "pb-2 box-border appearance-none cursor-pointer focus:outline-none flex items-center justify-end",
+      onClick: toggleAccordion
+    },
+    /* @__PURE__ */ import_react8.default.createElement("p", { className: "inline-block text-footnote text-gray-400 light" }, title),
+    active ? /* @__PURE__ */ import_react8.default.createElement(import_bs2.BsChevronUp, { className: "text-white ml-2" }) : /* @__PURE__ */ import_react8.default.createElement(import_bs2.BsChevronDown, { className: "text-white ml-2" })
+  ), active && /* @__PURE__ */ import_react8.default.createElement("div", { className: "pb-10" }, content));
+};
+
+// src/components/Swap/components/ExtraInfo.tsx
+var import_react9 = require("react");
+
+// src/components/Swap/components/Routes.tsx
+var React13 = __toESM(require("react"), 1);
+var Routes = ({ intermediateToken, wrappedToken, tokenFrom, tokenTo, wrappedDirection, sources }) => {
+  return /* @__PURE__ */ React13.createElement(React13.Fragment, null, !intermediateToken ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("div", { className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("img", { src: tokenFrom == null ? void 0 : tokenFrom.logoURI }), wrappedToken ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenTo == null ? void 0 : tokenTo.logoURI, alt: "" })) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React13.createElement("svg", { width: "300", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("img", { src: tokenTo == null ? void 0 : tokenTo.logoURI })), /* @__PURE__ */ React13.createElement("div", { className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, sources && sources.map((source, i) => source.name !== "MultiHop" && /* @__PURE__ */ React13.createElement("p", { key: source.name + i, className: "text-gray-400" }, source.name, source.proportion ? " - " + (source.proportion * 100).toFixed(1) + "%" : "")))) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, sources && sources.map((source, i) => /* @__PURE__ */ React13.createElement("div", { key: i }, source.name === "MultiHop" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, source.hops.map((hop, j) => /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("div", { key: hop + j, className: "flex mt-6", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("img", { src: j === 0 ? tokenFrom == null ? void 0 : tokenFrom.logoURI : intermediateToken, style: j === 0 ? {} : { height: "27px", width: "27px", marginTop: "0.2rem" } }), wrappedToken && j === 0 ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("div", { className: "flex mt-1", style: { marginRight: "1rem", marginLeft: "0.2rem" } }, wrappedDirection === "from" ? /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginLeft: "-0.5rem", marginBottom: "0.3rem", height: "26px", width: "64px" }, src: intermediateToken, alt: "" })) : /* @__PURE__ */ React13.createElement(React13.Fragment, null, /* @__PURE__ */ React13.createElement("img", { className: "border-2 border-white rounded-full dark:border-gray-800", style: { marginBottom: "0.3rem", height: "26px", width: "64px" }, src: tokenFrom == null ? void 0 : tokenFrom.logoURI, alt: "" }), /* @__PURE__ */ React13.createElement("img", { style: { height: "24px", width: "24px", marginLeft: "-0.5rem" }, className: "border-2 border-white rounded-full dark:border-gray-800", src: wrappedToken == null ? void 0 : wrappedToken.logoURI, alt: "" }))), /* @__PURE__ */ React13.createElement("svg", { width: "100%", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" }))) : /* @__PURE__ */ React13.createElement("svg", { width: "250", height: "35", viewBox: "850 0 300 200", xmlns: "http://www.w3.org/2000/svg", className: "text-gray-400" }, /* @__PURE__ */ React13.createElement("line", { x1: "0", x2: "3000", y1: "100", y2: "100", stroke: "currentColor", strokeWidth: "20", strokeLinecap: "round", strokeDasharray: "1, 45" })), /* @__PURE__ */ React13.createElement("img", { src: j === 0 ? intermediateToken : tokenTo == null ? void 0 : tokenTo.logoURI, style: { height: "27px", width: "27px", marginTop: "0.2rem" } })), /* @__PURE__ */ React13.createElement("div", { key: j + 4 + hop, className: "flex flex-col", style: wrappedToken ? { marginLeft: "-14.5rem" } : { marginLeft: "-2.5rem" } }, /* @__PURE__ */ React13.createElement("p", { className: "text-gray-400" }, hop))))) : null))));
+};
+var Routes_default = Routes;
+
+// src/components/Swap/components/ExtraInfo.tsx
+var ExtraInfo = ({ gas, sources, priceImpact, tokenFrom, tokenTo }) => {
+  const [intermediateToken, setIntermediateToken] = React14.useState();
+  const [wrappedToken, setWrappedToken] = React14.useState();
+  const [wrappedDirection, setWrappedDirection] = React14.useState("");
+  const extraInfoDirection = "vertical";
+  (0, import_react9.useEffect)(() => {
+    if (tokenFrom) {
+      getWrappedToken(tokenFrom).then((token) => {
+        if (token) {
+          setWrappedToken(token);
+          setWrappedDirection("from");
+        }
+      });
+    }
+    if (tokenTo) {
+      getWrappedToken(tokenTo).then((token) => {
+        setWrappedToken(token);
+        setWrappedDirection("to");
+      });
+    }
+  }, [tokenFrom]);
+  if (sources[0]) {
+    getTokenMetadata(sources[0].intermediateToken).then(
+      (data) => {
+        if (data) {
+          setIntermediateToken(data.logoURI);
+        }
+      }
+    );
+  }
+  return /* @__PURE__ */ React14.createElement(React14.Fragment, null, /* @__PURE__ */ React14.createElement(React14.Fragment, null, gas && sources && /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white " }, "Estimated Gas:"), /* @__PURE__ */ React14.createElement("p", { className: " text-gray-400" }, "$", gas && Number(gas).toFixed(2))), /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white" }, "Source:"), /* @__PURE__ */ React14.createElement(
+    Accordion,
+    {
+      title: sources.length > 1 ? "MultiSource" : sources[0].name,
+      content: /* @__PURE__ */ React14.createElement(
+        Routes_default,
+        {
+          intermediateToken,
+          wrappedToken,
+          tokenFrom,
+          tokenTo,
+          wrappedDirection,
+          sources
+        }
+      )
+    }
+  ))), priceImpact && /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("mt-4 mb-2", extraInfoDirection === "vertical" ? "flex-col" : "flex justify-between") }, /* @__PURE__ */ React14.createElement("div", { className: (0, import_classnames3.default)("text-xs", extraInfoDirection === "vertical" ? "flex justify-between mb-3" : "") }, /* @__PURE__ */ React14.createElement("p", { className: "text-white" }, "Price Impact"), /* @__PURE__ */ React14.createElement("p", { className: (0, import_classnames3.default)(Number(priceImpact) < 5 ? "text-green-400" : "text-red-400") }, "~ ", Number(priceImpact).toFixed(2), "%")))));
+};
+var ExtraInfo_default = ExtraInfo;
+
+// src/components/Swap/components/SwitchButton.tsx
+var React15 = __toESM(require("react"), 1);
+var SwitchButton = ({ children, onSwitch }) => {
+  return /* @__PURE__ */ React15.createElement("div", { className: "absolute top-[9.7rem] left-[9.5rem]", onClick: onSwitch }, children);
+};
+var SwitchButton_default = SwitchButton;
+
+// src/components/Swap/components/ChainDropdown.tsx
+var import_react10 = __toESM(require("react"), 1);
+
+// src/components/shared/data/providers.ts
+var providerList = [
+  {
+    name: "Ethereum",
+    icon: "https://chain-icons.s3.amazonaws.com/ethereum.png",
+    id: 1
+  },
+  {
+    name: "Arbitrum One",
+    icon: "https://chain-icons.s3.amazonaws.com/arbitrum.png",
+    id: 42161
+  },
+  // {
+  //     name: "Avalanche",
+  //     icon: "https://chain-icons.s3.amazonaws.com/avalanche.png",
+  //     id: 43114
+  // },
+  {
+    name: "BNB Smart Chain",
+    icon: "https://chain-icons.s3.amazonaws.com/bsc.png",
+    id: 56
+  },
+  {
+    name: "Optimism",
+    icon: "https://chain-icons.s3.amazonaws.com/optimism.png",
+    id: 10
+  },
+  {
+    name: "Polygon",
+    icon: "https://chain-icons.s3.amazonaws.com/polygon.png",
+    id: 137
+  }
+];
+
+// src/components/Swap/components/ChainDropdown.tsx
+var ChainDropdown = ({ resetAll, apiType, chain }) => {
+  const [provider, setProvider] = (0, import_react10.useState)();
+  const [isOpen, setIsOpen] = (0, import_react10.useState)(false);
+  const { useSwitchNetwork } = useDeFiUIKitContext();
+  const { switchNetwork } = useSwitchNetwork();
+  (0, import_react10.useEffect)(() => {
+    const currentChain = providerList.find(
+      (provider2) => provider2.name === (chain == null ? void 0 : chain.name)
+    );
+    const rightNetwork = apiType === "uniswapv2" && (chain == null ? void 0 : chain.name.toLowerCase()) != "ethereum" || apiType === "pancakeswap" && (chain == null ? void 0 : chain.name) != "BNB Smart Chain" ? { name: "Wrong Network", icon: "" } : currentChain;
+    setProvider(rightNetwork);
+    resetAll();
+  }, [chain]);
+  const handleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
+  const filteredProviderList = providerList.filter(
+    (provider2) => {
+      if (apiType === "uniswapv2") {
+        return provider2.name.toLowerCase() === "ethereum";
+      } else if (apiType === "pancakeswap") {
+        return provider2.name === "BNB Smart Chain";
+      } else {
+        return provider2;
+      }
+    }
+  );
+  const handleProvider = (e) => {
+    const newProviderName = e.currentTarget.getAttribute("value");
+    if (newProviderName) {
+      const newProvider = providerList.find(
+        (provider2) => provider2.name === newProviderName
+      );
+      if (newProvider) {
+        switchNetwork == null ? void 0 : switchNetwork(newProvider.id);
+      }
+    }
+    setIsOpen(false);
+  };
+  return /* @__PURE__ */ import_react10.default.createElement(import_react10.default.Fragment, null, /* @__PURE__ */ import_react10.default.createElement(
+    "button",
+    {
+      onClick: handleOpen,
+      className: "text-white font-medium rounded-lg text-sm py-2.5 text-center inline-flex items-center space-x-2",
+      type: "button"
+    },
+    (provider == null ? void 0 : provider.icon) && /* @__PURE__ */ import_react10.default.createElement("img", { src: provider == null ? void 0 : provider.icon, width: 20, height: 30, alt: "provider icon" }),
+    /* @__PURE__ */ import_react10.default.createElement("p", null, provider == null ? void 0 : provider.name),
+    /* @__PURE__ */ import_react10.default.createElement("svg", { className: "w-4 h-4 ml-2", "aria-hidden": "true", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" }, /* @__PURE__ */ import_react10.default.createElement("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: "2", d: "M19 9l-7 7-7-7" }))
+  ), isOpen && /* @__PURE__ */ import_react10.default.createElement("div", { id: "dropdown", className: "z-10 mt-12 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-[#1f1f21] absolute" }, /* @__PURE__ */ import_react10.default.createElement("ul", { className: "mt-1 py-1 text-sm text-gray-700 dark:text-gray-200 space-y-2", "aria-labelledby": "dropdownDefaultButton" }, filteredProviderList.map((provider2) => /* @__PURE__ */ import_react10.default.createElement("li", { key: provider2.name, onClick: handleProvider, value: provider2.name, className: "p-2 flex space-x-2 hover:bg-[#28282a] cursor-pointer" }, (provider2 == null ? void 0 : provider2.icon) && /* @__PURE__ */ import_react10.default.createElement("img", { src: provider2 == null ? void 0 : provider2.icon, width: 20, height: 30, alt: "provider icon" }), /* @__PURE__ */ import_react10.default.createElement("p", null, provider2 == null ? void 0 : provider2.name))))));
+};
+var ChainDropdown_default = ChainDropdown;
+
+// src/components/Swap/Swap.tsx
+var import_classnames4 = __toESM(require("classnames"), 1);
 var Swap = ({
   tokenA = null,
   tokenB = null,
