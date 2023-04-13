@@ -6888,8 +6888,8 @@ var quoteAddLiquidity = (tokenFrom, tokenTo, amountADesired, amountBDesired, api
 
 // src/components/LiquidityPool/components/LiquidityInfo.tsx
 import * as React8 from "react";
-var LiquidityInfo = ({ liquidityOut, reserves }) => {
-  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, reserves && /* @__PURE__ */ React8.createElement("div", { className: "flex justify-between mt-4 mb-2" }, /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Reserves A:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[0]).toLocaleString()), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Reserves B:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[1]).toLocaleString()), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Token A:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, "$", liquidityOut[0]), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Token B:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, "$", liquidityOut[1]), /* @__PURE__ */ React8.createElement("p", { className: "text-white " }, "Amount Out:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, "$", liquidityOut[2])), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" })));
+var LiquidityInfo = ({ liquidityOut, reserves, tokenFrom, tokenTo, amountFrom }) => {
+  return /* @__PURE__ */ React8.createElement(React8.Fragment, null, reserves && tokenFrom && tokenTo && amountFrom && /* @__PURE__ */ React8.createElement("div", { className: "flex flex-col justify-between mt-4 mb-2 space-y-4" }, /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Reserves"), /* @__PURE__ */ React8.createElement("div", { className: "flex space-x-4 justify-between text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[0]).toLocaleString(), " ", tokenFrom.symbol), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(reserves[1]).toLocaleString(), " ", tokenTo.symbol))), /* @__PURE__ */ React8.createElement("div", null, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Prices"), /* @__PURE__ */ React8.createElement("div", { className: "flex space-x-4 justify-between text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(liquidityOut[1] / liquidityOut[0]) > 0.01 ? Number(liquidityOut[1] / liquidityOut[0]).toFixed(2) : Number(liquidityOut[1] / liquidityOut[0]).toFixed(10), " ", tokenFrom.symbol, " per ", tokenTo.symbol), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, Number(liquidityOut[0] / liquidityOut[1]) > 0.01 ? Number(liquidityOut[0] / liquidityOut[1]).toFixed(2) : Number(liquidityOut[0] / liquidityOut[1]).toFixed(10), " ", tokenTo.symbol, " per ", tokenFrom.symbol))), /* @__PURE__ */ React8.createElement("div", { className: "flex justify-between" }, /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "LP Tokens:"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, liquidityOut[2])), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" }, /* @__PURE__ */ React8.createElement("p", { className: "text-white text-sm mb-3" }, "Share of Pool"), /* @__PURE__ */ React8.createElement("p", { className: " text-gray-400" }, (amountFrom / reserves[0] * 100).toFixed(2), " %"))), /* @__PURE__ */ React8.createElement("div", { className: "text-xs" })));
 };
 var LiquidityInfo_default = LiquidityInfo;
 
@@ -7034,7 +7034,10 @@ var LiquidityPool = ({
     LiquidityInfo_default,
     {
       liquidityOut,
-      reserves
+      reserves,
+      tokenFrom,
+      tokenTo,
+      amountFrom
     }
   ), /* @__PURE__ */ React10.createElement(
     SwapButton_default,

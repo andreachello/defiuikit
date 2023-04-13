@@ -265,6 +265,9 @@ export const LiquidityPool: React.FunctionComponent<ISwapProps> = ({
         <LiquidityInfo 
             liquidityOut={liquidityOut}
             reserves={reserves}
+            tokenFrom={tokenFrom}
+            tokenTo={tokenTo}
+            amountFrom={amountFrom}
         />
         <SwapButton 
                 canSwap={canSwap} 
